@@ -806,7 +806,7 @@ this.update();this.getGame().updatePlace()}}if(this.throwButtonShown==false){if(
 this.update();this.getGame().updatePlace()}}if(this.requestFeatureButtonShown==false){if(this.getGame().getCandies().getMax()>=30&&Saving.loadBool("statusBarUnlockedMap")==false){this.requestFeatureButtonShown=true;
 this.update();this.getGame().updatePlace()}}};a.prototype.clickedEatCandiesButton=function(){if(this.getGame().getCandies().getCurrent()>=1){this.getGame().getCandies().transferTo(this.getGame().getCandiesEaten());
 this.update();this.getGame().updatePlace()}};a.prototype.grabAnkiURLandFetch=function(c){return __awaiter(this,void 0,void 0,function(){var d;
-return __generator(this,function(e){switch(e.label){case 0:d="http://localhost:8765";
+return __generator(this,function(e){switch(e.label){case 0:d="http://127.0.0.1:8765";
 return[4,fetch(d,{method:"POST",headers:{"Access-Control-Allow-Origin":"*","Content-Type":"application/json;charset=utf-8"},body:JSON.stringify(c)})];
 case 1:return[2,e.sent()]}})})};a.prototype.reqPermission=function(){return __awaiter(this,void 0,void 0,function(){var d,g,f,e,c;
 return __generator(this,function(h){switch(h.label){case 0:d={action:"requestPermission",version:6};

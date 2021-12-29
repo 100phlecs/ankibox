@@ -4558,7 +4558,7 @@ var CandyBox = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = 'http://localhost:8765';
+                        url = 'http://127.0.0.1:8765';
                         return [4 /*yield*/, fetch(url, {
                                 method: 'POST',
                                 headers: {

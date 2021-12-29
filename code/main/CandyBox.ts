@@ -180,7 +180,7 @@ class CandyBox extends Place{
     }
 
     private async grabAnkiURLandFetch(body) {
-        let url = 'http://localhost:8765';
+        let url = 'http://127.0.0.1:8765';
         return await fetch(url, {
             method: 'POST',
             headers: {
