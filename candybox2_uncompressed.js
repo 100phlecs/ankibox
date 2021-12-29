@@ -27,58 +27,7 @@
  *
  */
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var Place = /** @class */ (function () {
+var Place = (function () {
     // Constructor
     function Place(game) {
         this.game = game;
@@ -118,7 +67,7 @@ var Place = /** @class */ (function () {
     Place.prototype.willBeDisplayed = function () { };
     Place.prototype.willStopBeingDisplayed = function () { };
     return Place;
-}());
+})();
 var Saving;
 (function (Saving) {
     // Saving maps
@@ -418,28 +367,33 @@ var Saving;
 })(Saving || (Saving = {}));
 ///<reference path="Place.ts"/>
 ///<reference path="Saving.ts"/>
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 Saving.registerNumber("aTreeStep", 0);
-var ATree = /** @class */ (function (_super) {
+var ATree = (function (_super) {
     __extends(ATree, _super);
     // Constructor
     function ATree(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Special tic-tac-toa variables
-        _this.ticTacToeStep = null;
-        _this.ticTacToeBoard = null;
+        this.ticTacToeStep = null;
+        this.ticTacToeBoard = null;
         // If we're going to play tic tac toe
         if (Saving.loadNumber("aTreeStep") == 7) {
-            _this.startTicTacToe();
+            this.startTicTacToe();
         }
         // If we're at step 8 (just won the tic tac toe game), go on to step 9
         if (Saving.loadNumber("aTreeStep") == 8)
-            _this.nextStep();
+            this.nextStep();
         // Resize & update
-        _this.renderArea.resizeFromArray(Database.getAscii("places/aTree/background"), 17, 3);
-        _this.update();
-        return _this;
+        this.renderArea.resizeFromArray(Database.getAscii("places/aTree/background"), 17, 3);
+        this.update();
     }
     // getRenderArea()
     ATree.prototype.getRenderArea = function () {
@@ -484,7 +438,6 @@ var ATree = /** @class */ (function (_super) {
                                     if (i == 0 || i == 4 || j == 0 || j == 4) {
                                         this.renderArea.addAsciiNinjaButton(x + i * 7 + 1, x + i * 7 + 7, yButton, "aTreeTicTacToeBoardButton" + i + "_" + j);
                                     }
-                                    // Else, we're inside the board : add a regular button
                                     else {
                                         this.renderArea.addAsciiButton(x + i * 7 + 1, x + i * 7 + 7, yButton, "aTreeTicTacToeBoardButton" + i + "_" + j);
                                     }
@@ -502,10 +455,10 @@ var ATree = /** @class */ (function (_super) {
         // We change the step
         Saving.saveNumber("aTreeStep", Saving.loadNumber("aTreeStep") + 1);
         // We possibly do some action depending on the new step
-        if (Saving.loadNumber("aTreeStep") == 7) { // If we're going to play tic tac toe
+        if (Saving.loadNumber("aTreeStep") == 7) {
             this.startTicTacToe();
         }
-        if (Saving.loadNumber("aTreeStep") == 9) { // If we won the tic tac toe game
+        if (Saving.loadNumber("aTreeStep") == 9) {
             this.getGame().gainItem("gridItemPossessedThirdHouseKey");
         }
         // We update
@@ -541,42 +494,42 @@ var ATree = /** @class */ (function (_super) {
         // The score
         var score = 0;
         // First cell
-        if (board[row1][col1] == ATreeTicTacToeSign.O) // If the first cell is the squirrel
+        if (board[row1][col1] == ATreeTicTacToeSign.O)
             score = 1;
-        else if (board[row1][col1] == ATreeTicTacToeSign.X) // Else if it's the player
+        else if (board[row1][col1] == ATreeTicTacToeSign.X)
             score = -1;
         // Second cell
-        if (board[row2][col2] == ATreeTicTacToeSign.O) { // If the second cell is the squirrel
-            if (score == 1) // If the first cell was the squirrel
+        if (board[row2][col2] == ATreeTicTacToeSign.O) {
+            if (score == 1)
                 score = 10;
-            else if (score == -1) // Else, if the first cell was the player
+            else if (score == -1)
                 return 0;
-            else // Else, the first cell was empty
+            else
                 score = 1;
         }
-        else if (board[row2][col2] == ATreeTicTacToeSign.X) { // If the second cell is the player
-            if (score == 1) // If the first cell was the squirrel
+        else if (board[row2][col2] == ATreeTicTacToeSign.X) {
+            if (score == 1)
                 return 0;
-            else if (score == -1) // Else, if the first cell was the player
+            else if (score == -1)
                 score = -10;
-            else // Else, the first cell was empty
+            else
                 score = -1;
         }
         // Third cell
-        if (board[row3][col3] == ATreeTicTacToeSign.O) { // If the third cell is the squirrel
-            if (score > 0) // If the first and/or the second cell is the squirrel
+        if (board[row3][col3] == ATreeTicTacToeSign.O) {
+            if (score > 0)
                 score *= 10;
-            else if (score < 0) // Else, if the first and/or the second cell is the player
+            else if (score < 0)
                 return 0;
-            else // Else, the first and the second cells are empty
+            else
                 score = 1;
         }
-        else if (board[row3][col3] == ATreeTicTacToeSign.X) { // Else, if the third cell is the player
-            if (score > 0) // If the first and/or the second cell is the squirrel
+        else if (board[row3][col3] == ATreeTicTacToeSign.X) {
+            if (score > 0)
                 return 0;
-            else if (score < 0) // Else, if the first and/or the second cell is the player
+            else if (score < 0)
                 score *= 10;
-            else // Else, the first and the second cells are empty
+            else
                 score = -1;
         }
         // Return the score
@@ -590,9 +543,9 @@ var ATree = /** @class */ (function (_super) {
         var returnValue = new ATreeTicTacToeMinimaxReturnValue; // The return value, which contains the best position and the best score
         var gameFull = true; // Used later to find out if the game is full or not
         // Set the initial best score, depending on the playerSign parameter
-        if (playerSign == ATreeTicTacToeSign.O) // If the player sign is the squirrel
+        if (playerSign == ATreeTicTacToeSign.O)
             returnValue.bestScore = -99999999;
-        else // Else
+        else
             returnValue.bestScore = 99999999;
         // If the depth is > to 0 (this condition is needed to stop the iterating loop at some point)
         if (depth > 0) {
@@ -607,14 +560,14 @@ var ATree = /** @class */ (function (_super) {
                         tempBoard = this.playTicTacToe_copyBoard(board);
                         // Try to play on this cell using the temp board
                         tempBoard[i][j] = playerSign;
-                        if (playerSign == ATreeTicTacToeSign.O) { // If we're testing the squirrel
+                        if (playerSign == ATreeTicTacToeSign.O) {
                             currentScore = this.playTicTacToe_minimax(tempBoard, ATreeTicTacToeSign.X, depth - 1).bestScore;
                             if (returnValue.bestScore <= currentScore) {
                                 returnValue.bestScore = currentScore;
                                 returnValue.bestPosition = new Pos(i, j);
                             }
                         }
-                        else { // Else, we're testing the player
+                        else {
                             currentScore = this.playTicTacToe_minimax(tempBoard, ATreeTicTacToeSign.O, depth - 1).bestScore;
                             if (returnValue.bestScore >= currentScore) {
                                 returnValue.bestScore = currentScore;
@@ -638,18 +591,18 @@ var ATree = /** @class */ (function (_super) {
         var shouldEnd = false;
         // Test if someone won (in the 5*5 grid)
         switch (this.playTicTacToe_testGameSomeoneWon()) {
-            case ATreeTicTacToeSign.O: // The squirrel won
+            case ATreeTicTacToeSign.O:
                 this.ticTacToeStep = ATreeTicTacToeStep.YOU_LOSE;
                 return true;
                 break;
-            case ATreeTicTacToeSign.X: // The player won
+            case ATreeTicTacToeSign.X:
                 // add object to the player here
                 this.nextStep();
                 return true;
                 break;
         }
         // Test if the game is full (in the 3*3 grid)
-        if (this.playTicTacToe_testGameFull()) { // It's a draw
+        if (this.playTicTacToe_testGameFull()) {
             this.ticTacToeStep = ATreeTicTacToeStep.NOBODY_WINS;
             return true;
         }
@@ -832,7 +785,7 @@ var ATree = /** @class */ (function (_super) {
                 this.renderArea.addAsciiRealButton(Database.getText("mapATreeTicTacToeIntroButton"), 21, 24, "mapATreeTicTacToeIntroButton", Database.getTranslatedText("mapATreeTicTacToeIntroButton"));
                 this.renderArea.addLinkCall(".mapATreeTicTacToeIntroButton", new CallbackCollection(this.nextStep.bind(this)));
                 break;
-            case 7: // Tic-tac-toe : let's play!
+            case 7:
                 // Draw different things depending on the tic-tac-toa step
                 switch (this.ticTacToeStep) {
                     case ATreeTicTacToeStep.PLAYING:
@@ -867,14 +820,14 @@ var ATree = /** @class */ (function (_super) {
         }
     };
     return ATree;
-}(Place));
-var ATreeTicTacToeMinimaxReturnValue = /** @class */ (function () {
+})(Place);
+var ATreeTicTacToeMinimaxReturnValue = (function () {
     function ATreeTicTacToeMinimaxReturnValue() {
         this.bestPosition = null;
         this.bestScore = null;
     }
     return ATreeTicTacToeMinimaxReturnValue;
-}());
+})();
 var ATreeTicTacToeSign;
 (function (ATreeTicTacToeSign) {
     ATreeTicTacToeSign[ATreeTicTacToeSign["NO_SIGN"] = 0] = "NO_SIGN";
@@ -887,7 +840,7 @@ var ATreeTicTacToeStep;
     ATreeTicTacToeStep[ATreeTicTacToeStep["NOBODY_WINS"] = 1] = "NOBODY_WINS";
     ATreeTicTacToeStep[ATreeTicTacToeStep["YOU_LOSE"] = 2] = "YOU_LOSE";
 })(ATreeTicTacToeStep || (ATreeTicTacToeStep = {}));
-// N.B. : the case when the player wins isn't in this enumeration because this case is a new aTreeStep and is therefore handled by the global saving system
+// N.B. : the case when the player wins isn't in this enumeration because this case is a new aTreeStep and is therefore handled by the global saving system 
 var Algo;
 (function (Algo) {
     // Return 0 is the number given is under 0, else return the number given
@@ -941,7 +894,7 @@ var Algo;
             // If the var is bigger than 3 characters
             if (str.length > 3) {
                 for (var i = Math.floor(str.length / 3); i > 0; i--) {
-                    if (i * 3 != str.length) // To avoid adding a whitespace at the left of multiple-of-three strings
+                    if (i * 3 != str.length)
                         str = str.addAt(str.length - i * 3, " ");
                 }
             }
@@ -984,7 +937,7 @@ var BarType;
     BarType[BarType["UNICOLOR_HEALTH"] = 2] = "UNICOLOR_HEALTH";
 })(BarType || (BarType = {}));
 ///<reference path="./../../libs/jquery.d.ts"/>
-var RenderLink = /** @class */ (function () {
+var RenderLink = (function () {
     // Constructor
     function RenderLink() {
     }
@@ -992,8 +945,8 @@ var RenderLink = /** @class */ (function () {
     RenderLink.prototype.run = function () {
     };
     return RenderLink;
-}());
-var RenderTag = /** @class */ (function () {
+})();
+var RenderTag = (function () {
     // Constructor
     function RenderTag(x, tagString) {
         this.x = x;
@@ -1019,7 +972,7 @@ var RenderTag = /** @class */ (function () {
         return this;
     };
     return RenderTag;
-}());
+})();
 String.prototype.addAt = function (index, text) {
     return this.substr(0, index) + text + this.substr(index);
 };
@@ -1047,7 +1000,7 @@ String.prototype.replaceAt = function (index, text) {
 ///<reference path="RenderLink.ts"/>
 ///<reference path="RenderTag.ts"/>
 ///<reference path="string_prototype.ts"/>
-var RenderArea = /** @class */ (function () {
+var RenderArea = (function () {
     // Constructor : by default, it creates en empty drawing area
     function RenderArea(width, height, character) {
         if (width === void 0) { width = 0; }
@@ -1141,7 +1094,6 @@ var RenderArea = /** @class */ (function () {
                 }, 1000);
             }));
         }
-        // Else, no wrong message
         else {
             // We add a simple link input
             this.addLinkInput("." + otherClass, enigmaAnswer, callbackCollection, new CallbackCollection());
@@ -1249,7 +1201,7 @@ var RenderArea = /** @class */ (function () {
             this.tags[y].push(tag);
             return true;
         }
-        else { // Else add the tag at the correct place in the array (tags must be sorted !!)
+        else {
             for (var i = 0; i < this.tags[y].length; i++) {
                 // If this is the right place to add the tag, we add it and we break the loop
                 if (tag.getX() > this.tags[y][i].getX()) {
@@ -1399,15 +1351,13 @@ var RenderArea = /** @class */ (function () {
         if (transparency == null) {
             this.area[y] = this.area[y].replaceAt(x + indexFirst, str.substring(indexFirst, indexLast));
         }
-        // Else we draw characters one by one to avoid drawing transparent ones !
         else {
-            for (var i = indexFirst; i < indexLast; i++) { // We iterate over characters
+            for (var i = indexFirst; i < indexLast; i++) {
                 // If the character isn't alpha
                 if (str[i] != transparency.getAlphaCharacter()) {
                     // If the meta alpha character isn't null and our character is this meta alpha character, we draw the alpha character
                     if (transparency.getMetaAlphaCharacter() != null && str[i] == transparency.getMetaAlphaCharacter())
                         this.area[y] = this.area[y].replaceAt(x + i, transparency.getAlphaCharacter());
-                    // Else, we draw the character
                     else
                         this.area[y] = this.area[y].replaceAt(x + i, str[i]);
                 }
@@ -1469,34 +1419,33 @@ var RenderArea = /** @class */ (function () {
         if (this.setSize(newWidth, newHeight) == false)
             return false;
         // We resize the height
-        if (newHeight > oldHeight) { // If the new height is higher
-            for (var i = oldHeight; i < newHeight; i++) { // We add the lines corresponding to the new height
+        if (newHeight > oldHeight) {
+            for (var i = oldHeight; i < newHeight; i++) {
                 // We resize the tags
                 this.tags.push([]);
                 // We resize the area
                 this.area.push("");
                 // If the new width is higher
                 if (newWidth > oldWidth) {
-                    for (var j = 0; j < oldWidth; j++) { // We fill the new lines from 0 to the old width
+                    for (var j = 0; j < oldWidth; j++) {
                         this.area[i] += character;
                     }
                 }
-                // Else, if the old width is higher
                 else if (oldWidth > newWidth) {
-                    for (var j = 0; j < newWidth; j++) { // We fill the new lines from 0 to the new width
+                    for (var j = 0; j < newWidth; j++) {
                         this.area[i] += character;
                     }
                 }
             }
         }
-        else if (oldHeight > newHeight) { // Else, if the old height was higher
+        else if (oldHeight > newHeight) {
             // We resize the tags
             this.tags.splice(this.tags.length - (oldHeight - newHeight), oldHeight - newHeight); // We remove some lines to reduce the height
             // We resize the area
             this.area.splice(this.area.length - (oldHeight - newHeight), oldHeight - newHeight); // We remove some lines to reduce the height
         }
         // We resize the width
-        if (newWidth > oldWidth) { // If the new width is higher
+        if (newWidth > oldWidth) {
             // We add characters at the end of the lines (lines 0 to new height)
             for (var i = 0; i < newHeight; i++) {
                 for (var j = oldWidth; j < newWidth; j++) {
@@ -1504,7 +1453,7 @@ var RenderArea = /** @class */ (function () {
                 }
             }
         }
-        else if (oldWidth > newWidth) { // Else, if the old width was higher
+        else if (oldWidth > newWidth) {
             // We each line (0 to new height), we only keep the beginning of the string
             for (var i = 0; i < newHeight; i++) {
                 this.area[i] = this.area[i].substr(0, newWidth);
@@ -1540,7 +1489,6 @@ var RenderArea = /** @class */ (function () {
             // We simply return the area as a string
             return this.area.join("\n");
         }
-        // Else, we have at least one tag
         else {
             // We clone the area
             areaClone = this.area.slice(0);
@@ -1580,13 +1528,13 @@ var RenderArea = /** @class */ (function () {
         return true;
     };
     return RenderArea;
-}());
-var CallbackCollection = /** @class */ (function () {
+})();
+var CallbackCollection = (function () {
     // Constructor
     function CallbackCollection() {
         var callbacks = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            callbacks[_i] = arguments[_i];
+            callbacks[_i - 0] = arguments[_i];
         }
         this.callbacks = []; // Array of functions returning void
         this.callbacks = callbacks;
@@ -1605,9 +1553,9 @@ var CallbackCollection = /** @class */ (function () {
         this.callbacks = [];
     };
     return CallbackCollection;
-}());
+})();
 ///<reference path="CallbackCollection.ts"/>
-var Resource = /** @class */ (function () {
+var Resource = (function () {
     // Constructor
     function Resource(savingPrefix) {
         if (savingPrefix === void 0) { savingPrefix = null; }
@@ -1694,35 +1642,33 @@ var Resource = /** @class */ (function () {
         this.max = n;
     };
     return Resource;
-}());
+})();
 ///<reference path="BarType.ts"/>
 ///<reference path="RenderArea.ts"/>
 ///<reference path="Resource.ts"/>
-var Bar = /** @class */ (function (_super) {
+var Bar = (function (_super) {
     __extends(Bar, _super);
     // Constructor
     function Bar(type) {
-        var _this = 
         // Super constructor
-        _super.call(this) || this;
+        _super.call(this);
         // We set the type
-        _this.type = type;
+        this.type = type;
         // We set some parameters depending on the bar type
-        switch (_this.type) {
+        switch (this.type) {
             case BarType.SIMPLE:
-                _this.contentCharacter = "*";
-                _this.bordersCharacter = "-";
+                this.contentCharacter = "*";
+                this.bordersCharacter = "-";
                 break;
             case BarType.HEALTH:
             case BarType.UNICOLOR_HEALTH:
-                _this.contentCharacter = " ";
-                _this.bordersCharacter = "-";
+                this.contentCharacter = " ";
+                this.bordersCharacter = "-";
                 break;
             default:
                 console.log("Error : trying to load an incorrect bar type");
                 break;
         }
-        return _this;
     }
     // Public methods
     Bar.prototype.update = function (ratio, text) {
@@ -1744,14 +1690,14 @@ var Bar = /** @class */ (function (_super) {
         this.removeAllTags();
         this.eraseEverything();
         // We decide if there will be text or not..
-        if (text.length != 0) // If there is at least one character in the text to draw
+        if (text.length != 0)
             textBool = true;
         else
             textBool = false;
         // We decide if there will be borders or not..
-        if (this.getHeight() < (textBool ? 4 : 3)) // If the height is 1 or 2 without text, no borders / if the height is 1 or 2 or 3 with text, no borders
+        if (this.getHeight() < (textBool ? 4 : 3))
             bordersBool = false;
-        else // Else, borders
+        else
             bordersBool = true;
         // ..and where the real content of the bar will take place
         if (bordersBool) {
@@ -1829,8 +1775,8 @@ var Bar = /** @class */ (function (_super) {
         return true;
     };
     return Bar;
-}(RenderArea));
-var QuestEntity = /** @class */ (function () {
+})(RenderArea);
+var QuestEntity = (function () {
     // Constructor
     function QuestEntity(quest, globalPosition, naming, renderArea, renderAreaPosition, cbc, questEntityMovement, questEntityAnimation) {
         if (naming === void 0) { naming = new Naming("???", "???"); }
@@ -2023,7 +1969,6 @@ var QuestEntity = /** @class */ (function () {
             else if (distance.x < 0)
                 movement.x = speed.x;
         }
-        // Else, the y distance is the biggest and big enough
         else if (Math.abs(distance.y) > minDistance) {
             if (distance.y > 0)
                 movement.y = -speed.y;
@@ -2053,7 +1998,6 @@ var QuestEntity = /** @class */ (function () {
             // If we're not a turtle
             if (this.turtle == false)
                 this.setHp(this.getHp() - damage);
-            // Else, we're a turtle
             else
                 this.setHp(this.getHp() - Math.ceil(damage / 2));
         }
@@ -2095,7 +2039,6 @@ var QuestEntity = /** @class */ (function () {
         // If we're not a turtle or this isn't a pure horizontal movement (turtles only care about horizontal movement)
         if (this.turtle == false || pos.y != 0)
             return this.setGlobalPosition(this.globalPosition.plus(pos), force);
-        // Else, we're a turtle
         else {
             // We check the duration
             if (this.turtleDuration > 0) {
@@ -2108,7 +2051,6 @@ var QuestEntity = /** @class */ (function () {
                 this.turtleLastMovement = 0; // We reset the movement
                 return this.setGlobalPosition(this.globalPosition.plus(pos), force); // We move
             }
-            // Else, we increase the movement
             else {
                 this.turtleLastMovement += 1;
                 return false;
@@ -2122,12 +2064,10 @@ var QuestEntity = /** @class */ (function () {
             if (this.checkCollision(pos.plus(new Pos(0, 2))) == true && this.checkCollision(pos.plus(new Pos(0, 1))) == false && this.jumping == false && this.controlledFalling == false) {
                 return this.move(pos.plus(new Pos(0, 1)));
             }
-            // Else we just move normally
             else {
                 return this.move(pos);
             }
         }
-        // Else, if we can move just one step above (and we're not jumping or controlled falling)
         else if (this.checkCollision(pos.plus(new Pos(0, -1))) == false && this.jumping == false && this.controlledFalling == false) {
             // We move one step above
             return this.move(pos.plus(new Pos(0, -1)));
@@ -2374,7 +2314,6 @@ var QuestEntity = /** @class */ (function () {
                 this.jumping = false;
                 this.controlledFalling = true;
             }
-            // Else, we try to jump
             else {
                 // If we don't manage to jump, stop jumping
                 if (this.move(new Pos(0, -this.jumpSpeed)) == false) {
@@ -2385,7 +2324,6 @@ var QuestEntity = /** @class */ (function () {
             // Return false so that we can move while jumping
             return false;
         }
-        // Else, we try to handle gravity
         else {
             // If we're not affected by anti-gravity and gravity isn't disabled in the whole quest
             if (this.antiGravity == false && this.getQuest().getGravityDisabled() == false) {
@@ -2418,7 +2356,6 @@ var QuestEntity = /** @class */ (function () {
                         if (this.moveWormsLike(this.questEntityMovement.getCurrentFrameMovement()))
                             this.noMovementLastUpdate = false;
                     }
-                    // Else, we just try to move
                     else {
                         if (this.move(this.questEntityMovement.getCurrentFrameMovement()))
                             this.noMovementLastUpdate = false;
@@ -2438,27 +2375,26 @@ var QuestEntity = /** @class */ (function () {
             this.healthBar.update();
     };
     return QuestEntity;
-}());
+})();
 ///<reference path="QuestEntity.ts"/>
-var BigShark = /** @class */ (function (_super) {
+var BigShark = (function (_super) {
     __extends(BigShark, _super);
     // Constructor
     function BigShark(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A shark", "a shark"), new RenderArea(47, 10), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(14, 0), new Pos(2, 1)), new CollisionBox(_this, new Pos(13, 1), new Pos(2, 1)), new CollisionBox(_this, new Pos(12, 2), new Pos(4, 1)), new CollisionBox(_this, new Pos(41, 2), new Pos(5, 1)), new CollisionBox(_this, new Pos(11, 3), new Pos(7, 1)), new CollisionBox(_this, new Pos(35, 3), new Pos(11, 1)), new CollisionBox(_this, new Pos(2, 4), new Pos(40, 1)), new CollisionBox(_this, new Pos(0, 5), new Pos(40, 1)), new CollisionBox(_this, new Pos(1, 6), new Pos(44, 1)), new CollisionBox(_this, new Pos(3, 7), new Pos(43, 1)), new CollisionBox(_this, new Pos(15, 8), new Pos(3, 1)), new CollisionBox(_this, new Pos(16, 9), new Pos(1, 1))), new QuestEntityMovement(new Pos(-1, 0))) || this;
+        _super.call(this, quest, pos, new Naming("A shark", "a shark"), new RenderArea(47, 10), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(14, 0), new Pos(2, 1)), new CollisionBox(this, new Pos(13, 1), new Pos(2, 1)), new CollisionBox(this, new Pos(12, 2), new Pos(4, 1)), new CollisionBox(this, new Pos(41, 2), new Pos(5, 1)), new CollisionBox(this, new Pos(11, 3), new Pos(7, 1)), new CollisionBox(this, new Pos(35, 3), new Pos(11, 1)), new CollisionBox(this, new Pos(2, 4), new Pos(40, 1)), new CollisionBox(this, new Pos(0, 5), new Pos(40, 1)), new CollisionBox(this, new Pos(1, 6), new Pos(44, 1)), new CollisionBox(this, new Pos(3, 7), new Pos(43, 1)), new CollisionBox(this, new Pos(15, 8), new Pos(3, 1)), new CollisionBox(this, new Pos(16, 9), new Pos(1, 1))), new QuestEntityMovement(new Pos(-1, 0)));
         // By default, finType is null
-        _this.finType = null;
+        this.finType = null;
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(200);
-        _this.setHp(200);
+        this.setDestructible(true);
+        this.setMaxHp(200);
+        this.setHp(200);
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/bigShark"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/bigShark"));
         // Set the transparency
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its sharp teeth", "its sharp teeth"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(49, 12))), Random.between(30, 42)));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(1);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its sharp teeth", "its sharp teeth"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(49, 12))), Random.between(30, 42)));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(1);
     }
     // draw()
     BigShark.prototype.draw = function (renderArea) {
@@ -2513,7 +2449,7 @@ var BigShark = /** @class */ (function (_super) {
         }
     };
     return BigShark;
-}(QuestEntity));
+})(QuestEntity);
 var BigSharkFinType;
 (function (BigSharkFinType) {
     BigSharkFinType[BigSharkFinType["RED"] = 0] = "RED";
@@ -2521,7 +2457,7 @@ var BigSharkFinType;
     BigSharkFinType[BigSharkFinType["PURPLE"] = 2] = "PURPLE";
 })(BigSharkFinType || (BigSharkFinType = {}));
 ///<reference path="QuestEntity.ts"/>
-var QuestEntitySpell = /** @class */ (function (_super) {
+var QuestEntitySpell = (function (_super) {
     __extends(QuestEntitySpell, _super);
     // Constructor
     function QuestEntitySpell(quest, pos, naming, renderArea, renderAreaPosition, cbc, questEntityMovement, questEntityAnimation) {
@@ -2530,12 +2466,11 @@ var QuestEntitySpell = /** @class */ (function (_super) {
         if (cbc === void 0) { cbc = null; }
         if (questEntityMovement === void 0) { questEntityMovement = null; }
         if (questEntityAnimation === void 0) { questEntityAnimation = null; }
-        var _this = _super.call(this, quest, pos, naming, renderArea, renderAreaPosition, cbc, questEntityMovement, questEntityAnimation) || this;
+        _super.call(this, quest, pos, naming, renderArea, renderAreaPosition, cbc, questEntityMovement, questEntityAnimation);
         // Colors
-        _this.colors = [];
+        this.colors = [];
         // Set isASpell
-        _this.setIsASpell(true);
-        return _this;
+        this.setIsASpell(true);
     }
     // Public methods
     QuestEntitySpell.prototype.addColor = function (color) {
@@ -2553,25 +2488,23 @@ var QuestEntitySpell = /** @class */ (function (_super) {
         this.colors = [];
     };
     return QuestEntitySpell;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntitySpell.ts"/>
-var Blackhole = /** @class */ (function (_super) {
+var Blackhole = (function (_super) {
     __extends(Blackhole, _super);
     // Constructor
     function Blackhole(quest, pos, damage, questEntityDamageReason) {
-        var _this = 
         // Call the mother class constructor
-        _super.call(this, quest, pos, new Naming("A blackhole", "a blackhole")) || this;
+        _super.call(this, quest, pos, new Naming("A blackhole", "a blackhole"));
         // Set from parameters
-        _this.damage = damage;
-        _this.questEntityDamageReason = questEntityDamageReason;
+        this.damage = damage;
+        this.questEntityDamageReason = questEntityDamageReason;
         // Create the collision box collection
-        _this.cbcDamage = new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -3), new Pos(2, 1)), new CollisionBox(_this, new Pos(-3, -2), new Pos(6, 1)), new CollisionBox(_this, new Pos(-4, -1), new Pos(8, 1)), new CollisionBox(_this, new Pos(-5, 0), new Pos(10, 1)), new CollisionBox(_this, new Pos(-4, 1), new Pos(8, 1)), new CollisionBox(_this, new Pos(-3, 2), new Pos(6, 1)), new CollisionBox(_this, new Pos(-1, 3), new Pos(2, 1)));
+        this.cbcDamage = new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -3), new Pos(2, 1)), new CollisionBox(this, new Pos(-3, -2), new Pos(6, 1)), new CollisionBox(this, new Pos(-4, -1), new Pos(8, 1)), new CollisionBox(this, new Pos(-5, 0), new Pos(10, 1)), new CollisionBox(this, new Pos(-4, 1), new Pos(8, 1)), new CollisionBox(this, new Pos(-3, 2), new Pos(6, 1)), new CollisionBox(this, new Pos(-1, 3), new Pos(2, 1)));
         // Set the timer
-        _this.timer = 30;
+        this.timer = 30;
         // Set the colors for the first time
-        _this.reAddColors();
-        return _this;
+        this.reAddColors();
     }
     // Public methods
     Blackhole.prototype.update = function () {
@@ -2690,8 +2623,8 @@ var Blackhole = /** @class */ (function (_super) {
         }
     };
     return Blackhole;
-}(QuestEntitySpell));
-var QuestEntityWeapon = /** @class */ (function () {
+})(QuestEntitySpell);
+var QuestEntityWeapon = (function () {
     // Constructor
     function QuestEntityWeapon(quest, questEntity, naming, cbc, damage) {
         if (cbc === void 0) { cbc = new CollisionBoxCollection(); }
@@ -2755,12 +2688,12 @@ var QuestEntityWeapon = /** @class */ (function () {
             .setQuestEntityWeapon(this));
     };
     return QuestEntityWeapon;
-}());
+})();
 ///<reference path="QuestEntityWeapon.ts"/>
-var Bludgeon = /** @class */ (function (_super) {
+var Bludgeon = (function (_super) {
     __extends(Bludgeon, _super);
     function Bludgeon() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // Public methods
     Bludgeon.prototype.getRealDamage = function () {
@@ -2770,8 +2703,8 @@ var Bludgeon = /** @class */ (function (_super) {
         return "15-25";
     };
     return Bludgeon;
-}(QuestEntityWeapon));
-var Item = /** @class */ (function () {
+})(QuestEntityWeapon);
+var Item = (function () {
     // Constructor
     function Item(savingName, databaseName, databaseDescriptionName, ascii) {
         // We set the variables
@@ -2812,12 +2745,12 @@ var Item = /** @class */ (function () {
         return null;
     };
     return Item;
-}());
+})();
 ///<reference path="Item.ts"/>
-var EqItem = /** @class */ (function (_super) {
+var EqItem = (function (_super) {
     __extends(EqItem, _super);
     function EqItem() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // Public methods    
     EqItem.prototype.update = function (player, quest) {
@@ -2827,72 +2760,71 @@ var EqItem = /** @class */ (function (_super) {
         return new QuestEntityWeapon(quest, player, new Naming("???", "???"));
     };
     return EqItem;
-}(Item));
+})(Item);
 ///<reference path="EqItem.ts"/>
-var BootsOfIntrospection = /** @class */ (function (_super) {
+var BootsOfIntrospection = (function (_super) {
     __extends(BootsOfIntrospection, _super);
     // Constructor
     function BootsOfIntrospection() {
-        return _super.call(this, "eqItemBootsBootsOfIntrospection", "eqItemBootsBootsOfIntrospectionName", "eqItemBootsBootsOfIntrospectionDescription", "eqItems/boots/bootsOfIntrospection") || this;
+        _super.call(this, "eqItemBootsBootsOfIntrospection", "eqItemBootsBootsOfIntrospectionName", "eqItemBootsBootsOfIntrospectionDescription", "eqItems/boots/bootsOfIntrospection");
     }
     return BootsOfIntrospection;
-}(EqItem));
+})(EqItem);
 ///<reference path="Place.ts"/>
-var Quest = /** @class */ (function (_super) {
+var Quest = (function (_super) {
     __extends(Quest, _super);
     // Constructor
     function Quest(game, specialInstruction) {
         if (specialInstruction === void 0) { specialInstruction = null; }
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Array of quest entities
-        _this.entities = [];
+        this.entities = [];
         // Render area
-        _this.renderArea = new RenderArea();
-        _this.globalDrawingOffset = new Pos(0, 0); // Global offset applied to all entities (very useful when dealing with a scrolling quest like the hole for example)
+        this.renderArea = new RenderArea();
+        this.globalDrawingOffset = new Pos(0, 0); // Global offset applied to all entities (very useful when dealing with a scrolling quest like the hole for example)
         // Drops
-        _this.candiesFound = new Resource();
-        _this.chocolateBarsFound = new Resource();
-        _this.itemsFound = [];
+        this.candiesFound = new Resource();
+        this.chocolateBarsFound = new Resource();
+        this.itemsFound = [];
         // Is the quest ended? (and did we win?)
-        _this.questEnded = false;
-        _this.questEndedAndWeWon = false;
+        this.questEnded = false;
+        this.questEndedAndWeWon = false;
         // Player spells
-        _this.playerSpells = [];
-        _this.playerSpellsHotkeys = [];
+        this.playerSpells = [];
+        this.playerSpellsHotkeys = [];
         // Countdowns
-        _this.playerSpellsCountdown = 0;
-        _this.playerPotionsCountdown = 0;
+        this.playerSpellsCountdown = 0;
+        this.playerPotionsCountdown = 0;
         // Is gravity / worms like disabled?
-        _this.gravityDisabled = false;
-        _this.wormsLikeDisabled = false;
+        this.gravityDisabled = false;
+        this.wormsLikeDisabled = false;
         // How many P potions did we use since the beginning of the quest?
-        _this.howManyPPotions = 0;
+        this.howManyPPotions = 0;
         // Set the special instruction
-        _this.specialInstruction = specialInstruction;
+        this.specialInstruction = specialInstruction;
         // Reset the player
-        _this.getGame().resetPlayer();
+        this.getGame().resetPlayer();
         // Create player spells
-        _this.createPlayerSpells();
+        this.createPlayerSpells();
         // Set the real quest position
-        _this.realQuestPosition = new Pos(0, 2);
+        this.realQuestPosition = new Pos(0, 2);
         // And the size to add to the real quest size
-        _this.sizeToAddToTheRealQuestSize = new Pos(0, 12);
+        this.sizeToAddToTheRealQuestSize = new Pos(0, 12);
         // If there is a special instruction, change the real quest position
-        if (_this.specialInstruction != null) {
-            _this.realQuestPosition.add(new Pos(0, 1));
+        if (this.specialInstruction != null) {
+            this.realQuestPosition.add(new Pos(0, 1));
         }
         // If there is at least a spell, change the real quest position
-        if (_this.playerSpells.length != 0) {
-            _this.realQuestPosition.add(new Pos(0, _this.playerSpellsHeight));
+        if (this.playerSpells.length != 0) {
+            this.realQuestPosition.add(new Pos(0, this.playerSpellsHeight));
         }
         // Add two delimiters in the quest log
-        _this.getGame().getQuestLog().addDelimiter();
+        this.getGame().getQuestLog().addDelimiter();
         // Create the player collision boxes entity
-        _this.playerCollisionBoxes = new Wall(_this, new Pos(0, 0));
+        this.playerCollisionBoxes = new Wall(this, new Pos(0, 0));
         // Set the quest slowed down variable at the game level (and the quest speed up too)
-        _this.getGame().setQuestSlowedDown(false);
-        _this.getGame().setQuestSpeedUp(0);
-        return _this;
+        this.getGame().setQuestSlowedDown(false);
+        this.getGame().setQuestSpeedUp(0);
     }
     // Public methods
     Quest.prototype.addPlayerCollisionBoxes = function (top, right, bottom, left) {
@@ -3031,7 +2963,6 @@ var Quest = /** @class */ (function (_super) {
         // If some spell was erase, we successfully casted the spell
         if (magicErased)
             this.getGame().getQuestLog().addMessage(new QuestLogMessage("You cast an erase magic spell!"));
-        // Else, it didn't work
         else
             this.getGame().getQuestLog().addMessage(new QuestLogMessage("You failed to cast an erase magic spell : there's no magic to erase."));
     };
@@ -3054,7 +2985,6 @@ var Quest = /** @class */ (function (_super) {
         // If we don't have the feather
         if (Saving.loadBool("gridItemPossessedFeather") == false)
             this.getGame().getPlayer().jump(3);
-        // Else, we have the feather
         else
             this.getGame().getPlayer().jump(6);
     };
@@ -3087,7 +3017,6 @@ var Quest = /** @class */ (function (_super) {
             // Set the message
             additionalMessage = "You lose " + hp + " health points.";
         }
-        // Else, if we have less than 8% of our health
         else if (this.getGame().getPlayer().getHp() < (this.getGame().getPlayer().getMaxHp() * 8 / 100)) {
             // Choose between the following
             switch (Random.between(0, 8)) {
@@ -3132,7 +3061,6 @@ var Quest = /** @class */ (function (_super) {
                     break; // Wow, not very effective : heal 3hp
             }
         }
-        // Else : we're not a turtle and we have more than 8% of our health
         else {
             // Normal effect
             if (Random.oneChanceOutOf(Math.ceil((this.howManyPPotions + 1) / 2))) {
@@ -3143,13 +3071,11 @@ var Quest = /** @class */ (function (_super) {
                     this.getGame().getPlayer().heal(-hp);
                     additionalMessage = "You lose " + hp + " health points.";
                 }
-                // We gain those health points
                 else {
                     this.getGame().getPlayer().heal(hp);
                     additionalMessage = "You gain " + hp + " health points.";
                 }
             }
-            // Strange effect
             else if (Random.oneChanceOutOf(Math.ceil((this.howManyPPotions + 1) / 6))) {
                 switch (Random.between(0, 3)) {
                     case 0:
@@ -3170,7 +3096,6 @@ var Quest = /** @class */ (function (_super) {
                         break;
                 }
             }
-            // Very strange effect
             else {
                 this.getGame().getQuestLog().addMessage(new QuestLogMessage("You drink a P potion! Something strange is happening."));
                 switch (Random.between(0, 2)) {
@@ -3236,7 +3161,6 @@ var Quest = /** @class */ (function (_super) {
             if (this.getGame().getPlayer().teleport(where))
                 teleportSucceeded = true;
         }
-        // Else, no special position at all or a teleport area
         else {
             // Find where the teleport area will begin
             if (where == null)
@@ -3410,7 +3334,6 @@ var Quest = /** @class */ (function (_super) {
                 this.entities.splice(i, 1);
                 i--;
             }
-            // Else, if the entity should be removed from the quest because it's out of the view, we remove it
             else if (this.entities[i].isOutOfArea()) {
                 this.entities[i].setOutOfArea(true);
                 this.entities.splice(i, 1);
@@ -3609,7 +3532,6 @@ var Quest = /** @class */ (function (_super) {
         // If we have the sorceress hat, the base time is 50
         if (this.getGame().isEquipped("hat", "eqItemHatSorceressHat"))
             time = 50;
-        // Else, it's 80
         else
             time = 80;
         // Reduce the time thanks to the magic gift
@@ -3621,29 +3543,28 @@ var Quest = /** @class */ (function (_super) {
         return time;
     };
     return Quest;
-}(Place));
+})(Place);
 ///<reference path="Quest.ts"/>
-var Bridge = /** @class */ (function (_super) {
+var Bridge = (function (_super) {
     __extends(Bridge, _super);
     // Constructor
     function Bridge(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(138, 32);
+        this.resizeQuest(138, 32);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, false, false, true);
+        this.addPlayerCollisionBoxes(true, false, false, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 17));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 17));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add a wall at the bridge position
-        _this.addBridgeFloor();
+        this.addBridgeFloor();
         // Add the troll
-        _this.addTroll();
+        this.addTroll();
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You're trying to cross the bridge. A huge troll is blocking your way!"));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You're trying to cross the bridge. A huge troll is blocking your way!"));
     }
     // Public methods
     Bridge.prototype.configPlayerOrClone = function (entity) {
@@ -3720,7 +3641,7 @@ var Bridge = /** @class */ (function (_super) {
         return false;
     };
     return Bridge;
-}(Quest));
+})(Quest);
 var Bugs;
 (function (Bugs) {
     // Variables
@@ -3767,30 +3688,29 @@ var Bugs;
     Bugs.setUltimateBugLevel = setUltimateBugLevel;
 })(Bugs || (Bugs = {}));
 ///<reference path="QuestEntity.ts"/>
-var Camazotz = /** @class */ (function (_super) {
+var Camazotz = (function (_super) {
     __extends(Camazotz, _super);
     // Constructor
     function Camazotz(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("Camazotz, the bat god", "Camazotz, the bat god"), new RenderArea(22, 8), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(8, 1), new Pos(6, 2)), new CollisionBox(_this, new Pos(2, 3), new Pos(18, 1)), new CollisionBox(_this, new Pos(1, 4), new Pos(20, 1)), new CollisionBox(_this, new Pos(0, 5), new Pos(22, 1)), new CollisionBox(_this, new Pos(9, 6), new Pos(4, 1)), new CollisionBox(_this, new Pos(10, 7), new Pos(2, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("Camazotz, the bat god", "Camazotz, the bat god"), new RenderArea(22, 8), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(8, 1), new Pos(6, 2)), new CollisionBox(this, new Pos(2, 3), new Pos(18, 1)), new CollisionBox(this, new Pos(1, 4), new Pos(20, 1)), new CollisionBox(this, new Pos(0, 5), new Pos(22, 1)), new CollisionBox(this, new Pos(9, 6), new Pos(4, 1)), new CollisionBox(this, new Pos(10, 7), new Pos(2, 1))), new QuestEntityMovement());
         // Set the drop a demon timer default value
-        _this.resetDropADemonTimer();
+        this.resetDropADemonTimer();
         // Set the default distance from the player
-        _this.distanceFromPlayer = 5;
+        this.distanceFromPlayer = 5;
         // Set the default tryToMoveAgainTimer
-        _this.tryToMoveAgainTimer = 0;
+        this.tryToMoveAgainTimer = 0;
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(false);
+        this.getQuestEntityMovement().setGravity(false);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(5000);
-        _this.setHp(5000);
+        this.setDestructible(true);
+        this.setMaxHp(5000);
+        this.setHp(5000);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/hell/camazotz"));
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/hell/camazotz"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its claws", "its claws"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, 0), new Pos(24, 9))), 300));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(20, 100); // This delay because Camazotz is quite busy throwing enemies to the player
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its claws", "its claws"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, 0), new Pos(24, 9))), 300));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(20, 100); // This delay because Camazotz is quite busy throwing enemies to the player
     }
     // update()
     Camazotz.prototype.update = function () {
@@ -3821,7 +3741,6 @@ var Camazotz = /** @class */ (function (_super) {
             this.dropADemon();
             this.resetDropADemonTimer();
         }
-        // Else
         else {
             // Decrese the timer
             this.dropADemonTimer -= 1;
@@ -3835,7 +3754,6 @@ var Camazotz = /** @class */ (function (_super) {
             // We'll try to move again in 3 frames
             this.tryToMoveAgainTimer = 3;
         }
-        // Else, we not moving, we decrese the timer, and possibly set we are moving to true
         else {
             this.tryToMoveAgainTimer -= 1;
         }
@@ -3844,41 +3762,39 @@ var Camazotz = /** @class */ (function (_super) {
         this.dropADemonTimer = Random.between(8, 12);
     };
     return Camazotz;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var Camel = /** @class */ (function (_super) {
+var Camel = (function (_super) {
     __extends(Camel, _super);
     // Constructor
     function Camel(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A camel", "a camel"), new RenderArea(7, 2), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(6, 1)), new CollisionBox(_this, new Pos(2, 1), new Pos(5, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A camel", "a camel"), new RenderArea(7, 2), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(6, 1)), new CollisionBox(this, new Pos(2, 1), new Pos(5, 1))), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(7);
-        _this.setHp(7);
+        this.setDestructible(true);
+        this.setMaxHp(7);
+        this.setHp(7);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/desert/camel"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/desert/camel"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its long neck", "its long neck"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, 0), new Pos(3, 3))), 5));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(5, 7);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its long neck", "its long neck"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, 0), new Pos(3, 3))), 5));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(5, 7);
     }
     // Public methods
     Camel.prototype.willDie = function () {
         this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage() + " (and found " + Algo.pluralFormat(this.getQuest().foundCandies(5 + Random.upTo(5)), " candy", " candies") + ")", this.getQuest().getCandiesFoundMessage()));
     };
     return Camel;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="Resource.ts"/>
-var StatusBarResource = /** @class */ (function (_super) {
+var StatusBarResource = (function (_super) {
     __extends(StatusBarResource, _super);
     // Constructor
     function StatusBarResource(game, savingPrefix) {
-        var _this = _super.call(this, savingPrefix) || this;
-        _this.game = game;
-        return _this;
+        _super.call(this, savingPrefix);
+        this.game = game;
     }
     // Public setters
     StatusBarResource.prototype.setCurrent = function (n, reCalcPlayerMaxHp) {
@@ -3890,13 +3806,13 @@ var StatusBarResource = /** @class */ (function (_super) {
             this.game.updateStatusBar();
     };
     return StatusBarResource;
-}(Resource));
+})(Resource);
 ///<reference path="StatusBarResource.ts"/>
-var Candies = /** @class */ (function (_super) {
+var Candies = (function (_super) {
     __extends(Candies, _super);
     // Constructor
     function Candies(game, savingPrefix) {
-        return _super.call(this, game, savingPrefix) || this;
+        _super.call(this, game, savingPrefix);
     }
     // Public methods
     Candies.prototype.getCurrentAsString = function (totalSize) {
@@ -3946,13 +3862,13 @@ var Candies = /** @class */ (function (_super) {
         return prefix + base + suffix + comment;
     };
     return Candies;
-}(StatusBarResource));
+})(StatusBarResource);
 ///<reference path="StatusBarResource.ts"/>
-var CandiesEaten = /** @class */ (function (_super) {
+var CandiesEaten = (function (_super) {
     __extends(CandiesEaten, _super);
     // Constructor
     function CandiesEaten(game, savingPrefix) {
-        return _super.call(this, game, savingPrefix) || this;
+        _super.call(this, game, savingPrefix);
     }
     // Public methods
     CandiesEaten.prototype.getCurrentAsString = function () {
@@ -3970,16 +3886,16 @@ var CandiesEaten = /** @class */ (function (_super) {
         _super.prototype.setCurrent.call(this, n, true);
     };
     return CandiesEaten;
-}(StatusBarResource));
+})(StatusBarResource);
 ///<reference path="Resource.ts"/>
 Saving.registerBool("candiesThrownGotChocolateBar", false);
-var CandiesThrown = /** @class */ (function (_super) {
+var CandiesThrown = (function (_super) {
     __extends(CandiesThrown, _super);
     // Constructor
     function CandiesThrown(game, savingPrefix) {
-        var _this = _super.call(this, savingPrefix) || this;
+        _super.call(this, savingPrefix);
         // Smileys
-        _this.smileys = [new CandiesThrownSmileyFirstLine("."),
+        this.smileys = [new CandiesThrownSmileyFirstLine("."),
             new CandiesThrownSmileyFirstLine("..."),
             new CandiesThrownSmileyFirstLine("...?"),
             new CandiesThrownSmileyFirstLine("...? :|"),
@@ -4203,7 +4119,7 @@ var CandiesThrown = /** @class */ (function (_super) {
             new CandiesThrownSmileyCave("(^_^)", new Pos(43, 11), CandiesThrownSmileyCaveStep.THIRD_ROOM),
         ];
         // *nom* *nom* smileys
-        _this.nomNomSmileys = [new CandiesThrownSmileyCave("(^_^)", new Pos(43, 11), CandiesThrownSmileyCaveStep.THIRD_ROOM),
+        this.nomNomSmileys = [new CandiesThrownSmileyCave("(^_^)", new Pos(43, 11), CandiesThrownSmileyCaveStep.THIRD_ROOM),
             new CandiesThrownSmileyCave("(^_^)", new Pos(43, 11), CandiesThrownSmileyCaveStep.THIRD_ROOM).addObject(new CandiesThrownSmileyCaveObject("*nom*", new Pos(40, 9))),
             new CandiesThrownSmileyCave("(^_^)", new Pos(43, 11), CandiesThrownSmileyCaveStep.THIRD_ROOM).addObject(new CandiesThrownSmileyCaveObject("*nom*", new Pos(41, 9))),
             new CandiesThrownSmileyCave("(^_^)", new Pos(43, 11), CandiesThrownSmileyCaveStep.THIRD_ROOM).addObject(new CandiesThrownSmileyCaveObject("*nom*", new Pos(42, 9))),
@@ -4214,9 +4130,8 @@ var CandiesThrown = /** @class */ (function (_super) {
             new CandiesThrownSmileyCave("(^_^)", new Pos(43, 11), CandiesThrownSmileyCaveStep.THIRD_ROOM).addObject(new CandiesThrownSmileyCaveObject("*nom* *nom*", new Pos(40, 9))),
         ];
         // Index of the *nom* *nom* smiley we show
-        _this.nomNomSmileyIndex = 0;
-        _this.game = game;
-        return _this;
+        this.nomNomSmileyIndex = 0;
+        this.game = game;
     }
     // Public methods
     CandiesThrown.prototype.add = function (n) {
@@ -4251,21 +4166,19 @@ var CandiesThrown = /** @class */ (function (_super) {
             // Draw the smiley and return the correct y gap
             return this.smileys[smileyIndex].draw(renderArea, x, y, base);
         }
-        // Else, if the index is too low, don't add any smiley
         else if (smileyIndex < 0) {
             // We just draw the base and return 0
             renderArea.drawString(base, x, y);
             return 0;
         }
-        // Else, add the *nom* *nom* smiley
         else {
             // Draw the smiley and return the correct y gap
             return this.nomNomSmileys[this.nomNomSmileyIndex].draw(renderArea, x, y, base);
         }
     };
     return CandiesThrown;
-}(Resource));
-var CandiesThrownSmiley = /** @class */ (function () {
+})(Resource);
+var CandiesThrownSmiley = (function () {
     // Constructor
     function CandiesThrownSmiley() {
     }
@@ -4275,22 +4188,21 @@ var CandiesThrownSmiley = /** @class */ (function () {
         return 0;
     };
     return CandiesThrownSmiley;
-}());
+})();
 ///<reference path="CandiesThrownSmiley.ts"/>
-var CandiesThrownSmileyCave = /** @class */ (function (_super) {
+var CandiesThrownSmileyCave = (function (_super) {
     __extends(CandiesThrownSmileyCave, _super);
     // Constructor
     function CandiesThrownSmileyCave(smiley, smileyPosition, step) {
         if (step === void 0) { step = CandiesThrownSmileyCaveStep.FIRST_ROOM; }
-        var _this = _super.call(this) || this;
+        _super.call(this);
         // Various objects (can be speeches, for example)
-        _this.objects = [];
+        this.objects = [];
         // Is the chest open ? (closed by default)
-        _this.chestOpened = false;
-        _this.smiley = smiley;
-        _this.smileyPosition = smileyPosition;
-        _this.step = step;
-        return _this;
+        this.chestOpened = false;
+        this.smiley = smiley;
+        this.smileyPosition = smileyPosition;
+        this.step = step;
     }
     // draw()
     CandiesThrownSmileyCave.prototype.draw = function (renderArea, x, y, base) {
@@ -4355,8 +4267,8 @@ var CandiesThrownSmileyCave = /** @class */ (function (_super) {
         return this;
     };
     return CandiesThrownSmileyCave;
-}(CandiesThrownSmiley));
-var CandiesThrownSmileyCaveObject = /** @class */ (function () {
+})(CandiesThrownSmiley);
+var CandiesThrownSmileyCaveObject = (function () {
     // Constructor
     function CandiesThrownSmileyCaveObject(str, position) {
         this.str = str;
@@ -4370,7 +4282,7 @@ var CandiesThrownSmileyCaveObject = /** @class */ (function () {
         return this.str;
     };
     return CandiesThrownSmileyCaveObject;
-}());
+})();
 var CandiesThrownSmileyCaveStep;
 (function (CandiesThrownSmileyCaveStep) {
     CandiesThrownSmileyCaveStep[CandiesThrownSmileyCaveStep["FIRST_ROOM"] = 0] = "FIRST_ROOM";
@@ -4378,13 +4290,12 @@ var CandiesThrownSmileyCaveStep;
     CandiesThrownSmileyCaveStep[CandiesThrownSmileyCaveStep["THIRD_ROOM"] = 2] = "THIRD_ROOM";
 })(CandiesThrownSmileyCaveStep || (CandiesThrownSmileyCaveStep = {}));
 ///<reference path="CandiesThrownSmiley.ts"/>
-var CandiesThrownSmileyFirstLine = /** @class */ (function (_super) {
+var CandiesThrownSmileyFirstLine = (function (_super) {
     __extends(CandiesThrownSmileyFirstLine, _super);
     // Constructor
     function CandiesThrownSmileyFirstLine(line) {
-        var _this = _super.call(this) || this;
-        _this.line = line;
-        return _this;
+        _super.call(this);
+        this.line = line;
     }
     // draw()
     CandiesThrownSmileyFirstLine.prototype.draw = function (renderArea, x, y, base) {
@@ -4392,25 +4303,24 @@ var CandiesThrownSmileyFirstLine = /** @class */ (function (_super) {
         return 0;
     };
     return CandiesThrownSmileyFirstLine;
-}(CandiesThrownSmiley));
+})(CandiesThrownSmiley);
 ///<reference path="Place.ts"/>
 Saving.registerBool("candyBoxBoxOpened", false);
 Saving.registerNumber("previousDailyCardTotal", 0);
 Saving.registerString("DateToday", "");
-var CandyBox = /** @class */ (function (_super) {
+var CandyBox = (function (_super) {
     __extends(CandyBox, _super);
     // Constructor
     function CandyBox(game) {
-        var _this = _super.call(this, game) || this;
-        _this.renderArea = new RenderArea();
-        _this.eatButtonShown = false;
-        _this.throwButtonShown = false;
-        _this.requestFeatureButtonShown = false;
+        _super.call(this, game);
+        this.renderArea = new RenderArea();
+        this.eatButtonShown = false;
+        this.throwButtonShown = false;
+        this.requestFeatureButtonShown = false;
         // Resize the area
-        _this.renderArea.resize(100, 40);
+        this.renderArea.resize(100, 40);
         // Update
-        _this.update();
-        return _this;
+        this.update();
     }
     // willBeDisplayed()
     CandyBox.prototype.willBeDisplayed = function () {
@@ -4444,14 +4354,12 @@ var CandyBox = /** @class */ (function (_super) {
                 // Draw the speech
                 this.renderArea.drawSpeech(Database.getText("talkingCandySpeechNoBox"), 30, 72, 98, "candyBoxTalkingCandySpeech", Database.getTranslatedText("talkingCandySpeechNoBox"));
             }
-            // Else, we have the box
             else {
                 // If the talking candy already opened the box
                 if (Saving.loadBool("candyBoxBoxOpened")) {
                     // Draw the speech
                     this.renderArea.drawSpeech(Database.getText("talkingCandySpeech2"), 34, 72, 98, "candyBoxTalkingCandySpeech", Database.getTranslatedText("talkingCandySpeech2"));
                 }
-                // Else, the box is still closed
                 else {
                     // Draw the speech
                     this.renderArea.drawSpeech(Database.getText("talkingCandySpeech1"), 30, 72, 98, "candyBoxTalkingCandySpeech", Database.getTranslatedText("talkingCandySpeech1"));
@@ -4585,31 +4493,13 @@ var CandyBox = /** @class */ (function (_super) {
         });
     };
     CandyBox.prototype.reqPermission = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var res, _a, _b, _c;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
-                    case 0: return [4 /*yield*/, this.invoke('requestPermission', 6)];
-                    case 1:
-                        res = _d.sent();
-                        _b = (_a = console).log;
-                        _c = ["perm res"];
-                        return [4 /*yield*/, res];
-                    case 2:
-                        _b.apply(_a, _c.concat([_d.sent()]));
-                        return [2 /*return*/];
-                }
-            });
-        });
+        return this.invoke('requestPermission', 6)
+            .then(function (res) { return console.log("perm res", res); });
     };
     CandyBox.prototype.fetchDailyAnkiCards = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.invoke('getNumCardsReviewedToday', 6)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
+        return this.invoke('getNumCardsReviewedToday', 6).then(function (res) {
+            console.log("card count", res);
+            return res;
         });
     };
     CandyBox.prototype.addAnkiCardCount = function (count) {
@@ -4626,19 +4516,10 @@ var CandyBox = /** @class */ (function (_super) {
         Saving.saveNumber("previousDailyCardTotal", count);
     };
     CandyBox.prototype.syncWithAnkiDailyCardCount = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var count;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.reqPermission()];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.fetchDailyAnkiCards()];
-                    case 2:
-                        count = _a.sent();
-                        this.addAnkiCardCount(count);
-                        return [2 /*return*/];
-                }
+        var _this = this;
+        this.reqPermission().then(function () {
+            _this.fetchDailyAnkiCards().then(function (count) {
+                _this.addAnkiCardCount(count);
             });
         });
     };
@@ -4707,8 +4588,8 @@ var CandyBox = /** @class */ (function (_super) {
         }
     };
     return CandyBox;
-}(Place));
-var CandyMerchantItem = /** @class */ (function () {
+})(Place);
+var CandyMerchantItem = (function () {
     // Constructor
     function CandyMerchantItem(game, savingBool, asciiName, asciiPosition, merchantSpeech, price, buttonText, buttonName) {
         this.game = game;
@@ -4769,12 +4650,12 @@ var CandyMerchantItem = /** @class */ (function () {
         return this.price;
     };
     return CandyMerchantItem;
-}());
+})();
 ///<reference path="CandyMerchantItem.ts"/>
-var CandyMerchantItem_ChocolateBar = /** @class */ (function (_super) {
+var CandyMerchantItem_ChocolateBar = (function (_super) {
     __extends(CandyMerchantItem_ChocolateBar, _super);
     function CandyMerchantItem_ChocolateBar() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // When we buy, we get one chocolate bar
     CandyMerchantItem_ChocolateBar.prototype.buy = function () {
@@ -4782,12 +4663,12 @@ var CandyMerchantItem_ChocolateBar = /** @class */ (function (_super) {
         this.getGame().getChocolateBars().add(1);
     };
     return CandyMerchantItem_ChocolateBar;
-}(CandyMerchantItem));
+})(CandyMerchantItem);
 ///<reference path="CandyMerchantItem.ts"/>
-var CandyMerchantItem_LeatherBoots = /** @class */ (function (_super) {
+var CandyMerchantItem_LeatherBoots = (function (_super) {
     __extends(CandyMerchantItem_LeatherBoots, _super);
     function CandyMerchantItem_LeatherBoots() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // The item can't be shown if the inventory isn't shown yet
     CandyMerchantItem_LeatherBoots.prototype.canBeShown = function () {
@@ -4798,12 +4679,12 @@ var CandyMerchantItem_LeatherBoots = /** @class */ (function (_super) {
         return true;
     };
     return CandyMerchantItem_LeatherBoots;
-}(CandyMerchantItem));
+})(CandyMerchantItem);
 ///<reference path="CandyMerchantItem.ts"/>
-var CandyMerchantItem_LeatherGloves = /** @class */ (function (_super) {
+var CandyMerchantItem_LeatherGloves = (function (_super) {
     __extends(CandyMerchantItem_LeatherGloves, _super);
     function CandyMerchantItem_LeatherGloves() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // The item can't be shown if the inventory isn't shown yet
     CandyMerchantItem_LeatherGloves.prototype.canBeShown = function () {
@@ -4814,12 +4695,12 @@ var CandyMerchantItem_LeatherGloves = /** @class */ (function (_super) {
         return true;
     };
     return CandyMerchantItem_LeatherGloves;
-}(CandyMerchantItem));
+})(CandyMerchantItem);
 ///<reference path="CandyMerchantItem.ts"/>
-var CandyMerchantItem_Lollipop = /** @class */ (function (_super) {
+var CandyMerchantItem_Lollipop = (function (_super) {
     __extends(CandyMerchantItem_Lollipop, _super);
     function CandyMerchantItem_Lollipop() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // When we buy, we get one lollipop
     CandyMerchantItem_Lollipop.prototype.buy = function () {
@@ -4827,12 +4708,12 @@ var CandyMerchantItem_Lollipop = /** @class */ (function (_super) {
         this.getGame().getLollipops().add(1);
     };
     return CandyMerchantItem_Lollipop;
-}(CandyMerchantItem));
+})(CandyMerchantItem);
 ///<reference path="CandyMerchantItem.ts"/>
-var CandyMerchantItem_MerchantHat = /** @class */ (function (_super) {
+var CandyMerchantItem_MerchantHat = (function (_super) {
     __extends(CandyMerchantItem_MerchantHat, _super);
     function CandyMerchantItem_MerchantHat() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // When we buy, we get the merchant hat
     CandyMerchantItem_MerchantHat.prototype.buy = function () {
@@ -4848,12 +4729,12 @@ var CandyMerchantItem_MerchantHat = /** @class */ (function (_super) {
         return true;
     };
     return CandyMerchantItem_MerchantHat;
-}(CandyMerchantItem));
+})(CandyMerchantItem);
 ///<reference path="CandyMerchantItem.ts"/>
-var CandyMerchantItem_TimeRing = /** @class */ (function (_super) {
+var CandyMerchantItem_TimeRing = (function (_super) {
     __extends(CandyMerchantItem_TimeRing, _super);
     function CandyMerchantItem_TimeRing() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // When we buy, we get the time ring
     CandyMerchantItem_TimeRing.prototype.buy = function () {
@@ -4869,19 +4750,18 @@ var CandyMerchantItem_TimeRing = /** @class */ (function (_super) {
         return true;
     };
     return CandyMerchantItem_TimeRing;
-}(CandyMerchantItem));
+})(CandyMerchantItem);
 ///<reference path="Place.ts"/>
 Saving.registerBool("castleKilledNougatMonster", false);
-var Castle = /** @class */ (function (_super) {
+var Castle = (function (_super) {
     __extends(Castle, _super);
     // Constructor
     function Castle(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/castle/map"), 0, 5);
-        _this.update();
-        return _this;
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/castle/map"), 0, 5);
+        this.update();
     }
     // getRenderArea()
     Castle.prototype.getRenderArea = function () {
@@ -5000,43 +4880,42 @@ var Castle = /** @class */ (function (_super) {
         }
     };
     return Castle;
-}(Place));
+})(Place);
 ///<reference path="Place.ts"/>
-var CastleRoom = /** @class */ (function (_super) {
+var CastleRoom = (function (_super) {
     __extends(CastleRoom, _super);
     // Constructor
     function CastleRoom(game) {
-        return _super.call(this, game) || this;
+        _super.call(this, game);
     }
     // Special method used to add a button to go back to the castle
     CastleRoom.prototype.addBackToTheCastleButton = function (renderArea, otherClass) {
         this.addBackToButton(renderArea, new CallbackCollection(this.getGame().goToCastle.bind(this.getGame())), Database.getText("buttonBackToTheCastle"), Database.getTranslatedText("buttonBackToTheCastle"), otherClass);
     };
     return CastleRoom;
-}(Place));
+})(Place);
 ///<reference path="CastleRoom.ts"/>
 // Is the hoven happy? He is if he cooked something at least once
 Saving.registerBool("castleBigRoomHovenHappy", false);
-var CastleBigRoom = /** @class */ (function (_super) {
+var CastleBigRoom = (function (_super) {
     __extends(CastleBigRoom, _super);
     // Constructor
     function CastleBigRoom(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // At first the hoven is waiting
-        _this.hovenWaiting = true;
+        this.hovenWaiting = true;
         // Set the default speech, depending on if the hoven is happy or not
         if (Saving.loadBool("castleBigRoomHovenHappy") == false) {
-            _this.currentSpeech = "castleBigRoomHovenSpeechSad";
+            this.currentSpeech = "castleBigRoomHovenSpeechSad";
         }
         else {
-            _this.currentSpeech = "castleBigRoomHovenSpeechHappy";
+            this.currentSpeech = "castleBigRoomHovenSpeechHappy";
         }
         // Resize the area and update
-        _this.renderArea.resize(160, 30);
-        _this.update();
-        return _this;
+        this.renderArea.resize(160, 30);
+        this.update();
     }
     // getRenderArea()
     CastleBigRoom.prototype.getRenderArea = function () {
@@ -5057,7 +4936,6 @@ var CastleBigRoom = /** @class */ (function (_super) {
             this.renderArea.addAsciiRealButton(Database.getText("castleBigRoomHovenLetHovenTakeButton"), 83, 19, "castleBigRoomLetHovenTakeButton", Database.getTranslatedText("castleBigRoomHovenLetHovenTakeButton"), true);
             this.renderArea.addLinkCall(".castleBigRoomLetHovenTakeButton", new CallbackCollection(this.letHovenTake.bind(this)));
         }
-        // Else, we add the "thanks" button
         else {
             this.renderArea.addAsciiRealButton(Database.getText("castleBigRoomHovenThanks"), 83, 19, "castleBigRoomThanksButton", Database.getTranslatedText("castleBigRoomHovenThanks"), true);
             this.renderArea.addLinkCall(".castleBigRoomThanksButton", new CallbackCollection(this.thanksHoven.bind(this)));
@@ -5092,13 +4970,11 @@ var CastleBigRoom = /** @class */ (function (_super) {
             // We add the pain au chocolat
             this.getGame().getPainsAuChocolat().add(1);
         }
-        // Else, we don't have enough sweets
         else {
             // If the hoven isn't happy
             if (Saving.loadBool("castleBigRoomHovenHappy") == false) {
                 this.currentSpeech = "castleBigRoomHovenNotEnough";
             }
-            // Else, if it is happy
             else {
                 this.currentSpeech = "castleBigRoomHovenSpeechHappyNotEnough";
             }
@@ -5117,31 +4993,30 @@ var CastleBigRoom = /** @class */ (function (_super) {
         this.getGame().updatePlace();
     };
     return CastleBigRoom;
-}(CastleRoom));
+})(CastleRoom);
 ///<reference path="Quest.ts"/>
-var CastleEntrance = /** @class */ (function (_super) {
+var CastleEntrance = (function (_super) {
     __extends(CastleEntrance, _super);
     // Constructor
     function CastleEntrance(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Last knight added
-        _this.lastKnightAdded = null;
+        this.lastKnightAdded = null;
         // Resize the quest
-        _this.resizeQuest(149, 30);
+        this.resizeQuest(149, 30);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, false, true, true);
+        this.addPlayerCollisionBoxes(true, false, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 25));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 25));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the walls
-        _this.addWalls();
+        this.addWalls();
         // Add the first knight
-        _this.addKnight(Random.between(80, 120));
+        this.addKnight(Random.between(80, 120));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You're trying to cross the castle's entrance."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You're trying to cross the castle's entrance."));
     }
     // Public methods
     CastleEntrance.prototype.castPlayerTeleport = function () {
@@ -5233,29 +5108,28 @@ var CastleEntrance = /** @class */ (function (_super) {
         return false;
     };
     return CastleEntrance;
-}(Quest));
+})(Quest);
 ///<reference path="Quest.ts"/>
-var CastleRoom1 = /** @class */ (function (_super) {
+var CastleRoom1 = (function (_super) {
     __extends(CastleRoom1, _super);
     // Constructor
     function CastleRoom1(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 30);
+        this.resizeQuest(100, 30);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(97, 10));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(97, 10));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the walls
-        _this.addWalls();
+        this.addWalls();
         // Add the spikes
-        _this.addEntity(new Spikes(_this, new Pos(7, 23), 88));
+        this.addEntity(new Spikes(this, new Pos(7, 23), 88));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter one of the castle's room. Damn, it seems to be full of spikes!"));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter one of the castle's room. Damn, it seems to be full of spikes!"));
     }
     // Public methods
     CastleRoom1.prototype.castPlayerTeleport = function () {
@@ -5306,25 +5180,24 @@ var CastleRoom1 = /** @class */ (function (_super) {
         this.addEntity(wall);
     };
     return CastleRoom1;
-}(Quest));
+})(Quest);
 ///<reference path="CastleRoom.ts"/>
 Saving.registerBool("castleRoom2LitFire", false);
 Saving.registerBool("castleRoom2TookObject", false);
-var CastleRoom2 = /** @class */ (function (_super) {
+var CastleRoom2 = (function (_super) {
     __extends(CastleRoom2, _super);
     function CastleRoom2(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // The smokes
-        _this.smokes = [];
+        this.smokes = [];
         // If needed, we add smokes
         if (Saving.loadBool("castleRoom2LitFire") == true) {
-            _this.addSmokes();
+            this.addSmokes();
         }
-        _this.renderArea.resize(100, 30);
-        _this.update();
-        return _this;
+        this.renderArea.resize(100, 30);
+        this.update();
     }
     // getRenderArea()
     CastleRoom2.prototype.getRenderArea = function () {
@@ -5346,7 +5219,6 @@ var CastleRoom2 = /** @class */ (function (_super) {
             // Add the button on the fire
             this.drawFireButton(42, 20);
         }
-        // Else, the fire is lit
         else {
             // We draw the fire
             this.drawFire(42, 20);
@@ -5424,33 +5296,32 @@ var CastleRoom2 = /** @class */ (function (_super) {
         this.getGame().updatePlace();
     };
     return CastleRoom2;
-}(CastleRoom));
+})(CastleRoom);
 ///<reference path="Quest.ts"/>
-var CastleRoom3 = /** @class */ (function (_super) {
+var CastleRoom3 = (function (_super) {
     __extends(CastleRoom3, _super);
     // Constructor
     function CastleRoom3(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 30);
+        this.resizeQuest(100, 30);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(97, 23));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(97, 23));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the walls
-        _this.addWalls();
+        this.addWalls();
         // Add the eggs
-        _this.addEggs();
+        this.addEggs();
         // Add the monster
-        _this.addMonster();
+        this.addMonster();
         // Add the chest
-        _this.addChest();
+        this.addChest();
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter one of the castle's room."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter one of the castle's room."));
     }
     // Public methods
     CastleRoom3.prototype.castPlayerTeleport = function () {
@@ -5532,7 +5403,7 @@ var CastleRoom3 = /** @class */ (function (_super) {
         this.foundGridOrEqItem(new QuestItemFound(this, "gridItemPossessedL", "You opened a chest and found a strange stone.", "You gain a strange stone."));
     };
     return CastleRoom3;
-}(Quest));
+})(Quest);
 ///<reference path="CastleRoom.ts"/>
 Saving.registerBool("castleTowerFirstVisitDone", false); // True if we already visited the tower at least once
 // The following bools are true if we placed the corresponding stones in the tower
@@ -5542,30 +5413,28 @@ Saving.registerBool("castleTowerAStoneDone", false);
 Saving.registerBool("castleTowerYStoneDone", false);
 // Another one
 Saving.registerBool("castleTowerTookTalkingCandy", false);
-var CastleTower = /** @class */ (function (_super) {
+var CastleTower = (function (_super) {
     __extends(CastleTower, _super);
     // Constructor
     function CastleTower(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Byt default, the interval ID is set to null
-        _this.intervalID = null;
+        this.intervalID = null;
         // Set the cut scene max timer
-        _this.cutSceneMaxTimer = 72;
+        this.cutSceneMaxTimer = 72;
         // If it's the first time we visit the tower, we change the bool, set the timer and start the interval
         if (Saving.loadBool("castleTowerFirstVisitDone") == false) {
             Saving.saveBool("castleTowerFirstVisitDone", true);
-            _this.cutSceneTimer = 0;
-            _this.intervalID = setInterval(_this.actionInterval.bind(_this), 100);
+            this.cutSceneTimer = 0;
+            this.intervalID = setInterval(this.actionInterval.bind(this), 100);
         }
-        // Else, we set the timer to the max timer value, no need to use it
         else {
-            _this.cutSceneTimer = _this.cutSceneMaxTimer;
+            this.cutSceneTimer = this.cutSceneMaxTimer;
         }
-        _this.renderArea.resize(100, 38);
-        _this.update();
-        return _this;
+        this.renderArea.resize(100, 38);
+        this.update();
     }
     // getRenderArea()
     CastleTower.prototype.getRenderArea = function () {
@@ -5619,7 +5488,6 @@ var CastleTower = /** @class */ (function (_super) {
             // Add the link
             this.renderArea.addLinkCall(".castleTower" + savingName + "Button", new CallbackCollection(this.clickedOnStone.bind(this, ourSavingName)));
         }
-        // Else, if we have the stone and it is in the tower
         else if (Saving.loadBool(savingName) == true && Saving.loadBool(ourSavingName) == true) {
             // We draw the stone ascii art on the specified position
             this.renderArea.drawArray(Database.getAscii(asciiArtName), pos.x, pos.y - 1);
@@ -5658,40 +5526,39 @@ var CastleTower = /** @class */ (function (_super) {
         this.drawTalkingCandy();
     };
     return CastleTower;
-}(CastleRoom));
+})(CastleRoom);
 ///<reference path="Place.ts"/>
 Saving.registerNumber("cauldronBookCurrentPage", 0);
-var Cauldron = /** @class */ (function (_super) {
+var Cauldron = (function (_super) {
     __extends(Cauldron, _super);
     // Constructor
     function Cauldron(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Maximum page
-        _this.maxPage = 10;
+        this.maxPage = 10;
         // The candies & lollipops in the input field
-        _this.candiesInput = "";
-        _this.lollipopsInput = "";
+        this.candiesInput = "";
+        this.lollipopsInput = "";
         // The comments next to candies and lollipops input fields (they're needed if the player types something which isn't a number, or which is a negative number)
-        _this.candiesInputComment = null;
-        _this.lollipopsInputComment = null;
+        this.candiesInputComment = null;
+        this.lollipopsInputComment = null;
         // What are we doing?
-        _this.currentAction = CauldronAction.NOTHING;
+        this.currentAction = CauldronAction.NOTHING;
         // Current timer time
-        _this.timerTime = 0;
+        this.timerTime = 0;
         // Action log
-        _this.actionLog = [null, null, null, null, null]; // We always remember the last five actions
+        this.actionLog = [null, null, null, null, null]; // We always remember the last five actions
         // The comment telling the player the potions he managed to brew
-        _this.potionsComment = null;
+        this.potionsComment = null;
         // Array containing the flames we can see when heating up the cauldron
-        _this.flames = [];
+        this.flames = [];
         // Launch the interval and get the ID
-        _this.timerIntervalID = setInterval(_this.actionInterval.bind(_this), 1000);
+        this.timerIntervalID = setInterval(this.actionInterval.bind(this), 1000);
         // Resize and update
-        _this.renderArea.resize(100, 57);
-        _this.update(true);
-        return _this;
+        this.renderArea.resize(100, 57);
+        this.update(true);
     }
     // getRenderArea()
     Cauldron.prototype.getRenderArea = function () {
@@ -5752,11 +5619,11 @@ var Cauldron = /** @class */ (function (_super) {
         }
     };
     Cauldron.prototype.changeCandiesInput = function () {
-        if ($(".cauldronCandiesInput").length) // If the element exists
+        if ($(".cauldronCandiesInput").length)
             this.candiesInput = $(".cauldronCandiesInput").val();
     };
     Cauldron.prototype.changeLollipopsInput = function () {
-        if ($(".cauldronLollipopsInput").length) // If the element exists
+        if ($(".cauldronLollipopsInput").length)
             this.lollipopsInput = $(".cauldronLollipopsInput").val();
     };
     Cauldron.prototype.drawActions = function (x, y, firstTimeWeUpdate, keepInputContent) {
@@ -5989,7 +5856,6 @@ var Cauldron = /** @class */ (function (_super) {
             this.getGame().updatePlace();
             return;
         }
-        // Else, we put the candies & lollipops in the cauldron
         else {
             // Take the candies & lollipops
             this.getGame().getCandies().add(-candies);
@@ -6011,94 +5877,88 @@ var Cauldron = /** @class */ (function (_super) {
         this.getGame().getCandiesInCauldron().add(-this.getGame().getCandiesInCauldron().getCurrent());
         this.getGame().getLollipopsInCauldron().add(-this.getGame().getLollipopsInCauldron().getCurrent());
         // Health potion check
-        if (this.actionLog[0] != null && // There's a last action
-            this.actionLog[0].getAction() == CauldronAction.MIXING && // It was mixing
-            this.actionLog[0].getLollipops() == 0 && // We didn't use any lollipop
-            this.actionLog[0].getCandies() > 0 && // We used at least one candy
-            this.actionLog[0].getCandies() % 100 == 0 && // We used a multiple of 100 candies
-            this.actionLog[0].getTime() < 30) { // We mixed for less than 30 seconds
+        if (this.actionLog[0] != null &&
+            this.actionLog[0].getAction() == CauldronAction.MIXING &&
+            this.actionLog[0].getLollipops() == 0 &&
+            this.actionLog[0].getCandies() > 0 &&
+            this.actionLog[0].getCandies() % 100 == 0 &&
+            this.actionLog[0].getTime() < 30) {
             this.makePotions("questPlayerSpellHealthPotionHasSpell", "questPlayerSpellHealthPotionQuantity", this.actionLog[0].getCandies() / 100, "health potion", "health potions");
         }
-        // Turtle potion check
-        else if (this.actionLog[1] != null && // There's a last last action
-            this.actionLog[1].getAction() == CauldronAction.MIXING && // It was mixing
-            this.actionLog[1].getCandies() > 0 && // We used at least one candy
-            this.actionLog[1].getLollipops() > 0 && // We used at least one lollipop
-            this.actionLog[1].getCandies() % 50 == 0 && // We used a multiple of 50 candies
-            this.actionLog[1].getLollipops() % 500 == 0 && // We used a multiple of 500 lollipops
-            this.actionLog[1].getLollipops() == 10 * this.actionLog[1].getCandies() && // We used 10 times more lollipops than candies
-            this.actionLog[1].getTime() > 6 && // We mixed for more than 6 seconds
-            this.actionLog[1].getTime() < 14 && // We mixed for less than 14 seconds
-            this.actionLog[0] != null && // There's a last action
-            this.actionLog[0].getAction() == CauldronAction.MIXING && // It was mixing
-            this.actionLog[0].getCandies() == 2 * this.actionLog[1].getCandies() && // We used twice more candies than in the previous action
-            this.actionLog[0].getLollipops() == this.actionLog[1].getLollipops()) { // We used as many lollipops as in the previous action
+        else if (this.actionLog[1] != null &&
+            this.actionLog[1].getAction() == CauldronAction.MIXING &&
+            this.actionLog[1].getCandies() > 0 &&
+            this.actionLog[1].getLollipops() > 0 &&
+            this.actionLog[1].getCandies() % 50 == 0 &&
+            this.actionLog[1].getLollipops() % 500 == 0 &&
+            this.actionLog[1].getLollipops() == 10 * this.actionLog[1].getCandies() &&
+            this.actionLog[1].getTime() > 6 &&
+            this.actionLog[1].getTime() < 14 &&
+            this.actionLog[0] != null &&
+            this.actionLog[0].getAction() == CauldronAction.MIXING &&
+            this.actionLog[0].getCandies() == 2 * this.actionLog[1].getCandies() &&
+            this.actionLog[0].getLollipops() == this.actionLog[1].getLollipops()) {
             this.makePotions("questPlayerSpellTurtlePotionHasSpell", "questPlayerSpellTurtlePotionQuantity", this.actionLog[0].getLollipops() / 500, "turtle potion", "turtle potions");
         }
-        // Anti-gravity potion check
-        else if (this.actionLog[1] != null && // There's a last last action
-            this.actionLog[1].getAction() == CauldronAction.BOILING && // It was boiling
-            this.actionLog[1].getLollipops() == 0 && // We didn't use any lollipop
-            this.actionLog[1].getCandies() > 0 && // We used at least one candy
-            this.actionLog[1].getCandies() % 1000 == 0 && // We used a multiple of 1000 candies
-            this.actionLog[1].getTime() >= 3 && this.actionLog[1].getTime() < 6 && // The water was lukewarm when we stopped boiling
-            this.actionLog[0] != null && // There's a last action
-            this.actionLog[0].getAction() == CauldronAction.BOILING && // It was boiling
-            this.actionLog[0].getLollipops() == 0 && // There were still no lollipops
-            this.actionLog[0].getCandies() == 2 * this.actionLog[1].getCandies() && // There were twice more candies than in the previous action
-            this.actionLog[0].getTime() > 17) { // The water was boiling when we stopped boiling
+        else if (this.actionLog[1] != null &&
+            this.actionLog[1].getAction() == CauldronAction.BOILING &&
+            this.actionLog[1].getLollipops() == 0 &&
+            this.actionLog[1].getCandies() > 0 &&
+            this.actionLog[1].getCandies() % 1000 == 0 &&
+            this.actionLog[1].getTime() >= 3 && this.actionLog[1].getTime() < 6 &&
+            this.actionLog[0] != null &&
+            this.actionLog[0].getAction() == CauldronAction.BOILING &&
+            this.actionLog[0].getLollipops() == 0 &&
+            this.actionLog[0].getCandies() == 2 * this.actionLog[1].getCandies() &&
+            this.actionLog[0].getTime() > 17) {
             this.makePotions("questPlayerSpellAntiGravityPotionHasSpell", "questPlayerSpellAntiGravityPotionQuantity", this.actionLog[1].getCandies() / 200, "anti-gravity potion", "anti-gravity potions");
         }
-        // Berserk & cloning potion check
-        else if (this.actionLog[0] != null && // There's a last action
-            this.actionLog[0].getAction() == CauldronAction.MIXING && // It was mixing
-            this.actionLog[0].getLollipops() > 0 && // We used at least one lollipop
-            this.actionLog[0].getLollipops() % 20000 == 0 && // We used a multiple of 20000 lollipops
-            this.actionLog[0].getTime() >= 60) { // We mixed until our arms were hurting
+        else if (this.actionLog[0] != null &&
+            this.actionLog[0].getAction() == CauldronAction.MIXING &&
+            this.actionLog[0].getLollipops() > 0 &&
+            this.actionLog[0].getLollipops() % 20000 == 0 &&
+            this.actionLog[0].getTime() >= 60) {
             // If we didn't use any candy, then we made berserk potions
             if (this.actionLog[0].getCandies() == 0) {
                 this.makePotions("questPlayerSpellBerserkPotionHasSpell", "questPlayerSpellBerserkPotionQuantity", this.actionLog[0].getLollipops() / 20000, "berserk potion", "berserk potions");
             }
-            // Else, we made cloning potions
             else {
                 this.makePotions("questPlayerSpellCloningPotionHasSpell", "questPlayerSpellCloningPotionQuantity", this.actionLog[0].getLollipops() / 20000, "cloning potion", "cloning potions");
             }
         }
-        // P potion check
-        else if (this.actionLog[2] != null && // There's a last last last action
-            this.actionLog[2].getAction() == CauldronAction.MIXING && // It was mixing
-            this.actionLog[2].getLollipops() == 0 && // We used no lollipop
-            this.actionLog[2].getCandies() > 0 && // We used at least one candy
-            this.actionLog[2].getCandies() % 500 == 0 && // We used a multiple of 500 candies
-            this.actionLog[2].getTime() < 30 && // We mixed for less than 30 seconds
-            this.actionLog[1] != null && // There was a last last action
-            this.actionLog[1].getLollipops() == 0 && // We still used no lollipop
-            this.actionLog[1].getCandies() == this.actionLog[2].getCandies() + 100 * this.actionLog[2].getTime() && // We used the number of candies in the last last last action plus 100 times the number of seconds we mixed before
-            this.actionLog[1].getAction() == CauldronAction.BOILING && // This aciton was boiling
-            this.actionLog[1].getTime() >= 3 && this.actionLog[1].getTime() < 6 && // The water was lukewarm when we stopped boiling
-            this.actionLog[0] != null && // There was a last action
-            this.actionLog[0].getAction() == CauldronAction.MIXING && // It was mixing
-            this.actionLog[0].getCandies() == this.actionLog[1].getCandies() && // We didn't add any candy
-            this.actionLog[0].getLollipops() > 0) { // We add at least one lollipop
+        else if (this.actionLog[2] != null &&
+            this.actionLog[2].getAction() == CauldronAction.MIXING &&
+            this.actionLog[2].getLollipops() == 0 &&
+            this.actionLog[2].getCandies() > 0 &&
+            this.actionLog[2].getCandies() % 500 == 0 &&
+            this.actionLog[2].getTime() < 30 &&
+            this.actionLog[1] != null &&
+            this.actionLog[1].getLollipops() == 0 &&
+            this.actionLog[1].getCandies() == this.actionLog[2].getCandies() + 100 * this.actionLog[2].getTime() &&
+            this.actionLog[1].getAction() == CauldronAction.BOILING &&
+            this.actionLog[1].getTime() >= 3 && this.actionLog[1].getTime() < 6 &&
+            this.actionLog[0] != null &&
+            this.actionLog[0].getAction() == CauldronAction.MIXING &&
+            this.actionLog[0].getCandies() == this.actionLog[1].getCandies() &&
+            this.actionLog[0].getLollipops() > 0) {
             this.makePotions("questPlayerSpellPPotionHasSpell", "questPlayerSpellPPotionQuantity", Math.ceil(this.actionLog[1].getCandies() / 500 + this.actionLog[0].getLollipops() / 1000), "P potion", "P potions");
         }
-        // X potion check
-        else if (this.actionLog[4] != null && this.actionLog[3] != null && this.actionLog[2] != null && this.actionLog[1] != null && this.actionLog[0] != null && // There are five last actions
-            this.actionLog[4].getAction() == CauldronAction.BOILING && // All
-            this.actionLog[3].getAction() == CauldronAction.BOILING && // the
-            this.actionLog[2].getAction() == CauldronAction.BOILING && // actions
-            this.actionLog[1].getAction() == CauldronAction.BOILING && // are
-            this.actionLog[0].getAction() == CauldronAction.BOILING && // boiling.
-            this.actionLog[4].getTime() < 3 && // All the
-            this.actionLog[3].getTime() < 3 && // actions
-            this.actionLog[2].getTime() < 3 && // are
-            this.actionLog[1].getTime() < 3 && // cold
-            this.actionLog[0].getTime() >= 6 && // except the last one!
-            this.actionLog[4].getLollipops() == 0 && this.actionLog[4].getCandies() == 1 && // No lollipop, 1 candy
-            this.actionLog[3].getLollipops() == 0 && this.actionLog[3].getCandies() == 2 && // No lollipop, 1 candy
-            this.actionLog[2].getLollipops() == 0 && this.actionLog[2].getCandies() == 3 && // No lollipop, 1 candy
-            this.actionLog[1].getLollipops() == 0 && this.actionLog[1].getCandies() == 4 && // No lollipop, 1 candy
-            this.actionLog[0].getLollipops() == 1 && this.actionLog[0].getCandies() == 4) { // No lollipop, 1 candy
+        else if (this.actionLog[4] != null && this.actionLog[3] != null && this.actionLog[2] != null && this.actionLog[1] != null && this.actionLog[0] != null &&
+            this.actionLog[4].getAction() == CauldronAction.BOILING &&
+            this.actionLog[3].getAction() == CauldronAction.BOILING &&
+            this.actionLog[2].getAction() == CauldronAction.BOILING &&
+            this.actionLog[1].getAction() == CauldronAction.BOILING &&
+            this.actionLog[0].getAction() == CauldronAction.BOILING &&
+            this.actionLog[4].getTime() < 3 &&
+            this.actionLog[3].getTime() < 3 &&
+            this.actionLog[2].getTime() < 3 &&
+            this.actionLog[1].getTime() < 3 &&
+            this.actionLog[0].getTime() >= 6 &&
+            this.actionLog[4].getLollipops() == 0 && this.actionLog[4].getCandies() == 1 &&
+            this.actionLog[3].getLollipops() == 0 && this.actionLog[3].getCandies() == 2 &&
+            this.actionLog[2].getLollipops() == 0 && this.actionLog[2].getCandies() == 3 &&
+            this.actionLog[1].getLollipops() == 0 && this.actionLog[1].getCandies() == 4 &&
+            this.actionLog[0].getLollipops() == 1 && this.actionLog[0].getCandies() == 4) {
             this.makePotions("questPlayerSpellXPotionHasSpell", "questPlayerSpellXPotionQuantity", 1, "X potion", "X potions");
         }
         // If the potions comment is null, it means we didn't manage to make anything
@@ -6166,14 +6026,14 @@ var Cauldron = /** @class */ (function (_super) {
         }
     };
     return Cauldron;
-}(Place));
+})(Place);
 var CauldronAction;
 (function (CauldronAction) {
     CauldronAction[CauldronAction["NOTHING"] = 0] = "NOTHING";
     CauldronAction[CauldronAction["MIXING"] = 1] = "MIXING";
     CauldronAction[CauldronAction["BOILING"] = 2] = "BOILING";
 })(CauldronAction || (CauldronAction = {}));
-var CauldronActionLogEntry = /** @class */ (function () {
+var CauldronActionLogEntry = (function () {
     // Constructor
     function CauldronActionLogEntry(action, time, candies, lollipops) {
         this.action = action;
@@ -6195,8 +6055,8 @@ var CauldronActionLogEntry = /** @class */ (function () {
         return this.time;
     };
     return CauldronActionLogEntry;
-}());
-var CauldronFlame = /** @class */ (function () {
+})();
+var CauldronFlame = (function () {
     // Constructor
     function CauldronFlame(pos, character) {
         this.pos = pos;
@@ -6207,32 +6067,31 @@ var CauldronFlame = /** @class */ (function () {
         renderArea.drawString(this.character, x + this.pos.x, y + this.pos.y);
     };
     return CauldronFlame;
-}());
+})();
 ///<reference path="Quest.ts"/>
 Saving.registerBool("cellarDone", false);
-var Cellar = /** @class */ (function (_super) {
+var Cellar = (function (_super) {
     __extends(Cellar, _super);
     // Constructor
     function Cellar(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 3);
+        this.resizeQuest(100, 3);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, false, true, true);
+        this.addPlayerCollisionBoxes(true, false, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 2));
-        _this.getGame().getPlayer().setQuestEntityMovement(new QuestEntityMovement(new Pos(1, 0)));
-        _this.getGame().getPlayer().getQuestEntityMovement().setGravity(true);
-        _this.getGame().getPlayer().getQuestEntityMovement().setWormsLike(false);
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 2));
+        this.getGame().getPlayer().setQuestEntityMovement(new QuestEntityMovement(new Pos(1, 0)));
+        this.getGame().getPlayer().getQuestEntityMovement().setGravity(true);
+        this.getGame().getPlayer().getQuestEntityMovement().setWormsLike(false);
+        this.addEntity(this.getGame().getPlayer());
         // Add the ground
-        _this.addGround();
+        this.addGround();
         // Add the rats
-        _this.addRats();
+        this.addRats();
         // Add a delimiter and the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the cellar. It's dark and you hear rats squeaking all around you."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the cellar. It's dark and you hear rats squeaking all around you."));
     }
     // Public methods
     Cellar.prototype.endQuest = function (win) {
@@ -6305,17 +6164,17 @@ var Cellar = /** @class */ (function (_super) {
         return false;
     };
     return Cellar;
-}(Quest));
+})(Quest);
 ///<reference path="Place.ts"/>
-var Cfg = /** @class */ (function (_super) {
+var Cfg = (function (_super) {
     __extends(Cfg, _super);
     // Constructor
     function Cfg(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // The map used for the language selection : match the select's options id with the actual usually two letters code used by the Saving module
-        _this.languageSelectionMap = {
+        this.languageSelectionMap = {
             "cfgLanguageEn": "en",
             "cfgLanguageBr": "br",
             "cfgLanguageCz": "cz",
@@ -6335,10 +6194,9 @@ var Cfg = /** @class */ (function (_super) {
             "cfgLanguageEl": "el"
         };
         // Resize the area
-        _this.renderArea.resize(100, 48);
+        this.renderArea.resize(100, 48);
         // Update for the first time
-        _this.update();
-        return _this;
+        this.update();
     }
     // getRenderArea()
     Cfg.prototype.getRenderArea = function () {
@@ -6407,7 +6265,6 @@ var Cfg = /** @class */ (function (_super) {
         if (Saving.loadString("gameLanguage") == "zh") {
             this.renderArea.drawString("中文版翻译会导致少量图像显示错误，我会尽量修复它们的！", x + 9, y + 2, true);
         }
-        // Add the TranslaCAT ascii art
         else if (Saving.loadString("gameLanguage") == "br") {
             this.renderArea.drawArray(Database.getAscii("general/translaCAT"), x + 70, y - 1);
             this.renderArea.addHtmlLink(x + 76, y + 7, "http://www.translacat.com/", "TranslaCAT");
@@ -6462,33 +6319,31 @@ var Cfg = /** @class */ (function (_super) {
         this.drawAbout(0, 18);
     };
     return Cfg;
-}(Place));
+})(Place);
 ///<reference path="QuestEntity.ts"/>
-var Chest = /** @class */ (function (_super) {
+var Chest = (function (_super) {
     __extends(Chest, _super);
     // Constructor
     function Chest(quest, globalPosition, isFacingRight, callbackCollection, isOpened) {
         if (isFacingRight === void 0) { isFacingRight = true; }
         if (callbackCollection === void 0) { callbackCollection = new CallbackCollection(); }
         if (isOpened === void 0) { isOpened = false; }
-        var _this = 
         // Call the mother constructor
-        _super.call(this, quest, globalPosition, new Naming("A chest", "a chest"), new RenderArea(), new Pos(0, -1), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, -1), new Pos(3, 2)))) || this;
+        _super.call(this, quest, globalPosition, new Naming("A chest", "a chest"), new RenderArea(), new Pos(0, -1), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, -1), new Pos(3, 2))));
         // Set the parameters
-        _this.isFacingRight = isFacingRight;
-        _this.callbackCollection = callbackCollection;
+        this.isFacingRight = isFacingRight;
+        this.callbackCollection = callbackCollection;
         // At first, we're not opened
-        _this.isOpened = isOpened;
+        this.isOpened = isOpened;
         // Create the opening collision box collection
-        _this.openingCollisionBoxCollection = new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(5, 3)));
+        this.openingCollisionBoxCollection = new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(5, 3)));
         // Set the team (nature)
-        _this.setTeam(QuestEntityTeam.NATURE);
+        this.setTeam(QuestEntityTeam.NATURE);
         // Resize the render area
-        _this.getRenderArea().resizeFromArray(Database.getAscii("places/quests/common/chestClosed"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().resizeFromArray(Database.getAscii("places/quests/common/chestClosed"));
+        this.setTransparency(new RenderTransparency(" "));
         // Draw for the first time
-        _this.drawChestAscii();
-        return _this;
+        this.drawChestAscii();
     }
     // update()
     Chest.prototype.update = function () {
@@ -6517,24 +6372,22 @@ var Chest = /** @class */ (function (_super) {
         if (this.isOpened == false) {
             this.getRenderArea().drawArray(Database.getAscii("places/quests/common/chestClosed"));
         }
-        // Else, we're opened
         else {
             // If we're facing right
             if (this.isFacingRight)
                 this.getRenderArea().drawArray(Database.getAscii("places/quests/common/chestOpenedRight"));
-            // Else we're facing left
             else
                 this.getRenderArea().drawArray(Database.getAscii("places/quests/common/chestOpenedLeft"));
         }
     };
     return Chest;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="StatusBarResource.ts"/>
-var ChocolateBars = /** @class */ (function (_super) {
+var ChocolateBars = (function (_super) {
     __extends(ChocolateBars, _super);
     // Constructor
     function ChocolateBars(game, savingPrefix) {
-        return _super.call(this, game, savingPrefix) || this;
+        _super.call(this, game, savingPrefix);
     }
     // Public methods
     ChocolateBars.prototype.getCurrentAsString = function (totalSize) {
@@ -6572,8 +6425,8 @@ var ChocolateBars = /** @class */ (function (_super) {
         return prefix + base + suffix;
     };
     return ChocolateBars;
-}(StatusBarResource));
-var CollisionBox = /** @class */ (function () {
+})(StatusBarResource);
+var CollisionBox = (function () {
     // Constructor
     function CollisionBox(questEntity, position, size) {
         this.questEntity = questEntity;
@@ -6606,13 +6459,13 @@ var CollisionBox = /** @class */ (function () {
         return this.size;
     };
     return CollisionBox;
-}());
-var CollisionBoxCollection = /** @class */ (function () {
+})();
+var CollisionBoxCollection = (function () {
     // Constructor
     function CollisionBoxCollection() {
         var boxes = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            boxes[_i] = arguments[_i];
+            boxes[_i - 0] = arguments[_i];
         }
         this.boxes = boxes;
     }
@@ -6647,8 +6500,8 @@ var CollisionBoxCollection = /** @class */ (function () {
         return this.boxes;
     };
     return CollisionBoxCollection;
-}());
-var Color = /** @class */ (function () {
+})();
+var Color = (function () {
     // Constructor
     function Color(colorType, shouldInvert) {
         if (shouldInvert === void 0) { shouldInvert = false; }
@@ -6872,7 +6725,7 @@ var Color = /** @class */ (function () {
         this.setInvertedColorString("rgb(" + (255 - r).toString() + ", " + (255 - g).toString() + ", " + (255 - b).toString() + ")");
     };
     return Color;
-}());
+})();
 var ColorType;
 (function (ColorType) {
     // Health bars
@@ -7005,7 +6858,6 @@ var Database;
             // If the translated text isn't chinese
             if (Saving.loadString("gameLanguage") != "zh")
                 return textMap[Saving.loadString("gameLanguage") + "." + key]; // We just return the text
-            // Else, the translated text is chinese
             else
                 return textMap[Saving.loadString("gameLanguage") + "." + key].addChineseSpaces(); // We return the text after adding spaces
         }
@@ -7015,66 +6867,65 @@ var Database;
     Database.getTranslatedText = getTranslatedText;
 })(Database || (Database = {}));
 ///<reference path="QuestEntity.ts"/>
-var Demon = /** @class */ (function (_super) {
+var Demon = (function (_super) {
     __extends(Demon, _super);
     // Constructor
     function Demon(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A demon", "a demon"), new RenderArea(0, 0), new Pos(0, 0), new CollisionBoxCollection(), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A demon", "a demon"), new RenderArea(0, 0), new Pos(0, 0), new CollisionBoxCollection(), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
+        this.setDestructible(true);
         // Set the demon type, randomly-chosen
         switch (Random.between(0, 2)) {
             case 0:
-                _this.type = DemonType.CUBE;
+                this.type = DemonType.CUBE;
                 break;
             case 1:
-                _this.type = DemonType.EYES;
+                this.type = DemonType.EYES;
                 break;
             case 2:
-                _this.type = DemonType.BUBBLES;
+                this.type = DemonType.BUBBLES;
                 break;
         }
         // Depending on the type, resize the render area, add a collision box, and draw the ascii art, and add the weapon and its delay
-        switch (_this.type) {
+        switch (this.type) {
             case DemonType.CUBE:
-                _this.getRenderArea().resize(5, 3);
-                _this.getCbc().addCollisionBox(new CollisionBox(_this, new Pos(0, 0), new Pos(5, 3)));
-                _this.getRenderArea().drawArray(Database.getAscii("places/quests/hell/demonCube"));
-                _this.setTransparency(new RenderTransparency(" ", "%"));
-                _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its huge body", "its huge body"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, 2), new Pos(7, 2))), 50));
-                _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(10);
+                this.getRenderArea().resize(5, 3);
+                this.getCbc().addCollisionBox(new CollisionBox(this, new Pos(0, 0), new Pos(5, 3)));
+                this.getRenderArea().drawArray(Database.getAscii("places/quests/hell/demonCube"));
+                this.setTransparency(new RenderTransparency(" ", "%"));
+                this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its huge body", "its huge body"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, 2), new Pos(7, 2))), 50));
+                this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(10);
                 break;
             case DemonType.EYES:
-                _this.getRenderArea().resize(5, 4);
-                _this.getCbc().addCollisionBox(new CollisionBox(_this, new Pos(0, 1), new Pos(5, 3)));
-                _this.getRenderArea().drawArray(Database.getAscii("places/quests/hell/demonEyes"));
-                _this.setTransparency(new RenderTransparency(" ", "%"));
-                _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Demonish eyes", "demonish eyes"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(7, 6))), 10));
-                _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
+                this.getRenderArea().resize(5, 4);
+                this.getCbc().addCollisionBox(new CollisionBox(this, new Pos(0, 1), new Pos(5, 3)));
+                this.getRenderArea().drawArray(Database.getAscii("places/quests/hell/demonEyes"));
+                this.setTransparency(new RenderTransparency(" ", "%"));
+                this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Demonish eyes", "demonish eyes"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(7, 6))), 10));
+                this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
                 break;
             case DemonType.BUBBLES:
-                _this.getRenderArea().resize(5, 3);
-                _this.getCbc().addCollisionBox(new CollisionBox(_this, new Pos(0, 0), new Pos(5, 3)));
-                _this.getRenderArea().drawArray(Database.getAscii("places/quests/hell/demonBubbles" + Random.between(0, 6).toString()));
-                _this.setTransparency(new RenderTransparency(" "));
-                _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Fire bubbles", "fire bubbles"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(7, 5))), 15));
-                _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(1);
+                this.getRenderArea().resize(5, 3);
+                this.getCbc().addCollisionBox(new CollisionBox(this, new Pos(0, 0), new Pos(5, 3)));
+                this.getRenderArea().drawArray(Database.getAscii("places/quests/hell/demonBubbles" + Random.between(0, 6).toString()));
+                this.setTransparency(new RenderTransparency(" "));
+                this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Fire bubbles", "fire bubbles"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(7, 5))), 15));
+                this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(1);
                 break;
         }
         // Set the health points, depending on the type
-        switch (_this.type) {
-            case DemonType.CUBE: // Cube : 120 hp
-                _this.setMaxHp(120);
-                _this.setHp(120);
+        switch (this.type) {
+            case DemonType.CUBE:
+                this.setMaxHp(120);
+                this.setHp(120);
                 break;
-            default: // Default : 30 / 40 / 50 / 60 / 70 / 80 / 90 / 100 hp
-                _this.setMaxHp(30 + Random.between(0, 7) * 10);
-                _this.setHp(_this.getMaxHp());
+            default:
+                this.setMaxHp(30 + Random.between(0, 7) * 10);
+                this.setHp(this.getMaxHp());
                 break;
         }
-        return _this;
     }
     // update()
     Demon.prototype.update = function () {
@@ -7091,7 +6942,7 @@ var Demon = /** @class */ (function (_super) {
         this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage() + " (and found " + Algo.pluralFormat(this.getQuest().foundCandies(5 + Random.upTo(5)), " candy", " candies") + ")", this.getQuest().getCandiesFoundMessage()));
     };
     return Demon;
-}(QuestEntity));
+})(QuestEntity);
 var DemonType;
 (function (DemonType) {
     DemonType[DemonType["CUBE"] = 0] = "CUBE";
@@ -7099,38 +6950,34 @@ var DemonType;
     DemonType[DemonType["BUBBLES"] = 2] = "BUBBLES";
 })(DemonType || (DemonType = {}));
 ///<reference path="Quest.ts"/>
-var Desert = /** @class */ (function (_super) {
+var Desert = (function (_super) {
     __extends(Desert, _super);
     // Constructor
     function Desert(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(149, 30);
+        this.resizeQuest(149, 30);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, false, true, true);
+        this.addPlayerCollisionBoxes(true, false, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 26));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 26));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the ground
-        _this.addGround(0, 3, 1, // From x = 0 to x = 3, the ground will start at y = 1
-        4, 12, 0, // From x = 4 to x = 12, the ground will start at y = 0
-        13, 18, 1, // Etc
-        19, 24, 2, 25, 30, 3, 31, 36, 2, 37, 42, 1, 43, 51, 0, 52, 57, 1, 58, 62, 2, 63, 68, 3, 69, 75, 2, 76, 82, 1, 83, 92, 0, 93, 97, 1, 98, 101, 2, 102, 107, 3, 108, 113, 2, 114, 119, 1, 120, 128, 0, 129, 134, 1, 135, 139, 2, 140, 145, 3, 146, 148, 2);
+        this.addGround(0, 3, 1, 4, 12, 0, 13, 18, 1, 19, 24, 2, 25, 30, 3, 31, 36, 2, 37, 42, 1, 43, 51, 0, 52, 57, 1, 58, 62, 2, 63, 68, 3, 69, 75, 2, 76, 82, 1, 83, 92, 0, 93, 97, 1, 98, 101, 2, 102, 107, 3, 108, 113, 2, 114, 119, 1, 120, 128, 0, 129, 134, 1, 135, 139, 2, 140, 145, 3, 146, 148, 2);
         // Bird adding stuff
-        _this.currentBirdTime = 0;
-        _this.setNextBirdAt();
+        this.currentBirdTime = 0;
+        this.setNextBirdAt();
         // Add the camels
-        _this.addCamel(new Pos(44, 24));
-        _this.addCamel(new Pos(65, 26));
-        _this.addCamel(new Pos(84, 24));
-        _this.addCamel(new Pos(106, 26));
-        _this.addCamel(new Pos(118, 24));
-        _this.addCamel(new Pos(144, 26));
+        this.addCamel(new Pos(44, 24));
+        this.addCamel(new Pos(65, 26));
+        this.addCamel(new Pos(84, 24));
+        this.addCamel(new Pos(106, 26));
+        this.addCamel(new Pos(118, 24));
+        this.addCamel(new Pos(144, 26));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the desert, camels and palm trees as far as the eye can see."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the desert, camels and palm trees as far as the eye can see."));
     }
     // Public methods
     Desert.prototype.configPlayerOrClone = function (entity) {
@@ -7201,7 +7048,6 @@ var Desert = /** @class */ (function (_super) {
         if (Random.flipACoin()) {
             bird = new DesertBird(this, new Pos(-9, yPos), true);
         }
-        // Or a bird going left
         else {
             bird = new DesertBird(this, new Pos(149, yPos), false);
         }
@@ -7221,7 +7067,7 @@ var Desert = /** @class */ (function (_super) {
     Desert.prototype.addGround = function () {
         var positions = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            positions[_i] = arguments[_i];
+            positions[_i - 0] = arguments[_i];
         }
         // Create the wall entity
         this.addEntity(new Wall(this, new Pos(0, 26)));
@@ -7242,28 +7088,26 @@ var Desert = /** @class */ (function (_super) {
         return false;
     };
     return Desert;
-}(Quest));
+})(Quest);
 ///<reference path="QuestEntity.ts"/>
-var DesertBird = /** @class */ (function (_super) {
+var DesertBird = (function (_super) {
     __extends(DesertBird, _super);
     // Constructor
     function DesertBird(quest, pos, goingRight) {
-        var _this = _super.call(this, quest, pos, new Naming("A desert bird", "a desert bird"), new RenderArea(9, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(9, 4)))) || this;
+        _super.call(this, quest, pos, new Naming("A desert bird", "a desert bird"), new RenderArea(9, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(9, 4))));
         // If we're heading to right
         if (goingRight) {
-            _this.setQuestEntityMovement(new QuestEntityMovement(new Pos(1, 0)));
-            _this.setQuestEntityAnimation(new QuestEntityAnimation(3, Random.upTo(2), Random.upTo(1), "places/quests/desert/birdRightUp", "places/quests/desert/birdRightDown"));
+            this.setQuestEntityMovement(new QuestEntityMovement(new Pos(1, 0)));
+            this.setQuestEntityAnimation(new QuestEntityAnimation(3, Random.upTo(2), Random.upTo(1), "places/quests/desert/birdRightUp", "places/quests/desert/birdRightDown"));
         }
-        // Else
         else {
-            _this.setQuestEntityMovement(new QuestEntityMovement(new Pos(-1, 0)));
-            _this.setQuestEntityAnimation(new QuestEntityAnimation(3, Random.upTo(2), Random.upTo(1), "places/quests/desert/birdLeftUp", "places/quests/desert/birdLeftDown"));
+            this.setQuestEntityMovement(new QuestEntityMovement(new Pos(-1, 0)));
+            this.setQuestEntityAnimation(new QuestEntityAnimation(3, Random.upTo(2), Random.upTo(1), "places/quests/desert/birdLeftUp", "places/quests/desert/birdLeftDown"));
         }
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(6);
-        _this.setHp(6);
-        return _this;
+        this.setDestructible(true);
+        this.setMaxHp(6);
+        this.setHp(6);
     }
     // willDie()
     DesertBird.prototype.willDie = function () {
@@ -7271,27 +7115,26 @@ var DesertBird = /** @class */ (function (_super) {
         this.getQuest().foundGridOrEqItem(new QuestItemFound(this.getQuest(), "gridItemPossessedFeather", "You found a desert bird feather!", "You gain a desert bird feather"));
     };
     return DesertBird;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="Quest.ts"/>
-var Developer = /** @class */ (function (_super) {
+var Developer = (function (_super) {
     __extends(Developer, _super);
     // Constructor
     function Developer(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 34);
+        this.resizeQuest(100, 34);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 33));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 33));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the developer entity
-        _this.addDeveloperEntity(new Pos(57, 0));
+        this.addDeveloperEntity(new Pos(57, 0));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You're attacking the developer."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You're attacking the developer."));
     }
     // Public methods
     Developer.prototype.castPlayerBlackDemons = function () {
@@ -7367,27 +7210,26 @@ var Developer = /** @class */ (function (_super) {
         return false;
     };
     return Developer;
-}(Quest));
+})(Quest);
 ///<reference path="QuestEntity.ts"/>
-var DeveloperEntity = /** @class */ (function (_super) {
+var DeveloperEntity = (function (_super) {
     __extends(DeveloperEntity, _super);
     // Constructor
     function DeveloperEntity(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("The developer", "the developer"), new RenderArea(43, 34), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(20, 0), new Pos(6, 1)), new CollisionBox(_this, new Pos(16, 1), new Pos(12, 1)), new CollisionBox(_this, new Pos(15, 2), new Pos(14, 1)), new CollisionBox(_this, new Pos(12, 3), new Pos(18, 1)), new CollisionBox(_this, new Pos(11, 4), new Pos(20, 1)), new CollisionBox(_this, new Pos(10, 5), new Pos(22, 1)), new CollisionBox(_this, new Pos(9, 6), new Pos(24, 2)), new CollisionBox(_this, new Pos(9, 8), new Pos(25, 1)), new CollisionBox(_this, new Pos(9, 9), new Pos(26, 2)), new CollisionBox(_this, new Pos(9, 11), new Pos(27, 3)), new CollisionBox(_this, new Pos(9, 14), new Pos(28, 1)), new CollisionBox(_this, new Pos(8, 15), new Pos(29, 3)), new CollisionBox(_this, new Pos(7, 18), new Pos(30, 4)), new CollisionBox(_this, new Pos(7, 22), new Pos(31, 2)), new CollisionBox(_this, new Pos(6, 24), new Pos(32, 4)), new CollisionBox(_this, new Pos(5, 28), new Pos(33, 1)), new CollisionBox(_this, new Pos(5, 29), new Pos(34, 1)), new CollisionBox(_this, new Pos(4, 30), new Pos(35, 1)), new CollisionBox(_this, new Pos(2, 31), new Pos(38, 1)), new CollisionBox(_this, new Pos(1, 32), new Pos(40, 1)), new CollisionBox(_this, new Pos(0, 33), new Pos(43, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("The developer", "the developer"), new RenderArea(43, 34), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(20, 0), new Pos(6, 1)), new CollisionBox(this, new Pos(16, 1), new Pos(12, 1)), new CollisionBox(this, new Pos(15, 2), new Pos(14, 1)), new CollisionBox(this, new Pos(12, 3), new Pos(18, 1)), new CollisionBox(this, new Pos(11, 4), new Pos(20, 1)), new CollisionBox(this, new Pos(10, 5), new Pos(22, 1)), new CollisionBox(this, new Pos(9, 6), new Pos(24, 2)), new CollisionBox(this, new Pos(9, 8), new Pos(25, 1)), new CollisionBox(this, new Pos(9, 9), new Pos(26, 2)), new CollisionBox(this, new Pos(9, 11), new Pos(27, 3)), new CollisionBox(this, new Pos(9, 14), new Pos(28, 1)), new CollisionBox(this, new Pos(8, 15), new Pos(29, 3)), new CollisionBox(this, new Pos(7, 18), new Pos(30, 4)), new CollisionBox(this, new Pos(7, 22), new Pos(31, 2)), new CollisionBox(this, new Pos(6, 24), new Pos(32, 4)), new CollisionBox(this, new Pos(5, 28), new Pos(33, 1)), new CollisionBox(this, new Pos(5, 29), new Pos(34, 1)), new CollisionBox(this, new Pos(4, 30), new Pos(35, 1)), new CollisionBox(this, new Pos(2, 31), new Pos(38, 1)), new CollisionBox(this, new Pos(1, 32), new Pos(40, 1)), new CollisionBox(this, new Pos(0, 33), new Pos(43, 1))), new QuestEntityMovement());
         // Init the time spent
-        _this.timeSpent = 0;
+        this.timeSpent = 0;
         // Create the texts
-        _this.createTexts();
+        this.createTexts();
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(false);
+        this.getQuestEntityMovement().setGravity(false);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(1000000000);
-        _this.setHp(1000000000);
+        this.setDestructible(true);
+        this.setMaxHp(1000000000);
+        this.setHp(1000000000);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/developer/me"));
-        _this.setTransparency(new RenderTransparency(" "));
-        return _this;
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/developer/me"));
+        this.setTransparency(new RenderTransparency(" "));
     }
     // inflictDamage()
     DeveloperEntity.prototype.inflictDamage = function (damage, reason) {
@@ -7449,8 +7291,8 @@ var DeveloperEntity = /** @class */ (function (_super) {
         this.getQuest().addEntity(new Blackhole(this.getQuest(), this.getQuest().getGame().getPlayer().getRenderAreaCenter(), 5000, new QuestEntityDamageReason(QuestEntityDamageReasonWhoType.ENTITY, QuestEntityDamageReasonWhatType.SPELL).setQuestEntity(this).setSpellNaming(new Naming("A blackhole", "a blackhole"))));
     };
     return DeveloperEntity;
-}(QuestEntity));
-var DeveloperEntityText = /** @class */ (function () {
+})(QuestEntity);
+var DeveloperEntityText = (function () {
     // Constructor
     function DeveloperEntityText(damage, textPos, timeToLive, text) {
         // Set from parameters
@@ -7485,32 +7327,30 @@ var DeveloperEntityText = /** @class */ (function () {
         this.xPos += 1;
     };
     return DeveloperEntityText;
-}());
+})();
 ///<reference path="QuestEntitySpell.ts"/>
-var Fireball = /** @class */ (function (_super) {
+var Fireball = (function (_super) {
     __extends(Fireball, _super);
     // Constructor
     function Fireball(quest, pos, naming, color, size, damage, questEntityDamageReason) {
-        var _this = 
         // Call the mother class constructor
-        _super.call(this, quest, pos, naming) || this;
+        _super.call(this, quest, pos, naming);
         // Target stuff
-        _this.targetType = FireballTargetType.NO_TARGET;
+        this.targetType = FireballTargetType.NO_TARGET;
         // Set the size
-        _this.size = size;
+        this.size = size;
         // Set the damage
-        _this.damage = damage;
+        this.damage = damage;
         // Set the quest entity damage reason
-        _this.questEntityDamageReason = questEntityDamageReason;
+        this.questEntityDamageReason = questEntityDamageReason;
         // Create the damage collision box collection
-        _this.damageCollisionBoxCollection = new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), _this.size));
+        this.damageCollisionBoxCollection = new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), this.size));
         // Add the color
-        _this.addColor(new QuestEntitySpellColor(_this.getQuest(), new Pos(0, 0), _this.size, color));
+        this.addColor(new QuestEntitySpellColor(this.getQuest(), new Pos(0, 0), this.size, color));
         // Create a quest entity movement
-        _this.setQuestEntityMovement(new QuestEntityMovement(new Pos(0, 0)));
+        this.setQuestEntityMovement(new QuestEntityMovement(new Pos(0, 0)));
         // Set the default target type
-        _this.setTargetTypeNoTarget(new Pos(0, 0));
-        return _this;
+        this.setTargetTypeNoTarget(new Pos(0, 0));
     }
     // Public methods
     Fireball.prototype.setTargetTypeNoTarget = function (movement) {
@@ -7545,22 +7385,18 @@ var Fireball = /** @class */ (function (_super) {
                 // We go towards it
                 this.goTowards(this.getGlobalPosition().plus(new Pos(Math.floor(this.size.x / 2), Math.floor(this.size.y / 2))), this.fireballTargetEntity.getRenderAreaCenter(), 0, this.speed);
             }
-            // Else, we die
             else
                 this.setDead(true);
         }
-        // Else, if we target to stick on an entity
         else if (this.targetType == FireballTargetType.TARGET_STICK_ON_ENTITY) {
             // If this entity is still alive
             if (this.fireballTargetEntity != null && this.fireballTargetEntity.getDead() == false) {
                 // We teleport on it
                 this.teleport(this.fireballTargetEntity.getGlobalPosition().plus(this.specialTargetPosition));
             }
-            // Else, we die
             else
                 this.setDead(true);
         }
-        // Else, if we target a position
         else if (this.targetType == FireballTargetType.TARGET_POSITION) {
             // We go towards this position
             this.goTowards(this.getGlobalPosition().plus(new Pos(Math.floor(this.size.x / 2), Math.floor(this.size.y / 2))), this.targetPosition, 0, this.speed);
@@ -7585,15 +7421,14 @@ var Fireball = /** @class */ (function (_super) {
                         // If this collision box collection collides with ours
                         if (this.getQuest().getEntities()[i].getCbc().collidesWith(this.damageCollisionBoxCollection)) {
                             // If...
-                            if (this.getQuest().getEntities()[i] == this.fireballTargetEntity && // This is the entity we're targetting
-                                this.targetType == FireballTargetType.TARGET_ENTITY && // We actually target an entity
-                                this.fireballTargetEntity != null && // Which is not null
-                                this.fireballTargetEntity.getDead() == false && // And not dead
+                            if (this.getQuest().getEntities()[i] == this.fireballTargetEntity &&
+                                this.targetType == FireballTargetType.TARGET_ENTITY &&
+                                this.fireballTargetEntity != null &&
+                                this.fireballTargetEntity.getDead() == false &&
                                 this.specialTargetDamage != null // And we want to inflict it special damage
                             ) {
                                 this.getQuest().getEntities()[i].inflictDamage(this.specialTargetDamage, this.questEntityDamageReason);
                             }
-                            // Else, we just inflict normal damage
                             else {
                                 this.getQuest().getEntities()[i].inflictDamage(this.damage, this.questEntityDamageReason);
                             }
@@ -7606,20 +7441,18 @@ var Fireball = /** @class */ (function (_super) {
         }
     };
     return Fireball;
-}(QuestEntitySpell));
+})(QuestEntitySpell);
 ///<reference path="Fireball.ts"/>
-var DeveloperMagicBall = /** @class */ (function (_super) {
+var DeveloperMagicBall = (function (_super) {
     __extends(DeveloperMagicBall, _super);
     // Constructor
     function DeveloperMagicBall(quest, pos, naming, color, size, damage, questEntityDamageReason, timeToLive) {
-        var _this = 
         // Call the mother class constructor
-        _super.call(this, quest, pos, naming, color, size, damage, questEntityDamageReason) || this;
+        _super.call(this, quest, pos, naming, color, size, damage, questEntityDamageReason);
         // Did we target the player already?
-        _this.playerTargeted = false;
+        this.playerTargeted = false;
         // Set the time to live
-        _this.timeToLive = timeToLive;
-        return _this;
+        this.timeToLive = timeToLive;
     }
     // Public methods
     DeveloperMagicBall.prototype.update = function () {
@@ -7639,33 +7472,32 @@ var DeveloperMagicBall = /** @class */ (function (_super) {
     // willDie()
     DeveloperMagicBall.prototype.willDie = function () { };
     return DeveloperMagicBall;
-}(Fireball));
+})(Fireball);
 ///<reference path="QuestEntity.ts"/>
-var Devil = /** @class */ (function (_super) {
+var Devil = (function (_super) {
     __extends(Devil, _super);
     // Constructor
     function Devil(quest, pos, minY, maxY) {
-        var _this = _super.call(this, quest, pos, new Naming("The devil", "the devil"), new RenderArea(16, 16), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(4, 0), new Pos(8, 5))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("The devil", "the devil"), new RenderArea(16, 16), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(4, 0), new Pos(8, 5))), new QuestEntityMovement());
         // Set from parameters
-        _this.minY = minY;
-        _this.maxY = maxY;
+        this.minY = minY;
+        this.maxY = maxY;
         // At first we're going down
-        _this.setGoingDown(true);
+        this.setGoingDown(true);
         // Init the flames array
-        _this.flames = [];
+        this.flames = [];
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(false);
+        this.getQuestEntityMovement().setGravity(false);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(666);
-        _this.setHp(666);
+        this.setDestructible(true);
+        this.setMaxHp(666);
+        this.setHp(666);
         // Set the transparent character and draw
-        _this.setTransparency(new RenderTransparency(" ", "%"));
-        _this.reDraw();
+        this.setTransparency(new RenderTransparency(" ", "%"));
+        this.reDraw();
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Evilness", "evilness"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(18, 18))), 500));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(0, 5);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Evilness", "evilness"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(18, 18))), 500));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(0, 5);
     }
     // inflictDamage()
     Devil.prototype.inflictDamage = function (damage, reason) {
@@ -7698,7 +7530,6 @@ var Devil = /** @class */ (function (_super) {
             // No target
             fireBall.setTargetTypeNoTarget(new Pos(-Random.between(3, 7), 0));
         }
-        // Else
         else {
             // We target the player
             fireBall.setTargetTypeTargetEntity(this.getQuest().getGame().getPlayer(), null, new Pos(1, 1));
@@ -7749,7 +7580,6 @@ var Devil = /** @class */ (function (_super) {
         if (this.goingDown && (this.getGlobalPosition().y >= this.maxY || this.checkCollision(new Pos(0, 1)))) {
             this.setGoingDown(false);
         }
-        // Else, if we're going up but we're too high, we now go down
         else if (this.goingDown == false && (this.getGlobalPosition().y <= this.minY || this.checkCollision(new Pos(0, -1)))) {
             this.setGoingDown(true);
         }
@@ -7774,32 +7604,31 @@ var Devil = /** @class */ (function (_super) {
         }
     };
     return Devil;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="CastleRoom.ts"/>
 Saving.registerBool("dragonDone", false); // If true, it means we began talking to the dragon
 Saving.registerBool("dragonUnlockedCyclops", false); // If true, we can ask the cyclops about the dragon
-var Dragon = /** @class */ (function (_super) {
+var Dragon = (function (_super) {
     __extends(Dragon, _super);
     // Constructor
     function Dragon(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Set the default step and player position
-        if (Saving.loadBool("dragonDone") == false) { // If we never talked with the dragon yet
-            _this.step = DragonStep.PLAYER_MOVING;
-            _this.playerPos = 0;
+        if (Saving.loadBool("dragonDone") == false) {
+            this.step = DragonStep.PLAYER_MOVING;
+            this.playerPos = 0;
         }
-        else { // Else, we already talked with the dragon
-            _this.step = DragonStep.TALKING;
-            _this.playerPos = 60;
+        else {
+            this.step = DragonStep.TALKING;
+            this.playerPos = 60;
         }
         // Launch the interval and get the ID
-        _this.timerIntervalID = setInterval(_this.actionInterval.bind(_this), 100);
+        this.timerIntervalID = setInterval(this.actionInterval.bind(this), 100);
         // Resize and update
-        _this.renderArea.resizeFromArray(Database.getAscii("places/dragonFoot"), 0, 3);
-        _this.update();
-        return _this;
+        this.renderArea.resizeFromArray(Database.getAscii("places/dragonFoot"), 0, 3);
+        this.update();
     }
     // getRenderArea()
     Dragon.prototype.getRenderArea = function () {
@@ -7816,7 +7645,7 @@ var Dragon = /** @class */ (function (_super) {
             case DragonStep.PLAYER_MOVING:
                 // Move the player
                 this.playerPos += 1;
-                if (this.playerPos >= 60) { // If we made it to the dragon
+                if (this.playerPos >= 60) {
                     // We're now attacking
                     this.step = DragonStep.PLAYER_ATTACKING;
                     // Set the countdown
@@ -7829,7 +7658,7 @@ var Dragon = /** @class */ (function (_super) {
             case DragonStep.PLAYER_ATTACKING:
                 // Lower the countdown
                 this.playerAttackingCountdown -= 1;
-                if (this.playerAttackingCountdown < 0) { // If it's time to stop attacking
+                if (this.playerAttackingCountdown < 0) {
                     // We're now "stop tickling"
                     this.step = DragonStep.STOP_TICKLING;
                 }
@@ -7957,7 +7786,7 @@ var Dragon = /** @class */ (function (_super) {
         }
     };
     return Dragon;
-}(CastleRoom));
+})(CastleRoom);
 var DragonStep;
 (function (DragonStep) {
     DragonStep[DragonStep["PLAYER_MOVING"] = 0] = "PLAYER_MOVING";
@@ -7969,24 +7798,22 @@ var DragonStep;
     DragonStep[DragonStep["TALKING_CANDIES"] = 6] = "TALKING_CANDIES";
 })(DragonStep || (DragonStep = {}));
 ///<reference path="QuestEntity.ts"/>
-var Egg = /** @class */ (function (_super) {
+var Egg = (function (_super) {
     __extends(Egg, _super);
     // Constructor
     function Egg(quest, globalPosition, callbackWhenDying) {
-        var _this = 
         // Call the mother constructor
-        _super.call(this, quest, globalPosition, new Naming("An egg", "an egg"), new RenderArea(2, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(2, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, globalPosition, new Naming("An egg", "an egg"), new RenderArea(2, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(2, 1))), new QuestEntityMovement());
         // Set the callback from parameter
-        _this.callbackWhenDying = callbackWhenDying;
+        this.callbackWhenDying = callbackWhenDying;
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(4);
-        _this.setHp(4);
+        this.setDestructible(true);
+        this.setMaxHp(4);
+        this.setHp(4);
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/castle/room3/egg"));
-        return _this;
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/castle/room3/egg"));
     }
     // willDie()
     Egg.prototype.willDie = function () {
@@ -7994,13 +7821,13 @@ var Egg = /** @class */ (function (_super) {
         this.callbackWhenDying.fire();
     };
     return Egg;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var EnchantedKnightBodyArmour = /** @class */ (function (_super) {
+var EnchantedKnightBodyArmour = (function (_super) {
     __extends(EnchantedKnightBodyArmour, _super);
     // Constructor
     function EnchantedKnightBodyArmour() {
-        return _super.call(this, "eqItemBodyArmoursEnchantedKnightBodyArmour", "eqItemBodyArmoursEnchantedKnightBodyArmourName", "eqItemBodyArmoursEnchantedKnightBodyArmourDescription", "eqItems/bodyArmours/enchantedKnightBodyArmour") || this;
+        _super.call(this, "eqItemBodyArmoursEnchantedKnightBodyArmour", "eqItemBodyArmoursEnchantedKnightBodyArmourName", "eqItemBodyArmoursEnchantedKnightBodyArmourDescription", "eqItems/bodyArmours/enchantedKnightBodyArmour");
     }
     // Special ability
     EnchantedKnightBodyArmour.prototype.getSpecialAbility = function () {
@@ -8015,12 +7842,12 @@ var EnchantedKnightBodyArmour = /** @class */ (function (_super) {
         return Math.ceil(damage - damage * 80 / 100);
     };
     return EnchantedKnightBodyArmour;
-}(EqItem));
+})(EqItem);
 ///<reference path="EqItem.ts"/>
-var MonkeyWizardStaffMotherClass = /** @class */ (function (_super) {
+var MonkeyWizardStaffMotherClass = (function (_super) {
     __extends(MonkeyWizardStaffMotherClass, _super);
     function MonkeyWizardStaffMotherClass() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // Public methods which the daughter classes can use
     MonkeyWizardStaffMotherClass.prototype.castPurpleBall = function (player, quest, target, speed) {
@@ -8049,16 +7876,15 @@ var MonkeyWizardStaffMotherClass = /** @class */ (function (_super) {
             return null;
     };
     return MonkeyWizardStaffMotherClass;
-}(EqItem));
+})(EqItem);
 ///<reference path="MonkeyWizardStaffMotherClass.ts"/>
-var EnchantedMonkeyWizardStaff = /** @class */ (function (_super) {
+var EnchantedMonkeyWizardStaff = (function (_super) {
     __extends(EnchantedMonkeyWizardStaff, _super);
     // Constructor
     function EnchantedMonkeyWizardStaff() {
-        var _this = _super.call(this, "eqItemWeaponEnchantedMonkeyWizardStaff", "eqItemWeaponEnchantedMonkeyWizardStaffName", "eqItemWeaponEnchantedMonkeyWizardStaffDescription", "eqItems/weapons/enchantedMonkeyWizardStaff") || this;
+        _super.call(this, "eqItemWeaponEnchantedMonkeyWizardStaff", "eqItemWeaponEnchantedMonkeyWizardStaffName", "eqItemWeaponEnchantedMonkeyWizardStaffDescription", "eqItems/weapons/enchantedMonkeyWizardStaff");
         // Set the timer
-        _this.timer = 0;
-        return _this;
+        this.timer = 0;
     }
     // Public getters
     EnchantedMonkeyWizardStaff.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -8079,8 +7905,8 @@ var EnchantedMonkeyWizardStaff = /** @class */ (function (_super) {
         }
     };
     return EnchantedMonkeyWizardStaff;
-}(MonkeyWizardStaffMotherClass));
-var Enchantment = /** @class */ (function () {
+})(MonkeyWizardStaffMotherClass);
+var Enchantment = (function () {
     // Constructor
     function Enchantment(beforeItem, afterItem) {
         this.beforeItem = beforeItem;
@@ -8109,8 +7935,8 @@ var Enchantment = /** @class */ (function () {
         return this.beforeItem;
     };
     return Enchantment;
-}());
-var EnchantmentItem = /** @class */ (function () {
+})();
+var EnchantmentItem = (function () {
     // Constructor
     function EnchantmentItem(game, savingName, type) {
         this.game = game;
@@ -8135,9 +7961,9 @@ var EnchantmentItem = /** @class */ (function () {
         return this.savingName;
     };
     return EnchantmentItem;
-}());
+})();
 // We can't use this class directly, we have to use a daughter class
-var EnigmaAnswer = /** @class */ (function () {
+var EnigmaAnswer = (function () {
     // Constructor
     function EnigmaAnswer() {
     }
@@ -8146,15 +7972,14 @@ var EnigmaAnswer = /** @class */ (function () {
         return false;
     };
     return EnigmaAnswer;
-}());
+})();
 ///<reference path="EnigmaAnswer.ts"/>
-var EnigmaAnswerCandies = /** @class */ (function (_super) {
+var EnigmaAnswerCandies = (function (_super) {
     __extends(EnigmaAnswerCandies, _super);
     // Constructor
     function EnigmaAnswerCandies(game) {
-        var _this = _super.call(this) || this;
-        _this.game = game;
-        return _this;
+        _super.call(this);
+        this.game = game;
     }
     // Public methods
     EnigmaAnswerCandies.prototype.isRight = function (answer) {
@@ -8171,15 +7996,14 @@ var EnigmaAnswerCandies = /** @class */ (function (_super) {
         return false;
     };
     return EnigmaAnswerCandies;
-}(EnigmaAnswer));
+})(EnigmaAnswer);
 ///<reference path="EnigmaAnswer.ts"/>
-var EnigmaAnswerStrings = /** @class */ (function (_super) {
+var EnigmaAnswerStrings = (function (_super) {
     __extends(EnigmaAnswerStrings, _super);
     // Constructor
     function EnigmaAnswerStrings(validStrings) {
-        var _this = _super.call(this) || this;
-        _this.validStrings = validStrings;
-        return _this;
+        _super.call(this);
+        this.validStrings = validStrings;
     }
     // Public methods
     EnigmaAnswerStrings.prototype.isRight = function (answer) {
@@ -8193,7 +8017,7 @@ var EnigmaAnswerStrings = /** @class */ (function (_super) {
         return false;
     };
     return EnigmaAnswerStrings;
-}(EnigmaAnswer));
+})(EnigmaAnswer);
 var EqItemType;
 (function (EqItemType) {
     EqItemType[EqItemType["WEAPON"] = 0] = "WEAPON";
@@ -8203,13 +8027,12 @@ var EqItemType;
     EqItemType[EqItemType["BOOTS"] = 4] = "BOOTS";
 })(EqItemType || (EqItemType = {}));
 ///<reference path="Item.ts"/>
-var GridItem = /** @class */ (function (_super) {
+var GridItem = (function (_super) {
     __extends(GridItem, _super);
     // Constructor
     function GridItem(savingName, databaseName, databaseDescriptionName, ascii, position) {
-        var _this = _super.call(this, savingName, databaseName, databaseDescriptionName, ascii) || this;
-        _this.position = position;
-        return _this;
+        _super.call(this, savingName, databaseName, databaseDescriptionName, ascii);
+        this.position = position;
     }
     // Public methods
     GridItem.prototype.update = function (player, quest) {
@@ -8219,12 +8042,12 @@ var GridItem = /** @class */ (function (_super) {
         return this.position;
     };
     return GridItem;
-}(Item));
+})(Item);
 ///<reference path="GridItem.ts"/>
-var Feather = /** @class */ (function (_super) {
+var Feather = (function (_super) {
     __extends(Feather, _super);
     function Feather() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Feather.prototype.getDatabaseDescriptionName = function () {
         // If we don't have the pogo stick yet, we return a special message
@@ -8234,30 +8057,29 @@ var Feather = /** @class */ (function (_super) {
         return _super.prototype.getDatabaseDescriptionName.call(this);
     };
     return Feather;
-}(GridItem));
+})(GridItem);
 ///<reference path="Place.ts"/>
-var House = /** @class */ (function (_super) {
+var House = (function (_super) {
     __extends(House, _super);
     // Constructor
     function House(game) {
-        return _super.call(this, game) || this;
+        _super.call(this, game);
     }
     // Special method used to add a button to go back to the village
     House.prototype.addBackToTheVillageButton = function (renderArea, otherClass) {
         this.addBackToButton(renderArea, new CallbackCollection(this.getGame().goToVillage.bind(this.getGame())), Database.getText("buttonBackToTheVillage"), Database.getTranslatedText("buttonBackToTheVillage"), otherClass);
     };
     return House;
-}(Place));
+})(Place);
 ///<reference path="House.ts"/>
-var FifthHouse = /** @class */ (function (_super) {
+var FifthHouse = (function (_super) {
     __extends(FifthHouse, _super);
     // Constructor
     function FifthHouse(game) {
-        var _this = _super.call(this, game) || this;
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/village/fifthHouse"), 0, 3);
-        _this.update();
-        return _this;
+        _super.call(this, game);
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/village/fifthHouse"), 0, 3);
+        this.update();
     }
     // getRenderArea()
     FifthHouse.prototype.getRenderArea = function () {
@@ -8292,13 +8114,11 @@ var FifthHouse = /** @class */ (function (_super) {
                 this.renderArea.addAsciiRealButton(Database.getText("mapVillageFifthHouseAgree"), 69, 8, "mapVillageFifthHouseAgreeButton", Database.getTranslatedText("mapVillageFifthHouseAgree"), true);
                 this.renderArea.addLinkCall(".mapVillageFifthHouseAgreeButton", new CallbackCollection(this.beginQuest.bind(this)));
             }
-            // Else, we don't have a weapon yet
             else {
                 // Draw the speech
                 this.renderArea.drawSpeech(Database.getText("mapVillageFifthHouseNoWeaponSpeech"), 6, 44, 67, "fifthHouseSpeech", Database.getTranslatedText("mapVillageFifthHouseNoWeaponSpeech"));
             }
         }
-        // If we have defeated the rats
         else {
             // Draw the speech
             this.renderArea.drawSpeech(Database.getText("mapVillageFifthHouseCellarDone"), 6, 44, 82, "fifthHouseSpeech", Database.getTranslatedText("mapVillageFifthHouseCellarDone"));
@@ -8307,7 +8127,7 @@ var FifthHouse = /** @class */ (function (_super) {
         }
     };
     return FifthHouse;
-}(House));
+})(House);
 var FireballTargetType;
 (function (FireballTargetType) {
     FireballTargetType[FireballTargetType["NO_TARGET"] = 0] = "NO_TARGET";
@@ -8316,36 +8136,35 @@ var FireballTargetType;
     FireballTargetType[FireballTargetType["TARGET_POSITION"] = 3] = "TARGET_POSITION";
 })(FireballTargetType || (FireballTargetType = {}));
 ///<reference path="Quest.ts"/>
-var Forest = /** @class */ (function (_super) {
+var Forest = (function (_super) {
     __extends(Forest, _super);
     // Constructor
     function Forest(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Various timers related to monsters handling
-        _this.timeSinceLastWolfAdding = 0;
-        _this.timeSinceLastTreeSpiritAdding = 40;
+        this.timeSinceLastWolfAdding = 0;
+        this.timeSinceLastTreeSpiritAdding = 40;
         // The ground y position
-        _this.groundYPosition = 20;
+        this.groundYPosition = 20;
         // The mosquito timer (mosquitos will come when the timer reaches 0)
-        _this.mosquitoTimer = 250;
+        this.mosquitoTimer = 250;
         // Resize the quest
-        _this.resizeQuest(294, _this.groundYPosition + 2);
+        this.resizeQuest(294, this.groundYPosition + 2);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, false, true, true);
+        this.addPlayerCollisionBoxes(true, false, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, _this.groundYPosition));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, this.groundYPosition));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the ground
-        _this.addGround();
+        this.addGround();
         // We add some wolves
         for (var i = 0; i < 10; i++) {
-            _this.addWolf(Random.between(80, 280));
+            this.addWolf(Random.between(80, 280));
         }
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the forest."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the forest."));
     }
     // Public methods
     Forest.prototype.castPlayerTeleport = function () {
@@ -8434,7 +8253,6 @@ var Forest = /** @class */ (function (_super) {
             this.addWolf(); // We add it
             this.timeSinceLastWolfAdding = 0; // We reset the timer
         }
-        // Else, it's not the time yet
         else
             this.timeSinceLastWolfAdding += 1; // We increase the timer
         // If it's time to add a mosquito
@@ -8453,7 +8271,7 @@ var Forest = /** @class */ (function (_super) {
         return false;
     };
     return Forest;
-}(Quest));
+})(Quest);
 ///<reference path="House.ts"/>
 // The lollipop
 Saving.registerBool("forgeFoundLollipop", false);
@@ -8463,33 +8281,31 @@ Saving.registerBool("forgeBoughtIronAxe", false);
 Saving.registerBool("forgeBoughtPolishedSilverSword", false);
 Saving.registerBool("forgeBoughtLightweightBodyArmour", false);
 Saving.registerBool("forgeBoughtScythe", false);
-var Forge = /** @class */ (function (_super) {
+var Forge = (function (_super) {
     __extends(Forge, _super);
     // Constructor
     function Forge(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // If...
         // We didn't buy one of the first three items
         if ((Saving.loadBool("forgeBoughtWoodenSword") == false || Saving.loadBool("forgeBoughtIronAxe") == false || Saving.loadBool("forgeBoughtPolishedSilverSword") == false)
-            || // OR
+            ||
                 // We didn't buy the armour and we made the cave entrance
                 (Saving.loadBool("forgeBoughtLightweightBodyArmour") == false && Saving.loadBool("mainMapDoneCaveEntrance") == true)
-            || // OR
+            ||
                 // We didn't buy the scythe and the dragon is done
                 (Saving.loadBool("forgeBoughtScythe") == false && Saving.loadBool("dragonDone") == true)) {
             // We set the normal introduction speech
-            _this.currentSpeech = "mapVillageForgeIntroductionSpeech";
+            this.currentSpeech = "mapVillageForgeIntroductionSpeech";
         }
-        // Else
         else {
             // We set the no more to sell introduction speech
-            _this.currentSpeech = "mapVillageForgeIntroductionSpeechNoMoreToSell";
+            this.currentSpeech = "mapVillageForgeIntroductionSpeechNoMoreToSell";
         }
-        _this.renderArea.resizeFromArray(Database.getAscii("places/village/forge"), 0, 3);
-        _this.update();
-        return _this;
+        this.renderArea.resizeFromArray(Database.getAscii("places/village/forge"), 0, 3);
+        this.update();
     }
     // getRenderArea()
     Forge.prototype.getRenderArea = function () {
@@ -8562,7 +8378,6 @@ var Forge = /** @class */ (function (_super) {
             // We add the link
             this.renderArea.addLinkCall(".forgeLollipopButton", new CallbackCollection(this.takeLollipop.bind(this)));
         }
-        // Else, we found the lollipop
         else {
             // We erase the lollipop
             this.renderArea.drawString("      ", x, y);
@@ -8597,67 +8412,62 @@ var Forge = /** @class */ (function (_super) {
             this.renderArea.addAsciiRealButton(Database.getText("mapVillageForgeBuyWoodenSwordButton"), 8, 35, "mapVillageForgeBuyWoodenSwordButton", Database.getTranslatedText("mapVillageForgeBuyWoodenSwordButton"), true, -1, null, false);
             this.renderArea.addLinkCall(".mapVillageForgeBuyWoodenSwordButton", new CallbackCollection(this.clickedBuyWoodenSwordButton.bind(this)));
         }
-        // If we bought the wooden sword, never bought the iron axe and we don't have one
         else if (Saving.loadBool("forgeBoughtWoodenSword") == true && Saving.loadBool("forgeBoughtIronAxe") == false && Saving.loadBool("eqItemWeaponIronAxe") == false) {
             this.renderArea.addAsciiRealButton(Database.getText("mapVillageForgeBuyIronAxeButton"), 8, 35, "mapVillageForgeBuyIronAxeButton", Database.getTranslatedText("mapVillageForgeBuyIronAxeButton"), true, -1, null, false);
             this.renderArea.addLinkCall(".mapVillageForgeBuyIronAxeButton", new CallbackCollection(this.clickedBuyIronAxeButton.bind(this)));
         }
-        // If we bought the iron axe, never bought the polished silver sword and we don't have one
         else if (Saving.loadBool("forgeBoughtIronAxe") == true && Saving.loadBool("forgeBoughtPolishedSilverSword") == false && Saving.loadBool("eqItemWeaponPolishedSilverSword") == false) {
             this.renderArea.addAsciiRealButton(Database.getText("mapVillageForgeBuyPolishedSilverSwordButton"), 8, 35, "mapVillageForgeBuyPolishedSilverSwordButton", Database.getTranslatedText("mapVillageForgeBuyPolishedSilverSwordButton"), true, -1, null, false);
             this.renderArea.addLinkCall(".mapVillageForgeBuyPolishedSilverSwordButton", new CallbackCollection(this.clickedBuyPolishedSilverSwordButton.bind(this)));
         }
-        // If we bought the polished silver sword, never bought the lightweight body armour and we don't have one and we made the cave entrance
         else if (Saving.loadBool("forgeBoughtPolishedSilverSword") == true && Saving.loadBool("forgeBoughtLightweightBodyArmour") == false && Saving.loadBool("eqItemBodyArmoursLightweightBodyArmour") == false && Saving.loadBool("mainMapDoneCaveEntrance")) {
             this.renderArea.addAsciiRealButton(Database.getText("mapVillageForgeBuyLightweightBodyArmourButton"), 8, 35, "mapVillageForgeBuyLightweightBodyArmourButton", Database.getTranslatedText("mapVillageForgeBuyLightweightBodyArmourButton"), true, -1, null, false);
             this.renderArea.addLinkCall(".mapVillageForgeBuyLightweightBodyArmourButton", new CallbackCollection(this.clickedBuyLightweightBodyArmourButton.bind(this)));
         }
-        // If we bought the lightweight body armour, never bought the scythe and we don't have one and the dragon is done
         else if (Saving.loadBool("forgeBoughtLightweightBodyArmour") == true && Saving.loadBool("forgeBoughtScythe") == false && Saving.loadBool("eqItemWeaponScythe") == false && Saving.loadBool("dragonDone")) {
             this.renderArea.addAsciiRealButton(Database.getText("mapVillageForgeBuyScytheButton"), 8, 35, "mapVillageForgeBuyScytheButton", Database.getTranslatedText("mapVillageForgeBuyScytheButton"), true, -1, null, false);
             this.renderArea.addLinkCall(".mapVillageForgeBuyScytheButton", new CallbackCollection(this.clickedBuyScytheButton.bind(this)));
         }
     };
     return Forge;
-}(House));
+})(House);
 ///<reference path="Quest.ts"/>
 Saving.registerBool("fortressRoom1ChestFound", false);
-var FortressRoom1 = /** @class */ (function (_super) {
+var FortressRoom1 = (function (_super) {
     __extends(FortressRoom1, _super);
     // Constructor
     function FortressRoom1(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Did we open the chest?
-        _this.chestOpened = false;
+        this.chestOpened = false;
         // Resize the quest
-        _this.resizeQuest(208, 31);
+        this.resizeQuest(208, 31);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 7));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 7));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the walls
-        _this.addWalls();
+        this.addWalls();
         // Add the spikes
-        _this.addSpikes(new Spikes(_this, new Pos(16, 30), 18));
-        _this.addSpikes(new Spikes(_this, new Pos(43, 30), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(53, 30), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(85, 30), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(161, 30), 12));
-        _this.addSpikes(new Spikes(_this, new Pos(180, 30), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(117, 9), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(121, 14), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(125, 19), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(129, 24), 4));
+        this.addSpikes(new Spikes(this, new Pos(16, 30), 18));
+        this.addSpikes(new Spikes(this, new Pos(43, 30), 4));
+        this.addSpikes(new Spikes(this, new Pos(53, 30), 4));
+        this.addSpikes(new Spikes(this, new Pos(85, 30), 4));
+        this.addSpikes(new Spikes(this, new Pos(161, 30), 12));
+        this.addSpikes(new Spikes(this, new Pos(180, 30), 4));
+        this.addSpikes(new Spikes(this, new Pos(117, 9), 4));
+        this.addSpikes(new Spikes(this, new Pos(121, 14), 4));
+        this.addSpikes(new Spikes(this, new Pos(125, 19), 4));
+        this.addSpikes(new Spikes(this, new Pos(129, 24), 4));
         // Add the xinopherydon
-        _this.addXinopherydon(new Pos(181, 2));
+        this.addXinopherydon(new Pos(181, 2));
         // Add the chest
-        _this.addEntity(new Chest(_this, new Pos(203, 24), false, new CallbackCollection(_this.openChest.bind(_this)), Saving.loadBool("fortressRoom1ChestFound")));
+        this.addEntity(new Chest(this, new Pos(203, 24), false, new CallbackCollection(this.openChest.bind(this)), Saving.loadBool("fortressRoom1ChestFound")));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the first room. It seems tricky."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the first room. It seems tricky."));
     }
     // Public methods
     FortressRoom1.prototype.castPlayerTeleport = function () {
@@ -8750,29 +8560,28 @@ var FortressRoom1 = /** @class */ (function (_super) {
         this.foundGridOrEqItem(new QuestItemFound(this, "gridItemPossessedUnicornHorn", "You opened a chest and found a unicorn horn!", "You gain a unicorn horn."));
     };
     return FortressRoom1;
-}(Quest));
+})(Quest);
 ///<reference path="Quest.ts"/>
-var FortressRoom2 = /** @class */ (function (_super) {
+var FortressRoom2 = (function (_super) {
     __extends(FortressRoom2, _super);
     // Constructor
     function FortressRoom2(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 17);
+        this.resizeQuest(100, 17);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 13));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 13));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the ground
-        _this.addWalls();
+        this.addWalls();
         // Add the chest
-        _this.addTeapot();
+        this.addTeapot();
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the second room. There's a giant teapot in the center."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the second room. There's a giant teapot in the center."));
     }
     // Public methods
     FortressRoom2.prototype.configPlayerOrClone = function (entity) {
@@ -8829,32 +8638,31 @@ var FortressRoom2 = /** @class */ (function (_super) {
         this.addEntity(teapot);
     };
     return FortressRoom2;
-}(Quest));
+})(Quest);
 ///<reference path="Quest.ts"/>
 Saving.registerBool("fortressRoom3ChestFound", false);
-var FortressRoom3 = /** @class */ (function (_super) {
+var FortressRoom3 = (function (_super) {
     __extends(FortressRoom3, _super);
     // Constructor
     function FortressRoom3(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Did we open the chest?
-        _this.chestOpened = false;
+        this.chestOpened = false;
         // Resize the quest
-        _this.resizeQuest(100, 31);
+        this.resizeQuest(100, 31);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 30));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 30));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the ground
-        _this.addWalls();
+        this.addWalls();
         // Add the chest
-        _this.addEntity(new Chest(_this, new Pos(87, 6), false, new CallbackCollection(_this.openChest.bind(_this)), Saving.loadBool("fortressRoom3ChestFound")));
+        this.addEntity(new Chest(this, new Pos(87, 6), false, new CallbackCollection(this.openChest.bind(this)), Saving.loadBool("fortressRoom3ChestFound")));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the third room. There's a chest up there. How to reach it?!"));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the third room. There's a chest up there. How to reach it?!"));
     }
     // Public methods
     FortressRoom3.prototype.castPlayerTeleport = function () {
@@ -8915,20 +8723,19 @@ var FortressRoom3 = /** @class */ (function (_super) {
         this.foundGridOrEqItem(new QuestItemFound(this, "eqItemBootsRocketBoots", "You opened a chest and found rocket boots!", "You gain rocket boots."));
     };
     return FortressRoom3;
-}(Quest));
+})(Quest);
 ///<reference path="House.ts"/>
 Saving.registerBool("fourthHouseFoundLollipopOnCupboard", false);
 Saving.registerNumber("fourthHouseCupboardStep", 0); // 0 : closed ; 1 : opened ; 2 : lollipop taken
 Saving.registerNumber("fourthHouseCarpetStep", 0); // 0 : lollipop still under the carpet ; 1 : lollipop outside ; 2 : lollipop taken
-var FourthHouse = /** @class */ (function (_super) {
+var FourthHouse = (function (_super) {
     __extends(FourthHouse, _super);
     // Constructor
     function FourthHouse(game) {
-        var _this = _super.call(this, game) || this;
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/village/fourthHouse"), 0, 3);
-        _this.update();
-        return _this;
+        _super.call(this, game);
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/village/fourthHouse"), 0, 3);
+        this.update();
     }
     // getRenderArea()
     FourthHouse.prototype.getRenderArea = function () {
@@ -8948,13 +8755,13 @@ var FourthHouse = /** @class */ (function (_super) {
     FourthHouse.prototype.drawCarpetStuff = function (x, y) {
         // We do different things depending on the step
         switch (Saving.loadNumber("fourthHouseCarpetStep")) {
-            case 0: // The lollipop is still under the carpet
+            case 0:
                 // We add a button on the area of the carpet around the lollipop
                 this.renderArea.addMultipleAsciiButtons("fourthHouseCarpetButton", x - 2, x + 2, y - 1, x - 6, x + 1, y, x - 4, x, y + 1);
                 // We add the link
                 this.renderArea.addLinkCall(".fourthHouseCarpetButton", new CallbackCollection(this.clickOnCarpet.bind(this)));
                 break;
-            case 1: // The lollipop is outside the carpet, ready to be clicked
+            case 1:
                 // We draw the lollipop
                 this.renderArea.drawArray(Database.getAscii("places/village/fourthHouseLollipopUnderCarpet"), x, y);
                 // We add a button on the lollipop
@@ -8962,7 +8769,7 @@ var FourthHouse = /** @class */ (function (_super) {
                 // We add the link
                 this.renderArea.addLinkCall(".fourthHouseLollipopUnderCarpetButton", new CallbackCollection(this.pickCarpetLollipop.bind(this)));
                 break;
-            case 2: // The lollipop is taken, nothing to do here
+            case 2:
                 break;
         }
     };
@@ -8974,7 +8781,6 @@ var FourthHouse = /** @class */ (function (_super) {
             // We add the link
             this.renderArea.addLinkCall(".fourthHouseLollipopOnCupboardButton", new CallbackCollection(this.takeLollipopOnCupboard.bind(this)));
         }
-        // Else, we found the lollipop
         else {
             // We draw the no lollipop ascii art
             this.renderArea.drawArray(Database.getAscii("places/village/fourthHouseNoLollipopOnCupboard"), x, y);
@@ -8983,13 +8789,13 @@ var FourthHouse = /** @class */ (function (_super) {
     FourthHouse.prototype.drawOpenCupboardStuff = function (x, y) {
         // We do different things depending on the step
         switch (Saving.loadNumber("fourthHouseCupboardStep")) {
-            case 0: // The cupboard is closed
+            case 0:
                 // We add a button on the cupboard's door
                 this.renderArea.addMultipleAsciiButtons("fourthHouseCupboardDoorButton", x, x + 7, y, x, x + 7, y + 1, x, x + 7, y + 2, x, x + 7, y + 3, x, x + 7, y + 4, x, x + 7, y + 5, x, x + 7, y + 6, x, x + 7, y + 7, x, x + 7, y + 8, x, x + 7, y + 9, x, x + 7, y + 10, x, x + 7, y + 11, x, x + 7, y + 12);
                 // We add the link
                 this.renderArea.addLinkCall(".fourthHouseCupboardDoorButton", new CallbackCollection(this.openCupboard.bind(this)));
                 break;
-            case 1: // The cupboard is opened with the lollipop in it
+            case 1:
                 // We draw the opened cupboard with the lollipop in it
                 this.renderArea.drawArray(Database.getAscii("places/village/fourthHouseCupboardOpenedWithLollipop"), x - 2, y);
                 // We add a button on the lollipop
@@ -8997,7 +8803,7 @@ var FourthHouse = /** @class */ (function (_super) {
                 // We add the link
                 this.renderArea.addLinkCall(".fourthHouseLollipopInsideCupboardButton", new CallbackCollection(this.takeLollipopInsideCupboard.bind(this)));
                 break;
-            case 2: // The cupboard is opened and the lollipop taken
+            case 2:
                 // We draw the opened cupboard without lollipop
                 this.renderArea.drawArray(Database.getAscii("places/village/fourthHouseCupboardOpenedWithoutLollipop"), x - 2, y);
                 break;
@@ -9064,8 +8870,8 @@ var FourthHouse = /** @class */ (function (_super) {
         this.drawCarpetStuff(41, 32);
     };
     return FourthHouse;
-}(House));
-var ThirdHouseGame = /** @class */ (function () {
+})(House);
+var ThirdHouseGame = (function () {
     // Constructor
     function ThirdHouseGame(thirdHouse) {
         // Set the third house from parameter
@@ -9094,22 +8900,21 @@ var ThirdHouseGame = /** @class */ (function () {
         return this.thirdHouse;
     };
     return ThirdHouseGame;
-}());
+})();
 ///<reference path="ThirdHouseGame.ts"/>
 Saving.registerNumber("galacticWarsBestScore", 0);
-var GalacticWars = /** @class */ (function (_super) {
+var GalacticWars = (function (_super) {
     __extends(GalacticWars, _super);
     function GalacticWars() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
         // The global step of the game (splash screen, the menu, or the game itself
-        _this.step = GalacticWarsStep.SPLASH_SCREEN;
+        this.step = GalacticWarsStep.SPLASH_SCREEN;
         // The timer used for the splash screen
-        _this.splashScreenTimer = 47;
+        this.splashScreenTimer = 47;
         // Asteroids
-        _this.asteroids = [];
+        this.asteroids = [];
         // Should we exit the game?
-        _this.exitGame = false;
-        return _this;
+        this.exitGame = false;
     }
     // Public methods
     GalacticWars.prototype.run = function () {
@@ -9350,7 +9155,6 @@ var GalacticWars = /** @class */ (function (_super) {
         // If we pressed space and we were losing, we should now exit the game
         if (this.step == GalacticWarsStep.LOSE)
             this.exitGame = true;
-        // Else, if we're playing
         else if (this.step == GalacticWarsStep.GAME) {
             // If we have enough power
             if (this.power == this.maxPower) {
@@ -9393,7 +9197,6 @@ var GalacticWars = /** @class */ (function (_super) {
             // If we can shift it, we do so
             if (this.asteroids[i].x > 0)
                 this.asteroids[i].x -= 1;
-            // Else, we delete it
             else {
                 this.asteroids.splice(i, 1);
                 i--;
@@ -9417,7 +9220,6 @@ var GalacticWars = /** @class */ (function (_super) {
             // Reduce the timer
             this.splashScreenTimer -= 1;
         }
-        // Else
         else {
             // Switch to the next step
             this.goToGame();
@@ -9437,7 +9239,7 @@ var GalacticWars = /** @class */ (function (_super) {
         return true;
     };
     return GalacticWars;
-}(ThirdHouseGame));
+})(ThirdHouseGame);
 var GalacticWarsStep;
 (function (GalacticWarsStep) {
     GalacticWarsStep[GalacticWarsStep["SPLASH_SCREEN"] = 0] = "SPLASH_SCREEN";
@@ -9445,7 +9247,7 @@ var GalacticWarsStep;
     GalacticWarsStep[GalacticWarsStep["LOSE"] = 2] = "LOSE";
 })(GalacticWarsStep || (GalacticWarsStep = {}));
 ///<reference path="./../../libs/jquery.d.ts"/>
-var RenderLocation = /** @class */ (function () {
+var RenderLocation = (function () {
     // Constructor
     function RenderLocation(locationString, scrolling) {
         if (scrolling === void 0) { scrolling = false; }
@@ -9539,7 +9341,7 @@ var RenderLocation = /** @class */ (function () {
         });
     };
     return RenderLocation;
-}());
+})();
 ///<reference path="Place.ts"/>
 ///<reference path="RenderLocation.ts"/>
 ///<reference path="RenderArea.ts"/>
@@ -9590,7 +9392,7 @@ Saving.registerNumber("gameGiftHealth", 0);
 Saving.registerNumber("gameGiftMagic", 0);
 // The gamemode
 Saving.registerString("gameGameMode", "normal");
-var Game = /** @class */ (function () {
+var Game = (function () {
     // Constructor
     function Game(gameMode) {
         // Render locations
@@ -9677,7 +9479,6 @@ var Game = /** @class */ (function () {
                 (Saving.loadBool("gridItemPossessedGreenSharkFin") ? 5 : 1) *
                 Math.ceil(100 * (1 - Math.exp(-(Saving.loadNumber("lollipopFarmLollipopsPlanted") - 20) / 5000))));
         }
-        // Else
         else {
             switch (Saving.loadNumber("lollipopFarmLollipopsPlanted")) {
                 case 1:
@@ -10186,7 +9987,6 @@ var Game = /** @class */ (function () {
                 // We just add the production as lollipops
                 this.lollipops.add(Saving.loadNumber("lollipopFarmProduction"));
             }
-            // Else
             else {
                 // If it's time for a new production
                 if (Saving.loadNumber("lollipopFarmTimeSinceLastProduction") >= Saving.loadNumber("lollipopFarmProduction") - 1) {
@@ -10229,7 +10029,6 @@ var Game = /** @class */ (function () {
                 // We reset the time
                 this.setDefaultLocalAutosaveTime();
             }
-            // Else, we decrease the local autosave time
             else
                 this.localAutosaveTime -= 1;
         }
@@ -10279,25 +10078,24 @@ var Game = /** @class */ (function () {
         }
     };
     return Game;
-}());
+})();
 ///<reference path="QuestEntity.ts"/>
-var GiantNougatMonster = /** @class */ (function (_super) {
+var GiantNougatMonster = (function (_super) {
     __extends(GiantNougatMonster, _super);
     // Constructor
     function GiantNougatMonster(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("The giant nougat monster", "the giant nougat monster"), new RenderArea(15, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(1, 0), new Pos(12, 1)), new CollisionBox(_this, new Pos(0, 1), new Pos(15, 2)), new CollisionBox(_this, new Pos(1, 3), new Pos(12, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("The giant nougat monster", "the giant nougat monster"), new RenderArea(15, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(1, 0), new Pos(12, 1)), new CollisionBox(this, new Pos(0, 1), new Pos(15, 2)), new CollisionBox(this, new Pos(1, 3), new Pos(12, 1))), new QuestEntityMovement());
         // Set the default step
-        _this.step = GiantNougatMonsterStep.ASLEEP;
+        this.step = GiantNougatMonsterStep.ASLEEP;
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(2000);
-        _this.setHp(2000);
+        this.setDestructible(true);
+        this.setMaxHp(2000);
+        this.setHp(2000);
         // Set the ascii art and the transparent character
-        _this.reDrawAscii();
-        _this.setTransparency(new RenderTransparency(" ", "%"));
-        return _this;
+        this.reDrawAscii();
+        this.setTransparency(new RenderTransparency(" ", "%"));
     }
     // update()
     GiantNougatMonster.prototype.update = function () {
@@ -10354,29 +10152,28 @@ var GiantNougatMonster = /** @class */ (function (_super) {
         }
     };
     return GiantNougatMonster;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="Quest.ts"/>
-var GiantNougatMonsterQuest = /** @class */ (function (_super) {
+var GiantNougatMonsterQuest = (function (_super) {
     __extends(GiantNougatMonsterQuest, _super);
     // Constructor
     function GiantNougatMonsterQuest(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 20);
+        this.resizeQuest(100, 20);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 19));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 19));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the walls
-        _this.addWalls();
+        this.addWalls();
         // Add the monster
-        _this.addMonster();
+        this.addMonster();
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You attack the giant nougat monster. It seems to be asleep."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You attack the giant nougat monster. It seems to be asleep."));
     }
     // Public methods
     GiantNougatMonsterQuest.prototype.configPlayerOrClone = function (entity) {
@@ -10442,7 +10239,7 @@ var GiantNougatMonsterQuest = /** @class */ (function (_super) {
         return false;
     };
     return GiantNougatMonsterQuest;
-}(Quest));
+})(Quest);
 var GiantNougatMonsterStep;
 (function (GiantNougatMonsterStep) {
     GiantNougatMonsterStep[GiantNougatMonsterStep["ASLEEP"] = 0] = "ASLEEP";
@@ -10450,11 +10247,11 @@ var GiantNougatMonsterStep;
     GiantNougatMonsterStep[GiantNougatMonsterStep["ANGRY"] = 2] = "ANGRY";
 })(GiantNougatMonsterStep || (GiantNougatMonsterStep = {}));
 ///<reference path="EqItem.ts"/>
-var GiantSpoon = /** @class */ (function (_super) {
+var GiantSpoon = (function (_super) {
     __extends(GiantSpoon, _super);
     // Constructor
     function GiantSpoon() {
-        return _super.call(this, "eqItemWeaponGiantSpoon", "eqItemWeaponGiantSpoonName", "eqItemWeaponGiantSpoonDescription", "eqItems/weapons/giantSpoon") || this;
+        _super.call(this, "eqItemWeaponGiantSpoon", "eqItemWeaponGiantSpoonName", "eqItemWeaponGiantSpoonDescription", "eqItems/weapons/giantSpoon");
     }
     // Public getters
     GiantSpoon.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -10463,13 +10260,13 @@ var GiantSpoon = /** @class */ (function (_super) {
         return qew;
     };
     return GiantSpoon;
-}(EqItem));
+})(EqItem);
 ///<reference path="EqItem.ts"/>
-var GiantSpoonOfDoom = /** @class */ (function (_super) {
+var GiantSpoonOfDoom = (function (_super) {
     __extends(GiantSpoonOfDoom, _super);
     // Constructor
     function GiantSpoonOfDoom() {
-        return _super.call(this, "eqItemWeaponGiantSpoonOfDoom", "eqItemWeaponGiantSpoonOfDoomName", "eqItemWeaponGiantSpoonOfDoomDescription", "eqItems/weapons/giantSpoonOfDoom") || this;
+        _super.call(this, "eqItemWeaponGiantSpoonOfDoom", "eqItemWeaponGiantSpoonOfDoomName", "eqItemWeaponGiantSpoonOfDoomDescription", "eqItems/weapons/giantSpoonOfDoom");
     }
     // Public getters
     GiantSpoonOfDoom.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -10478,34 +10275,33 @@ var GiantSpoonOfDoom = /** @class */ (function (_super) {
         return qew;
     };
     return GiantSpoonOfDoom;
-}(EqItem));
+})(EqItem);
 ///<reference path="Quest.ts"/>
-var Hell = /** @class */ (function (_super) {
+var Hell = (function (_super) {
     __extends(Hell, _super);
     // Constructor
     function Hell(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(150, 30);
+        this.resizeQuest(150, 30);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 23));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 23));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the floor
-        _this.addFloor(0, 20);
+        this.addFloor(0, 20);
         // Add the lava entities
-        _this.addLava(new Pos(53, 27), new Pos(20, 2));
-        _this.addLava(new Pos(92, 27), new Pos(16, 2));
+        this.addLava(new Pos(53, 27), new Pos(20, 2));
+        this.addLava(new Pos(92, 27), new Pos(16, 2));
         // Add the devil
-        _this.addDevil(new Pos(130, 2));
+        this.addDevil(new Pos(130, 2));
         // Add Camazotz
-        _this.addCamazotz(new Pos(Random.between(70, 100), 2));
+        this.addCamazotz(new Pos(Random.between(70, 100), 2));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter Hell."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter Hell."));
     }
     // Public methods
     Hell.prototype.castPlayerTeleport = function () {
@@ -10610,8 +10406,8 @@ var Hell = /** @class */ (function (_super) {
         return false;
     };
     return Hell;
-}(Quest));
-var Hotkey = /** @class */ (function () {
+})(Quest);
+var Hotkey = (function () {
     // Constructor
     function Hotkey(keyString, callbackCollection) {
         this.pressed = false; // Is this hotkey pressed ?
@@ -10694,18 +10490,17 @@ var Hotkey = /** @class */ (function () {
         this.pressed = pressed;
     };
     return Hotkey;
-}());
+})();
 ///<reference path="Place.ts"/>
-var InsideFortress = /** @class */ (function (_super) {
+var InsideFortress = (function (_super) {
     __extends(InsideFortress, _super);
     // Constructor
     function InsideFortress(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/fortress/inside"), 0, 4);
-        _this.update();
-        return _this;
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/fortress/inside"), 0, 4);
+        this.update();
     }
     // getRenderArea()
     InsideFortress.prototype.getRenderArea = function () {
@@ -10763,23 +10558,22 @@ var InsideFortress = /** @class */ (function (_super) {
         this.addThirdDoorButton(78, 10);
     };
     return InsideFortress;
-}(Place));
+})(Place);
 ///<reference path="Place.ts"/>
-var InsideYourBox = /** @class */ (function (_super) {
+var InsideYourBox = (function (_super) {
     __extends(InsideYourBox, _super);
     // Constructor
     function InsideYourBox(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // The sweets
-        _this.sweets = [];
+        this.sweets = [];
         // Launch the interval
-        _this.intervalID = setInterval(_this.actionInterval.bind(_this), 100);
+        this.intervalID = setInterval(this.actionInterval.bind(this), 100);
         // Resize and update
-        _this.renderArea.resize(100, 40);
-        _this.update();
-        return _this;
+        this.renderArea.resize(100, 40);
+        this.update();
     }
     // getRenderArea()
     InsideYourBox.prototype.getRenderArea = function () {
@@ -10815,8 +10609,8 @@ var InsideYourBox = /** @class */ (function (_super) {
         this.renderArea.drawArray(Database.getAscii("general/insideYourBox/text"), 0, 5, new RenderTransparency(" ", "%"));
     };
     return InsideYourBox;
-}(Place));
-var InsideYourBoxSweet = /** @class */ (function () {
+})(Place);
+var InsideYourBoxSweet = (function () {
     // Constructor
     function InsideYourBoxSweet() {
         // Set the ascii art name
@@ -10841,20 +10635,19 @@ var InsideYourBoxSweet = /** @class */ (function () {
         this.pos.y += Math.floor(this.speed);
     };
     return InsideYourBoxSweet;
-}());
+})();
 ///<reference path="Place.ts"/>
-var Inventory = /** @class */ (function (_super) {
+var Inventory = (function (_super) {
     __extends(Inventory, _super);
     // Constructor
     function Inventory(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Resize the area
-        _this.renderArea.resize(99, 136);
+        this.renderArea.resize(99, 136);
         // Update
-        _this.update();
-        return _this;
+        this.update();
     }
     // Public methods
     Inventory.prototype.update = function () {
@@ -10971,13 +10764,13 @@ var Inventory = /** @class */ (function (_super) {
     Inventory.prototype.drawStats = function (x, y) {
         // Set the additional damage text
         var additionalDamageText;
-        if (Saving.loadBool("gridItemPossessedXinopherydonClaw") && (this.getGame().getSelectedEqItems()["bodyArmour"] != null && this.getGame().getSelectedEqItems()["bodyArmour"].getSavingName() == "eqItemBodyArmoursEnchantedKnightBodyArmour")) // If we have the armour en the claw
+        if (Saving.loadBool("gridItemPossessedXinopherydonClaw") && (this.getGame().getSelectedEqItems()["bodyArmour"] != null && this.getGame().getSelectedEqItems()["bodyArmour"].getSavingName() == "eqItemBodyArmoursEnchantedKnightBodyArmour"))
             additionalDamageText = "";
-        else if (Saving.loadBool("gridItemPossessedXinopherydonClaw")) // Else, if we just have the claw
+        else if (Saving.loadBool("gridItemPossessedXinopherydonClaw"))
             additionalDamageText = " x 2";
-        else if ((this.getGame().getSelectedEqItems()["bodyArmour"] != null && this.getGame().getSelectedEqItems()["bodyArmour"].getSavingName() == "eqItemBodyArmoursEnchantedKnightBodyArmour")) // Else, if we just have the armour
+        else if ((this.getGame().getSelectedEqItems()["bodyArmour"] != null && this.getGame().getSelectedEqItems()["bodyArmour"].getSavingName() == "eqItemBodyArmoursEnchantedKnightBodyArmour"))
             additionalDamageText = " / 2";
-        else // Else, we have nothing special
+        else
             additionalDamageText = "";
         // This array will contain the special abilities
         var specialAbilities = [];
@@ -11069,13 +10862,13 @@ var Inventory = /** @class */ (function (_super) {
         $("#" + Saving.loadString("gameBootsSelected")).prop('selected', true);
     };
     return Inventory;
-}(Place));
+})(Place);
 ///<reference path="EqItem.ts"/>
-var IronAxe = /** @class */ (function (_super) {
+var IronAxe = (function (_super) {
     __extends(IronAxe, _super);
     // Constructor
     function IronAxe() {
-        return _super.call(this, "eqItemWeaponIronAxe", "eqItemWeaponIronAxeName", "eqItemWeaponIronAxeDescription", "eqItems/weapons/ironAxe") || this;
+        _super.call(this, "eqItemWeaponIronAxe", "eqItemWeaponIronAxeName", "eqItemWeaponIronAxeDescription", "eqItems/weapons/ironAxe");
     }
     // Public getters
     IronAxe.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -11084,25 +10877,24 @@ var IronAxe = /** @class */ (function (_super) {
         return qew;
     };
     return IronAxe;
-}(EqItem));
+})(EqItem);
 ///<reference path="QuestEntity.ts"/>
-var JellyFish = /** @class */ (function (_super) {
+var JellyFish = (function (_super) {
     __extends(JellyFish, _super);
     // Constructor
     function JellyFish(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A jellyfish", "a jellyfish"), new RenderArea(6, 5), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 1), new Pos(6, 1)), new CollisionBox(_this, new Pos(1, 2), new Pos(4, 1)), new CollisionBox(_this, new Pos(0, 3), new Pos(4, 1)), new CollisionBox(_this, new Pos(1, 4), new Pos(4, 1))), new QuestEntityMovement(new Pos(-1, 0))) || this;
+        _super.call(this, quest, pos, new Naming("A jellyfish", "a jellyfish"), new RenderArea(6, 5), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 1), new Pos(6, 1)), new CollisionBox(this, new Pos(1, 2), new Pos(4, 1)), new CollisionBox(this, new Pos(0, 3), new Pos(4, 1)), new CollisionBox(this, new Pos(1, 4), new Pos(4, 1))), new QuestEntityMovement(new Pos(-1, 0)));
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(42);
-        _this.setHp(42);
+        this.setDestructible(true);
+        this.setMaxHp(42);
+        this.setHp(42);
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/jellyFish"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/jellyFish"));
         // Set the transparency
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Poisoned tentacles", "poisoned tentacles"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(8, 7))), 2));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Poisoned tentacles", "poisoned tentacles"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(8, 7))), 2));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
     }
     // Public methods
     JellyFish.prototype.update = function () {
@@ -11116,7 +10908,7 @@ var JellyFish = /** @class */ (function (_super) {
         this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage() + " (and found " + Algo.pluralFormat(this.getQuest().foundCandies(120), " candy", " candies") + ")", this.getQuest().getCandiesFoundMessage()));
     };
     return JellyFish;
-}(QuestEntity));
+})(QuestEntity);
 var Keyboard;
 (function (Keyboard) {
     // The game
@@ -11176,27 +10968,26 @@ var Keyboard;
     Keyboard.isKeyPressed = isKeyPressed;
 })(Keyboard || (Keyboard = {}));
 ///<reference path="QuestEntity.ts"/>
-var Knight = /** @class */ (function (_super) {
+var Knight = (function (_super) {
     __extends(Knight, _super);
     // Constructor
     function Knight(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A knight", "a knight"), new RenderArea(15, 6), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(3, 1), new Pos(1, 1)), new CollisionBox(_this, new Pos(6, 1), new Pos(3, 1)), new CollisionBox(_this, new Pos(0, 2), new Pos(9, 1)), new CollisionBox(_this, new Pos(2, 3), new Pos(13, 1)), new CollisionBox(_this, new Pos(3, 4), new Pos(9, 1)), new CollisionBox(_this, new Pos(4, 5), new Pos(2, 1)), new CollisionBox(_this, new Pos(9, 5), new Pos(2, 1))), new QuestEntityMovement(new Pos(0, 0))) || this;
+        _super.call(this, quest, pos, new Naming("A knight", "a knight"), new RenderArea(15, 6), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(3, 1), new Pos(1, 1)), new CollisionBox(this, new Pos(6, 1), new Pos(3, 1)), new CollisionBox(this, new Pos(0, 2), new Pos(9, 1)), new CollisionBox(this, new Pos(2, 3), new Pos(13, 1)), new CollisionBox(this, new Pos(3, 4), new Pos(9, 1)), new CollisionBox(this, new Pos(4, 5), new Pos(2, 1)), new CollisionBox(this, new Pos(9, 5), new Pos(2, 1))), new QuestEntityMovement(new Pos(0, 0)));
         // Default movement related variables values
-        _this.moving = false;
-        _this.currentAsciiNumber = 1;
+        this.moving = false;
+        this.currentAsciiNumber = 1;
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(150);
-        _this.setHp(150);
+        this.setDestructible(true);
+        this.setMaxHp(150);
+        this.setHp(150);
         // Set the ascii art and the transparent character
-        _this.reDrawAscii();
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.reDrawAscii();
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("A sword", "a sword"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, 0), new Pos(17, 7))), 70));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(8);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("A sword", "a sword"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, 0), new Pos(17, 7))), 70));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(8);
     }
     // update()
     Knight.prototype.update = function () {
@@ -11208,7 +10999,6 @@ var Knight = /** @class */ (function (_super) {
                 this.getQuestEntityMovement().setOffset(new Pos(-3, 0)); // The movement
             }
         }
-        // Else, if we're moving
         else {
             // If we're not able to move anymore
             if (this.testNewGlobalPosition(this.getGlobalPosition().plus(new Pos(-3, 0))) == false) {
@@ -11217,7 +11007,6 @@ var Knight = /** @class */ (function (_super) {
                 this.currentAsciiNumber = 1; // currentAsciiNumber
                 this.reDrawAscii();
             }
-            // Else we're really moving
             else {
                 // Change the currentAsciiNumber
                 this.currentAsciiNumber += 1;
@@ -11240,13 +11029,13 @@ var Knight = /** @class */ (function (_super) {
         this.getRenderArea().drawArray(Database.getAscii("places/quests/castleEntrance/knight" + this.currentAsciiNumber.toString()));
     };
     return Knight;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var KnightBodyArmour = /** @class */ (function (_super) {
+var KnightBodyArmour = (function (_super) {
     __extends(KnightBodyArmour, _super);
     // Constructor
     function KnightBodyArmour() {
-        return _super.call(this, "eqItemBodyArmoursKnightBodyArmour", "eqItemBodyArmoursKnightBodyArmourName", "eqItemBodyArmoursKnightBodyArmourDescription", "eqItems/bodyArmours/knightBodyArmour") || this;
+        _super.call(this, "eqItemBodyArmoursKnightBodyArmour", "eqItemBodyArmoursKnightBodyArmourName", "eqItemBodyArmoursKnightBodyArmourDescription", "eqItems/bodyArmours/knightBodyArmour");
     }
     // Special ability
     KnightBodyArmour.prototype.getSpecialAbility = function () {
@@ -11257,65 +11046,62 @@ var KnightBodyArmour = /** @class */ (function (_super) {
         return Math.ceil(damage - damage * 30 / 100);
     };
     return KnightBodyArmour;
-}(EqItem));
+})(EqItem);
 ///<reference path="QuestEntity.ts"/>
-var Lava = /** @class */ (function (_super) {
+var Lava = (function (_super) {
     __extends(Lava, _super);
     // Constructor
     function Lava(quest, globalPosition, size) {
-        var _this = 
         // Call the mother constructor
-        _super.call(this, quest, globalPosition, new Naming("Lava", "lava")) || this;
+        _super.call(this, quest, globalPosition, new Naming("Lava", "lava"));
         // Set the team (nature)
-        _this.setTeam(QuestEntityTeam.NATURE);
+        this.setTeam(QuestEntityTeam.NATURE);
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Fire", "fire"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), size)), 1000));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Fire", "fire"), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), size)), 1000));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
     }
     return Lava;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var LeatherBoots = /** @class */ (function (_super) {
+var LeatherBoots = (function (_super) {
     __extends(LeatherBoots, _super);
     // Constructor
     function LeatherBoots() {
-        return _super.call(this, "eqItemBootsLeatherBoots", "eqItemBootsLeatherBootsName", "eqItemBootsLeatherBootsDescription", "eqItems/boots/leatherBoots") || this;
+        _super.call(this, "eqItemBootsLeatherBoots", "eqItemBootsLeatherBootsName", "eqItemBootsLeatherBootsDescription", "eqItems/boots/leatherBoots");
     }
     return LeatherBoots;
-}(EqItem));
+})(EqItem);
 ///<reference path="EqItem.ts"/>
-var LeatherGloves = /** @class */ (function (_super) {
+var LeatherGloves = (function (_super) {
     __extends(LeatherGloves, _super);
     // Constructor
     function LeatherGloves() {
-        return _super.call(this, "eqItemGlovesLeatherGloves", "eqItemGlovesLeatherGlovesName", "eqItemGlovesLeatherGlovesDescription", "eqItems/gloves/leatherGloves") || this;
+        _super.call(this, "eqItemGlovesLeatherGloves", "eqItemGlovesLeatherGlovesName", "eqItemGlovesLeatherGlovesDescription", "eqItems/gloves/leatherGloves");
     }
     return LeatherGloves;
-}(EqItem));
+})(EqItem);
 ///<reference path="Place.ts"/>
 Saving.registerBool("lighthousePuzzleDone", false);
-var Lighthouse = /** @class */ (function (_super) {
+var Lighthouse = (function (_super) {
     __extends(Lighthouse, _super);
     // Constructor
     function Lighthouse(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Selected question id
-        _this.selectedQuestionId = "lighthouseQuestionWho";
+        this.selectedQuestionId = "lighthouseQuestionWho";
         // Speech id
-        _this.speechId = null;
+        this.speechId = null;
         // Show the puzzle?
-        _this.showPuzzle = false;
+        this.showPuzzle = false;
         // The puzzle
-        _this.puzzle = null;
+        this.puzzle = null;
         // We create the questions array
-        _this.createQuestionsArray();
+        this.createQuestionsArray();
         // We resize and update
-        _this.renderArea.resizeFromArray(Database.getAscii("places/lighthouse/lighthouse"), 0, 4); // 4 in order to add a space below the lighthouse, so that it looks nicer
-        _this.update();
-        return _this;
+        this.renderArea.resizeFromArray(Database.getAscii("places/lighthouse/lighthouse"), 0, 4); // 4 in order to add a space below the lighthouse, so that it looks nicer
+        this.update();
     }
     // getRenderArea()
     Lighthouse.prototype.getRenderArea = function () {
@@ -11410,8 +11196,8 @@ var Lighthouse = /** @class */ (function (_super) {
         $("#" + this.selectedQuestionId).prop('selected', true);
     };
     return Lighthouse;
-}(Place));
-var LighthousePuzzle = /** @class */ (function () {
+})(Place);
+var LighthousePuzzle = (function () {
     // Constructor
     function LighthousePuzzle(lighthouse) {
         // Create the parts
@@ -11488,8 +11274,8 @@ var LighthousePuzzle = /** @class */ (function () {
         this.parts[6][3] = new LighthousePuzzlePart(lighthouse, LighthousePuzzlePartType.BLANK, 0, new Pos(6, 3), false);
     };
     return LighthousePuzzle;
-}());
-var LighthousePuzzlePart = /** @class */ (function () {
+})();
+var LighthousePuzzlePart = (function () {
     // Constructor
     function LighthousePuzzlePart(lighthouse, type, lives, arrayPos, shown) {
         if (shown === void 0) { shown = false; }
@@ -11593,13 +11379,10 @@ var LighthousePuzzlePart = /** @class */ (function () {
                 // If we can show the part above, we show it
                 if (this.arrayPos.y > 0 && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x][this.arrayPos.y - 1] != null && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x][this.arrayPos.y - 1].getShown() == false)
                     this.lighthouse.getPuzzle().getParts()[this.arrayPos.x][this.arrayPos.y - 1].setShown(true);
-                // If we can show the part on the right, we show it
                 else if (this.arrayPos.x < 6 && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x + 1][this.arrayPos.y] != null && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x + 1][this.arrayPos.y].getShown() == false)
                     this.lighthouse.getPuzzle().getParts()[this.arrayPos.x + 1][this.arrayPos.y].setShown(true);
-                // If we can show the part below, we show it
                 else if (this.arrayPos.y < 4 && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x][this.arrayPos.y + 1] != null && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x][this.arrayPos.y + 1].getShown() == false)
                     this.lighthouse.getPuzzle().getParts()[this.arrayPos.x][this.arrayPos.y + 1].setShown(true);
-                // If we can show the part on the left, we show it
                 else if (this.arrayPos.x > 0 && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x - 1][this.arrayPos.y] != null && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x - 1][this.arrayPos.y].getShown() == false)
                     this.lighthouse.getPuzzle().getParts()[this.arrayPos.x - 1][this.arrayPos.y].setShown(true);
                 break;
@@ -11667,7 +11450,6 @@ var LighthousePuzzlePart = /** @class */ (function () {
                 // If we can show the part on the right, we show it
                 if (this.arrayPos.x < 6 && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x + 1][this.arrayPos.y] != null && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x + 1][this.arrayPos.y].getShown() == false)
                     this.lighthouse.getPuzzle().getParts()[this.arrayPos.x + 1][this.arrayPos.y].setShown(true);
-                // If we can show the part on the left, we show it
                 else if (this.arrayPos.x > 0 && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x - 1][this.arrayPos.y] != null && this.lighthouse.getPuzzle().getParts()[this.arrayPos.x - 1][this.arrayPos.y].getShown() == false)
                     this.lighthouse.getPuzzle().getParts()[this.arrayPos.x - 1][this.arrayPos.y].setShown(true);
                 break;
@@ -11681,7 +11463,6 @@ var LighthousePuzzlePart = /** @class */ (function () {
                     // Change the speech
                     this.lighthouse.setSpeechId("lighthouseFoundStone");
                 }
-                // Else, we already had the stone before
                 else {
                     // Change the speech
                     this.lighthouse.setSpeechId("lighthouseFoundStoneAgain");
@@ -11695,7 +11476,7 @@ var LighthousePuzzlePart = /** @class */ (function () {
         this.lighthouse.getGame().updatePlace();
     };
     return LighthousePuzzlePart;
-}());
+})();
 var LighthousePuzzlePartType;
 (function (LighthousePuzzlePartType) {
     LighthousePuzzlePartType[LighthousePuzzlePartType["BLANK"] = 0] = "BLANK";
@@ -11713,11 +11494,11 @@ var LighthousePuzzlePartType;
     LighthousePuzzlePartType[LighthousePuzzlePartType["STONE"] = 12] = "STONE";
 })(LighthousePuzzlePartType || (LighthousePuzzlePartType = {}));
 ///<reference path="EqItem.ts"/>
-var LightweightBodyArmour = /** @class */ (function (_super) {
+var LightweightBodyArmour = (function (_super) {
     __extends(LightweightBodyArmour, _super);
     // Constructor
     function LightweightBodyArmour() {
-        return _super.call(this, "eqItemBodyArmoursLightweightBodyArmour", "eqItemBodyArmoursLightweightBodyArmourName", "eqItemBodyArmoursLightweightBodyArmourDescription", "eqItems/bodyArmours/lightweightBodyArmour") || this;
+        _super.call(this, "eqItemBodyArmoursLightweightBodyArmour", "eqItemBodyArmoursLightweightBodyArmourName", "eqItemBodyArmoursLightweightBodyArmourDescription", "eqItems/bodyArmours/lightweightBodyArmour");
     }
     // Special ability
     LightweightBodyArmour.prototype.getSpecialAbility = function () {
@@ -11728,7 +11509,7 @@ var LightweightBodyArmour = /** @class */ (function (_super) {
         return Math.ceil(damage - damage * 15 / 100);
     };
     return LightweightBodyArmour;
-}(EqItem));
+})(EqItem);
 var LocalSaving;
 (function (LocalSaving) {
     // Public functions
@@ -11737,7 +11518,6 @@ var LocalSaving;
         if (loadString(slotId) == null) {
             return "empty";
         }
-        // Else, there's a save on this slot
         else {
             return loadString(slotId) + ", candies : " + loadString(slotId + ".gameCandiesCurrent");
         }
@@ -11854,32 +11634,31 @@ Saving.registerNumber("lollipopFarmPondConversionRate", 0);
 // The candies production
 Saving.registerNumber("lollipopFarmPreviousCandiesProduction", 0);
 Saving.registerNumber("lollipopFarmCurrentCandiesProduction", 0);
-var LollipopFarm = /** @class */ (function (_super) {
+var LollipopFarm = (function (_super) {
     __extends(LollipopFarm, _super);
     // Constructor
     function LollipopFarm(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Pond lines
-        _this.pondLines = [];
+        this.pondLines = [];
         // Pond lolligators
-        _this.pondLolligators = [];
+        this.pondLolligators = [];
         // Resize the area
-        _this.renderArea.resizeFromArray(Database.getAscii("places/lollipopFarm/lollipopFarm"), 0, 12);
+        this.renderArea.resizeFromArray(Database.getAscii("places/lollipopFarm/lollipopFarm"), 0, 12);
         // Update
-        _this.update();
+        this.update();
         // Add pond lines to the pond lines array
-        _this.addPondLine(new PondLine(8, 37)); // first line, index 0 but at y position 3 on the pond
-        _this.addPondLine(new PondLine(9, 38)); // second line, index 1, y position 4
-        _this.addPondLine(new PondLine(9, 40)); // etc
-        _this.addPondLine(new PondLine(8, 43));
-        _this.addPondLine(new PondLine(8, 46));
-        _this.addPondLine(new PondLine(3, 47));
-        _this.addPondLine(new PondLine(4, 48));
-        _this.addPondLine(new PondLine(9, 45));
-        _this.addPondLine(new PondLine(12, 44));
-        return _this;
+        this.addPondLine(new PondLine(8, 37)); // first line, index 0 but at y position 3 on the pond
+        this.addPondLine(new PondLine(9, 38)); // second line, index 1, y position 4
+        this.addPondLine(new PondLine(9, 40)); // etc
+        this.addPondLine(new PondLine(8, 43));
+        this.addPondLine(new PondLine(8, 46));
+        this.addPondLine(new PondLine(3, 47));
+        this.addPondLine(new PondLine(4, 48));
+        this.addPondLine(new PondLine(9, 45));
+        this.addPondLine(new PondLine(12, 44));
     }
     // Public methods
     LollipopFarm.prototype.willBeDisplayed = function () {
@@ -11982,7 +11761,6 @@ var LollipopFarm = /** @class */ (function (_super) {
             this.renderArea.addAsciiRealButton("Plant 1 lollipop", x, y + 2, "lollipopFarmPlant1LollipopButton");
             this.renderArea.addLinkCall(".lollipopFarmPlant1LollipopButton", new CallbackCollection(this.plantLollipops.bind(this, 1)));
         }
-        // Else, if the second is unlocked
         else if (Saving.loadBool("lollipopFarmPlant10LollipopsButtonUnlocked") == true) {
             // We set the x position to 0
             plantingButtonsXPos = 0;
@@ -12123,14 +11901,12 @@ var LollipopFarm = /** @class */ (function (_super) {
                 else
                     str += Math.floor(Saving.loadNumber("lollipopFarmProduction") / 3600).toString() + " hours";
             }
-            // Else, if the production is every minute
             else if (Saving.loadNumber("lollipopFarmProduction") >= 60) {
                 if (Math.floor(Saving.loadNumber("lollipopFarmProduction") / 60) == 1)
                     str += "minute";
                 else
                     str += Math.floor(Saving.loadNumber("lollipopFarmProduction") / 60).toString() + " minutes";
             }
-            // Else, the production is every second
             else {
                 if (Saving.loadNumber("lollipopFarmProduction") == 1)
                     str += "second";
@@ -12210,13 +11986,13 @@ var LollipopFarm = /** @class */ (function (_super) {
         Saving.saveNumber("lollipopFarmPondConversionRate", Math.ceil(Saving.loadNumber("lollipopFarmPondHowManyLolligators") * 3 + Math.pow(1.3, Saving.loadNumber("lollipopFarmPondHowManyLolligators"))));
     };
     return LollipopFarm;
-}(Place));
+})(Place);
 ///<reference path="StatusBarResource.ts"/>
-var Lollipops = /** @class */ (function (_super) {
+var Lollipops = (function (_super) {
     __extends(Lollipops, _super);
     // Constructor
     function Lollipops(game, savingPrefix) {
-        return _super.call(this, game, savingPrefix) || this;
+        _super.call(this, game, savingPrefix);
     }
     // Public methods
     Lollipops.prototype.getCurrentAsString = function (totalSize) {
@@ -12254,7 +12030,7 @@ var Lollipops = /** @class */ (function (_super) {
         return prefix + base + suffix;
     };
     return Lollipops;
-}(StatusBarResource));
+})(StatusBarResource);
 ///<reference path="Place.ts"/>
 Saving.registerBool("lonelyHouseOpenBoxDone", false);
 Saving.registerBool("lonelyHouseShakeBoxDone", false);
@@ -12263,15 +12039,14 @@ Saving.registerBool("lonelyHouseKickBoxDone", false);
 Saving.registerBool("lonelyHouseAskTheBoxToOpenItselfDone", false);
 Saving.registerBool("lonelyHouseLureTheBoxWithACandyDone", false);
 Saving.registerBool("lonelyHouseTakeTheBoxDone", false);
-var LonelyHouse = /** @class */ (function (_super) {
+var LonelyHouse = (function (_super) {
     __extends(LonelyHouse, _super);
     // Constructor
     function LonelyHouse(game) {
-        var _this = _super.call(this, game) || this;
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/village/fifthHouse"), 0, 3);
-        _this.update();
-        return _this;
+        _super.call(this, game);
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/village/fifthHouse"), 0, 3);
+        this.update();
     }
     // getRenderArea()
     LonelyHouse.prototype.getRenderArea = function () {
@@ -12396,30 +12171,29 @@ var LonelyHouse = /** @class */ (function (_super) {
         }
     };
     return LonelyHouse;
-}(Place));
+})(Place);
 ///<reference path="QuestEntity.ts"/>
-var LostTribeWarrior = /** @class */ (function (_super) {
+var LostTribeWarrior = (function (_super) {
     __extends(LostTribeWarrior, _super);
     // Constructor
     function LostTribeWarrior(quest, pos, watchedAreaPosition, watchedAreaPosition2) {
-        var _this = _super.call(this, quest, pos, new Naming("A lost tribe warrior", "a lost tribe warrior"), new RenderArea(4, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(1, 1)), new CollisionBox(_this, new Pos(0, 1), new Pos(4, 3))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A lost tribe warrior", "a lost tribe warrior"), new RenderArea(4, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(1, 1)), new CollisionBox(this, new Pos(0, 1), new Pos(4, 3))), new QuestEntityMovement());
         // Create the watched area
-        _this.watchedAreaPosition = watchedAreaPosition;
-        _this.watchedAreaPosition2 = watchedAreaPosition2;
+        this.watchedAreaPosition = watchedAreaPosition;
+        this.watchedAreaPosition2 = watchedAreaPosition2;
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
-        _this.getQuestEntityMovement().setWormsLike(true);
+        this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setWormsLike(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(200);
-        _this.setHp(200);
+        this.setDestructible(true);
+        this.setMaxHp(200);
+        this.setHp(200);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theHole/lostTribeWarrior"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theHole/lostTribeWarrior"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("A tribal spear", "a tribal spear"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(6, 6))), 80));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(1, 2);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("A tribal spear", "a tribal spear"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(6, 6))), 80));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(1, 2);
     }
     // update()
     LostTribeWarrior.prototype.update = function () {
@@ -12429,7 +12203,6 @@ var LostTribeWarrior = /** @class */ (function (_super) {
             // We go towards the player
             this.goTowards(this.getRenderAreaCenter(), this.getQuest().getGame().getPlayer().getRenderAreaCenter());
         }
-        // Else
         else {
             // We heal ourselves
             this.heal(1);
@@ -12456,7 +12229,7 @@ var LostTribeWarrior = /** @class */ (function (_super) {
         return true;
     };
     return LostTribeWarrior;
-}(QuestEntity));
+})(QuestEntity);
 var MainLoadingType;
 (function (MainLoadingType) {
     MainLoadingType[MainLoadingType["NONE"] = 0] = "NONE";
@@ -12473,14 +12246,13 @@ Saving.registerBool("mainMapDoneCaveEntrance", false);
 Saving.registerBool("mainMapDonePier", false);
 Saving.registerBool("mainMapDoneForest", false);
 Saving.registerBool("mainMapDoneCastleEntrance", false);
-var MainMap = /** @class */ (function (_super) {
+var MainMap = (function (_super) {
     __extends(MainMap, _super);
     // Constructor
     function MainMap(game) {
-        var _this = _super.call(this, game) || this;
-        _this.renderArea = new RenderArea();
-        _this.load();
-        return _this;
+        _super.call(this, game);
+        this.renderArea = new RenderArea();
+        this.load();
     }
     // willStopBeingDisplayed()
     MainMap.prototype.willStopBeingDisplayed = function () {
@@ -12768,38 +12540,37 @@ var MainMap = /** @class */ (function (_super) {
         this.renderArea.addLinkCall(".mapWishingWellButton, .mapWishingWellComment", new CallbackCollection(this.goToWishingWell.bind(this)));
     };
     return MainMap;
-}(Place));
+})(Place);
 ///<reference path="QuestEntity.ts"/>
-var MediumFish = /** @class */ (function (_super) {
+var MediumFish = (function (_super) {
     __extends(MediumFish, _super);
     // Constructor
     function MediumFish(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A fish", "a fish"), new RenderArea(8, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(1, 1), new Pos(7, 1)), new CollisionBox(_this, new Pos(0, 2), new Pos(8, 1)), new CollisionBox(_this, new Pos(1, 3), new Pos(7, 1))), new QuestEntityMovement(new Pos(-1, 0))) || this;
+        _super.call(this, quest, pos, new Naming("A fish", "a fish"), new RenderArea(8, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(1, 1), new Pos(7, 1)), new CollisionBox(this, new Pos(0, 2), new Pos(8, 1)), new CollisionBox(this, new Pos(1, 3), new Pos(7, 1))), new QuestEntityMovement(new Pos(-1, 0)));
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(30);
-        _this.setHp(30);
+        this.setDestructible(true);
+        this.setMaxHp(30);
+        this.setHp(30);
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/mediumFish"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/mediumFish"));
         // Set the transparency
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its fins", "its fins"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(10, 6))), 3));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(4);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its fins", "its fins"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(10, 6))), 3));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(4);
     }
     // willDie()
     MediumFish.prototype.willDie = function () {
         this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage() + " (and found " + Algo.pluralFormat(this.getQuest().foundCandies(15), " candy", " candies") + ")", this.getQuest().getCandiesFoundMessage()));
     };
     return MediumFish;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var MerchantHat = /** @class */ (function (_super) {
+var MerchantHat = (function (_super) {
     __extends(MerchantHat, _super);
     // Constructor
     function MerchantHat() {
-        return _super.call(this, "eqItemHatMerchantHat", "eqItemHatMerchantHatName", "eqItemHatMerchantHatDescription", "eqItems/hats/merchantHat") || this;
+        _super.call(this, "eqItemHatMerchantHat", "eqItemHatMerchantHatName", "eqItemHatMerchantHatDescription", "eqItems/hats/merchantHat");
     }
     // Special ability
     MerchantHat.prototype.getSpecialAbility = function () {
@@ -12810,57 +12581,55 @@ var MerchantHat = /** @class */ (function (_super) {
         return howMany * 7;
     };
     return MerchantHat;
-}(EqItem));
+})(EqItem);
 ///<reference path="QuestEntity.ts"/>
-var MiniShark = /** @class */ (function (_super) {
+var MiniShark = (function (_super) {
     __extends(MiniShark, _super);
     // Constructor
     function MiniShark(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A dangerous fish", "a dangerous fish"), new RenderArea(19, 5), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(8, 1), new Pos(2, 1)), new CollisionBox(_this, new Pos(17, 1), new Pos(2, 1)), new CollisionBox(_this, new Pos(5, 2), new Pos(14, 1)), new CollisionBox(_this, new Pos(2, 3), new Pos(17, 1)), new CollisionBox(_this, new Pos(0, 4), new Pos(12, 1)), new CollisionBox(_this, new Pos(18, 4), new Pos(1, 1))), new QuestEntityMovement(new Pos(-1, 0))) || this;
+        _super.call(this, quest, pos, new Naming("A dangerous fish", "a dangerous fish"), new RenderArea(19, 5), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(8, 1), new Pos(2, 1)), new CollisionBox(this, new Pos(17, 1), new Pos(2, 1)), new CollisionBox(this, new Pos(5, 2), new Pos(14, 1)), new CollisionBox(this, new Pos(2, 3), new Pos(17, 1)), new CollisionBox(this, new Pos(0, 4), new Pos(12, 1)), new CollisionBox(this, new Pos(18, 4), new Pos(1, 1))), new QuestEntityMovement(new Pos(-1, 0)));
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(70);
-        _this.setHp(70);
+        this.setDestructible(true);
+        this.setMaxHp(70);
+        this.setHp(70);
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/miniShark"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/miniShark"));
         // Set the transparency
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its teeth", "its teeth"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(21, 7))), 8));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(2);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its teeth", "its teeth"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(21, 7))), 8));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(2);
     }
     // willDie()
     MiniShark.prototype.willDie = function () {
         this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage() + " (and found " + Algo.pluralFormat(this.getQuest().foundCandies(50 + 10 * Random.upTo(5)), " candy", " candies") + ")", this.getQuest().getCandiesFoundMessage()));
     };
     return MiniShark;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var MonkeyWizard = /** @class */ (function (_super) {
+var MonkeyWizard = (function (_super) {
     __extends(MonkeyWizard, _super);
     // Constructor
     function MonkeyWizard(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A monkey wizard", "a monkey wizard"), new RenderArea(4, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(3, 0), new Pos(1, 1)), new CollisionBox(_this, new Pos(1, 1), new Pos(3, 1)), new CollisionBox(_this, new Pos(0, 2), new Pos(4, 1)), new CollisionBox(_this, new Pos(0, 3), new Pos(4, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A monkey wizard", "a monkey wizard"), new RenderArea(4, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(3, 0), new Pos(1, 1)), new CollisionBox(this, new Pos(1, 1), new Pos(3, 1)), new CollisionBox(this, new Pos(0, 2), new Pos(4, 1)), new CollisionBox(this, new Pos(0, 3), new Pos(4, 1))), new QuestEntityMovement());
         // Set the timers
-        _this.timer = 0;
-        _this.bigTimer = 0;
+        this.timer = 0;
+        this.bigTimer = 0;
         // At first we're going left
-        _this.goingLeft = true;
+        this.goingLeft = true;
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
-        _this.getQuestEntityMovement().setWormsLike(false);
+        this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setWormsLike(false);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(300);
-        _this.setHp(300);
+        this.setDestructible(true);
+        this.setMaxHp(300);
+        this.setHp(300);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/monkeyWizard/monkeyWizard"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/monkeyWizard/monkeyWizard"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its staff", "its staff"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(6, 6))), 3));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(1);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its staff", "its staff"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(6, 6))), 3));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(1);
     }
     // update()
     MonkeyWizard.prototype.update = function () {
@@ -12907,36 +12676,30 @@ var MonkeyWizard = /** @class */ (function (_super) {
                 // If we're on the right of the quest
                 if (this.getGlobalPosition().x > 25)
                     this.goLeft();
-                // Else, we're on the left, we go right
                 else {
                     this.goRight();
                     this.goingLeft = false;
                 }
             }
-            // Else, if we're going right
             else {
                 // If the player is on the left
                 if (playerPos.x < this.getGlobalPosition().x) {
                     // If we're on the left side of the quest
                     if (this.getGlobalPosition().x < 75)
                         this.goRight();
-                    // Else, we're on the right, we go left
                     else {
                         this.goLeft();
                         this.goingLeft = true;
                     }
                 }
-                // Else, the player is on the right and we're not too much on the left of the quest
                 else if (this.getGlobalPosition().x > 25) {
                     // We go left
                     this.goLeft();
                 }
-                // Else, we don't move
                 else
                     this.dontMove();
             }
         }
-        // Else, we don't move
         else
             this.dontMove();
     };
@@ -12975,18 +12738,16 @@ var MonkeyWizard = /** @class */ (function (_super) {
         this.jump(3);
     };
     return MonkeyWizard;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="Fireball.ts"/>
-var MonkeyWizardMagicalPurpleBall = /** @class */ (function (_super) {
+var MonkeyWizardMagicalPurpleBall = (function (_super) {
     __extends(MonkeyWizardMagicalPurpleBall, _super);
     // Constructor
     function MonkeyWizardMagicalPurpleBall(quest, pos, naming, color, size, damage, questEntityDamageReason, timer) {
-        var _this = 
         // Call the mother class constructor
-        _super.call(this, quest, pos, naming, color, size, damage, questEntityDamageReason) || this;
+        _super.call(this, quest, pos, naming, color, size, damage, questEntityDamageReason);
         // Set the timer
-        _this.timer = timer;
-        return _this;
+        this.timer = timer;
     }
     // Public methods
     MonkeyWizardMagicalPurpleBall.prototype.update = function () {
@@ -12995,7 +12756,6 @@ var MonkeyWizardMagicalPurpleBall = /** @class */ (function (_super) {
             // If the timer is > 0, decrease it
             if (this.timer > 0)
                 this.timer -= 1;
-            // Else, if the timer is <= 0, we go towards the player now!
             else {
                 this.timer = null; // No more timer
                 this.setTargetTypeTargetEntity(this.getQuest().getGame().getPlayer());
@@ -13005,29 +12765,28 @@ var MonkeyWizardMagicalPurpleBall = /** @class */ (function (_super) {
         _super.prototype.update.call(this);
     };
     return MonkeyWizardMagicalPurpleBall;
-}(Fireball));
+})(Fireball);
 ///<reference path="Quest.ts"/>
-var MonkeyWizardQuest = /** @class */ (function (_super) {
+var MonkeyWizardQuest = (function (_super) {
     __extends(MonkeyWizardQuest, _super);
     // Constructor
     function MonkeyWizardQuest(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 20);
+        this.resizeQuest(100, 20);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 17));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 17));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the roof and the floor
-        _this.addRoofAndFloor();
+        this.addRoofAndFloor();
         // Add the monkey wizard
-        _this.addMonkeyWizard(new Pos(88, 16));
+        this.addMonkeyWizard(new Pos(88, 16));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You challenged the monkey wizard. Let the fight begin!"));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You challenged the monkey wizard. Let the fight begin!"));
     }
     // Public methods
     MonkeyWizardQuest.prototype.configPlayerOrClone = function (entity) {
@@ -13086,16 +12845,15 @@ var MonkeyWizardQuest = /** @class */ (function (_super) {
         this.addEntity(wall);
     };
     return MonkeyWizardQuest;
-}(Quest));
+})(Quest);
 ///<reference path="MonkeyWizardStaffMotherClass.ts"/>
-var MonkeyWizardStaff = /** @class */ (function (_super) {
+var MonkeyWizardStaff = (function (_super) {
     __extends(MonkeyWizardStaff, _super);
     // Constructor
     function MonkeyWizardStaff() {
-        var _this = _super.call(this, "eqItemWeaponMonkeyWizardStaff", "eqItemWeaponMonkeyWizardStaffName", "eqItemWeaponMonkeyWizardStaffDescription", "eqItems/weapons/monkeyWizardStaff") || this;
+        _super.call(this, "eqItemWeaponMonkeyWizardStaff", "eqItemWeaponMonkeyWizardStaffName", "eqItemWeaponMonkeyWizardStaffDescription", "eqItems/weapons/monkeyWizardStaff");
         // Set the timer
-        _this.timer = 0;
-        return _this;
+        this.timer = 0;
     }
     // Public getters
     MonkeyWizardStaff.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -13116,24 +12874,22 @@ var MonkeyWizardStaff = /** @class */ (function (_super) {
         }
     };
     return MonkeyWizardStaff;
-}(MonkeyWizardStaffMotherClass));
+})(MonkeyWizardStaffMotherClass);
 ///<reference path="QuestEntity.ts"/>
-var Monster = /** @class */ (function (_super) {
+var Monster = (function (_super) {
     __extends(Monster, _super);
     // Constructor
     function Monster(quest, globalPosition) {
-        var _this = 
         // Call the mother constructor
-        _super.call(this, quest, globalPosition, new Naming("The monster", "the monster"), new RenderArea(13, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(13, 1)), new CollisionBox(_this, new Pos(1, 0), new Pos(11, 1)), new CollisionBox(_this, new Pos(2, 0), new Pos(9, 1)), new CollisionBox(_this, new Pos(3, 0), new Pos(7, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, globalPosition, new Naming("The monster", "the monster"), new RenderArea(13, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(13, 1)), new CollisionBox(this, new Pos(1, 0), new Pos(11, 1)), new CollisionBox(this, new Pos(2, 0), new Pos(9, 1)), new CollisionBox(this, new Pos(3, 0), new Pos(7, 1))), new QuestEntityMovement());
         // At first, no egg was destroyed
-        _this.anEggWasDestroyed = false;
+        this.anEggWasDestroyed = false;
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/castle/room3/monster"));
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/castle/room3/monster"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("??", "??"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(15, 6))), 10000));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("??", "??"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(15, 6))), 10000));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
     }
     // update()
     Monster.prototype.update = function () {
@@ -13141,7 +12897,6 @@ var Monster = /** @class */ (function (_super) {
         if (this.anEggWasDestroyed == false) {
             this.goTowards(this.getGlobalPosition().plus(new Pos(6, 4)), this.getQuest().getGame().getPlayer().getGlobalPosition().plus(new Pos(1, 0)), 0, new Pos(2, 0), true);
         }
-        // Else, we go down on the player
         else {
             this.goTowards(this.getGlobalPosition().plus(new Pos(6, 4)), this.getQuest().getGame().getPlayer().getGlobalPosition().plus(new Pos(1, 0)), 0, new Pos(4, 4));
         }
@@ -13153,29 +12908,28 @@ var Monster = /** @class */ (function (_super) {
         this.anEggWasDestroyed = true;
     };
     return Monster;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var Mosquito = /** @class */ (function (_super) {
+var Mosquito = (function (_super) {
     __extends(Mosquito, _super);
     // Constructor
     function Mosquito(quest, pos, groundYPosition) {
-        var _this = _super.call(this, quest, pos, new Naming("A forest mosquito", "a forest mosquito"), new RenderArea(1, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(1, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A forest mosquito", "a forest mosquito"), new RenderArea(1, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(1, 1))), new QuestEntityMovement());
         // Set the ground y position from the value given in parameter
-        _this.groundYPosition = groundYPosition;
+        this.groundYPosition = groundYPosition;
         // Set the perfect position above the ground
-        _this.perfectYPositionAboveGround = Random.between(8, 13);
+        this.perfectYPositionAboveGround = Random.between(8, 13);
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(false);
+        this.getQuestEntityMovement().setGravity(false);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(1);
-        _this.setHp(1);
+        this.setDestructible(true);
+        this.setMaxHp(1);
+        this.setHp(1);
         // Set the ascii art (well, it's actually just a ".")
-        _this.getRenderArea().drawString(".");
+        this.getRenderArea().drawString(".");
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("A proboscis", "a proboscis"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(3, 3))), 12));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setOnceThenWaitDelay(20);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("A proboscis", "a proboscis"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(3, 3))), 12));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setOnceThenWaitDelay(20);
     }
     // update()
     Mosquito.prototype.update = function () {
@@ -13187,18 +12941,17 @@ var Mosquito = /** @class */ (function (_super) {
         _super.prototype.update.call(this);
     };
     return Mosquito;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="Place.ts"/>
-var Moutains = /** @class */ (function (_super) {
+var Moutains = (function (_super) {
     __extends(Moutains, _super);
     // Constructor
     function Moutains(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/mountains"), 0, 10);
-        _this.update();
-        return _this;
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/mountains"), 0, 10);
+        this.update();
     }
     // getRenderArea()
     Moutains.prototype.getRenderArea = function () {
@@ -13233,15 +12986,14 @@ var Moutains = /** @class */ (function (_super) {
             this.renderArea.drawString(Database.getTranslatedText("mountainsText0"), 19, 27, true);
             this.renderArea.drawString(Database.getTranslatedText("mountainsText1"), 19, 28, true);
         }
-        // Else, we already found it
         else {
             this.renderArea.drawString(Database.getText("mountainsTextAfter"), 19, 22);
             this.renderArea.drawString(Database.getTranslatedText("mountainsTextAfter"), 19, 24, true);
         }
     };
     return Moutains;
-}(Place));
-var Naming = /** @class */ (function () {
+})(Place);
+var Naming = (function () {
     // Constructor
     function Naming(beginning, anywhere) {
         if (anywhere === void 0) { anywhere = null; }
@@ -13259,45 +13011,43 @@ var Naming = /** @class */ (function () {
         return this.beginning;
     };
     return Naming;
-}());
+})();
 ///<reference path="QuestEntitySpell.ts"/>
-var ObsidianBrick = /** @class */ (function (_super) {
+var ObsidianBrick = (function (_super) {
     __extends(ObsidianBrick, _super);
     // Constructor
     function ObsidianBrick(quest, pos, hp) {
-        var _this = _super.call(this, quest, pos, new Naming("An obsidian brick", "an obsidian brick"), null, new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(2, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("An obsidian brick", "an obsidian brick"), null, new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(2, 1))), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(hp);
-        _this.setHp(hp);
+        this.setDestructible(true);
+        this.setMaxHp(hp);
+        this.setHp(hp);
         // Add the color
-        _this.addColor(new QuestEntitySpellColor(_this.getQuest(), new Pos(0, 0), new Pos(2, 1), new Color(ColorType.PLAYER_OBSIDIAN_BRICK)));
-        return _this;
+        this.addColor(new QuestEntitySpellColor(this.getQuest(), new Pos(0, 0), new Pos(2, 1), new Color(ColorType.PLAYER_OBSIDIAN_BRICK)));
     }
     return ObsidianBrick;
-}(QuestEntitySpell));
+})(QuestEntitySpell);
 ///<reference path="QuestEntity.ts"/>
-var OctopusKing = /** @class */ (function (_super) {
+var OctopusKing = (function (_super) {
     __extends(OctopusKing, _super);
     // Constructor
     function OctopusKing(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("The Octopus King", "the Octopus King"), new RenderArea(6, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(2, 0), new Pos(2, 1)), new CollisionBox(_this, new Pos(1, 1), new Pos(4, 1)), new CollisionBox(_this, new Pos(1, 2), new Pos(4, 1)), new CollisionBox(_this, new Pos(0, 3), new Pos(6, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("The Octopus King", "the Octopus King"), new RenderArea(6, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(2, 0), new Pos(2, 1)), new CollisionBox(this, new Pos(1, 1), new Pos(4, 1)), new CollisionBox(this, new Pos(1, 2), new Pos(4, 1)), new CollisionBox(this, new Pos(0, 3), new Pos(6, 1))), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
-        _this.getQuestEntityMovement().setWormsLike(false);
+        this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setWormsLike(false);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(380);
-        _this.setHp(380);
+        this.setDestructible(true);
+        this.setMaxHp(380);
+        this.setHp(380);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/octopusKing/octopusKing"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/octopusKing/octopusKing"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its tentacles", "its tentacles"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(8, 6))), 16));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its tentacles", "its tentacles"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(8, 6))), 16));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
     }
     // update()
     OctopusKing.prototype.update = function () {
@@ -13314,30 +13064,29 @@ var OctopusKing = /** @class */ (function (_super) {
         this.getQuest().foundGridOrEqItem(new QuestItemFound(this.getQuest(), "eqItemHatOctopusKingCrown", "You found the Octopus King crown.", "You gain the Octopus King crown."));
     };
     return OctopusKing;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var OctopusKingCrown = /** @class */ (function (_super) {
+var OctopusKingCrown = (function (_super) {
     __extends(OctopusKingCrown, _super);
     // Constructor
     function OctopusKingCrown() {
-        return _super.call(this, "eqItemHatOctopusKingCrown", "eqItemHatOctopusKingCrownName", "eqItemHatOctopusKingCrownDescription", "eqItems/hats/octopusKingCrown") || this;
+        _super.call(this, "eqItemHatOctopusKingCrown", "eqItemHatOctopusKingCrownName", "eqItemHatOctopusKingCrownDescription", "eqItems/hats/octopusKingCrown");
     }
     // Special ability
     OctopusKingCrown.prototype.getSpecialAbility = function () {
         return "You are a lot more confident.";
     };
     return OctopusKingCrown;
-}(EqItem));
+})(EqItem);
 ///<reference path="EqItem.ts"/>
-var OctopusKingCrownWithJaspers = /** @class */ (function (_super) {
+var OctopusKingCrownWithJaspers = (function (_super) {
     __extends(OctopusKingCrownWithJaspers, _super);
     // Constructor
     function OctopusKingCrownWithJaspers() {
-        var _this = _super.call(this, "eqItemHatOctopusKingCrownWithJaspers", "eqItemHatOctopusKingCrownWithJaspersName", "eqItemHatOctopusKingCrownWithJaspersDescription", "eqItems/hats/octopusKingCrownWithJaspers") || this;
+        _super.call(this, "eqItemHatOctopusKingCrownWithJaspers", "eqItemHatOctopusKingCrownWithJaspersName", "eqItemHatOctopusKingCrownWithJaspersDescription", "eqItems/hats/octopusKingCrownWithJaspers");
         // The timer (to avoid casting fireballs too often..)
-        _this.currentTimer = 0;
-        _this.maxTimer = 3;
-        return _this;
+        this.currentTimer = 0;
+        this.maxTimer = 3;
     }
     // Special ability
     OctopusKingCrownWithJaspers.prototype.getSpecialAbility = function () {
@@ -13364,16 +13113,15 @@ var OctopusKingCrownWithJaspers = /** @class */ (function (_super) {
         quest.addEntity(fireball);
     };
     return OctopusKingCrownWithJaspers;
-}(EqItem));
+})(EqItem);
 ///<reference path="EqItem.ts"/>
-var OctopusKingCrownWithObsidian = /** @class */ (function (_super) {
+var OctopusKingCrownWithObsidian = (function (_super) {
     __extends(OctopusKingCrownWithObsidian, _super);
     // Constructor
     function OctopusKingCrownWithObsidian() {
-        var _this = _super.call(this, "eqItemHatOctopusKingCrownWithObsidian", "eqItemHatOctopusKingCrownWithObsidianName", "eqItemHatOctopusKingCrownWithObsidianDescription", "eqItems/hats/octopusKingCrownWithObsidian") || this;
+        _super.call(this, "eqItemHatOctopusKingCrownWithObsidian", "eqItemHatOctopusKingCrownWithObsidianName", "eqItemHatOctopusKingCrownWithObsidianDescription", "eqItems/hats/octopusKingCrownWithObsidian");
         // Reset the timer for the first time
-        _this.resetTimer();
-        return _this;
+        this.resetTimer();
     }
     // Special ability
     OctopusKingCrownWithObsidian.prototype.getSpecialAbility = function () {
@@ -13405,29 +13153,28 @@ var OctopusKingCrownWithObsidian = /** @class */ (function (_super) {
         this.currentTimer = Random.between(60, 120);
     };
     return OctopusKingCrownWithObsidian;
-}(EqItem));
+})(EqItem);
 ///<reference path="Quest.ts"/>
-var OctopusKingQuest = /** @class */ (function (_super) {
+var OctopusKingQuest = (function (_super) {
     __extends(OctopusKingQuest, _super);
     // Constructor
     function OctopusKingQuest(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 20);
+        this.resizeQuest(100, 20);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 17));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 17));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the roof and the floor
-        _this.addRoofAndFloor();
+        this.addRoofAndFloor();
         // Add the monkey wizard
-        _this.addOctopusKing(new Pos(88, 16));
+        this.addOctopusKing(new Pos(88, 16));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You challenged the Octopus King. Let the fight begin!"));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You challenged the Octopus King. Let the fight begin!"));
     }
     // Public methods
     OctopusKingQuest.prototype.configPlayerOrClone = function (entity) {
@@ -13486,18 +13233,17 @@ var OctopusKingQuest = /** @class */ (function (_super) {
         this.addEntity(wall);
     };
     return OctopusKingQuest;
-}(Quest));
+})(Quest);
 ///<reference path="Place.ts"/>
-var OutsideTheHole = /** @class */ (function (_super) {
+var OutsideTheHole = (function (_super) {
     __extends(OutsideTheHole, _super);
     // Constructor
     function OutsideTheHole(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/outsideTheHole"), 0, 4);
-        _this.update();
-        return _this;
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/outsideTheHole"), 0, 4);
+        this.update();
     }
     // getRenderArea()
     OutsideTheHole.prototype.getRenderArea = function () {
@@ -13519,13 +13265,13 @@ var OutsideTheHole = /** @class */ (function (_super) {
         this.renderArea.addLinkCall(".outsideTheHoleButton", new CallbackCollection(this.jump.bind(this)));
     };
     return OutsideTheHole;
-}(Place));
+})(Place);
 ///<reference path="StatusBarResource.ts"/>
-var PainsAuChocolat = /** @class */ (function (_super) {
+var PainsAuChocolat = (function (_super) {
     __extends(PainsAuChocolat, _super);
     // Constructor
     function PainsAuChocolat(game, savingPrefix) {
-        return _super.call(this, game, savingPrefix) || this;
+        _super.call(this, game, savingPrefix);
     }
     // Public methods
     PainsAuChocolat.prototype.getCurrentAsString = function (totalSize) {
@@ -13563,18 +13309,17 @@ var PainsAuChocolat = /** @class */ (function (_super) {
         return prefix + base + suffix;
     };
     return PainsAuChocolat;
-}(StatusBarResource));
+})(StatusBarResource);
 ///<reference path="Place.ts"/>
-var Pier = /** @class */ (function (_super) {
+var Pier = (function (_super) {
     __extends(Pier, _super);
     // Constructor
     function Pier(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/pier"), 0, 6);
-        _this.update();
-        return _this;
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/pier"), 0, 6);
+        this.update();
     }
     // getRenderArea()
     Pier.prototype.getRenderArea = function () {
@@ -13609,13 +13354,13 @@ var Pier = /** @class */ (function (_super) {
         this.addTheSeaButton(52, 9);
     };
     return Pier;
-}(Place));
+})(Place);
 ///<reference path="EqItem.ts"/>
-var PinkEnchantedGloves = /** @class */ (function (_super) {
+var PinkEnchantedGloves = (function (_super) {
     __extends(PinkEnchantedGloves, _super);
     // Constructor
     function PinkEnchantedGloves() {
-        return _super.call(this, "eqItemGlovesPinkEnchantedGloves", "eqItemGlovesPinkEnchantedGlovesName", "eqItemGlovesPinkEnchantedGlovesDescription", "eqItems/gloves/pinkEnchantedGloves") || this;
+        _super.call(this, "eqItemGlovesPinkEnchantedGloves", "eqItemGlovesPinkEnchantedGlovesName", "eqItemGlovesPinkEnchantedGlovesDescription", "eqItems/gloves/pinkEnchantedGloves");
     }
     // Special ability
     PinkEnchantedGloves.prototype.getSpecialAbility = function () {
@@ -13626,47 +13371,44 @@ var PinkEnchantedGloves = /** @class */ (function (_super) {
         player.heal(1);
     };
     return PinkEnchantedGloves;
-}(EqItem));
+})(EqItem);
 ///<reference path="QuestEntity.ts"/>
-var Plant = /** @class */ (function (_super) {
+var Plant = (function (_super) {
     __extends(Plant, _super);
     // Constructor
     function Plant(quest, leftDownCornerPosition, minPlantNumber, maxPlantNumber) {
-        var _this = this;
         // Set the ascii art name
         var asciiArtName = "places/quests/theSea/plant" + Random.between(minPlantNumber, maxPlantNumber).toString();
         // Create the real global position
         var globalPosition = leftDownCornerPosition;
         globalPosition.add(new Pos(0, -Database.getAsciiHeight(asciiArtName) + 1));
         // Call the mother constructor
-        _this = _super.call(this, quest, globalPosition, new Naming("A plant", "a plant"), new RenderArea()) || this;
+        _super.call(this, quest, globalPosition, new Naming("A plant", "a plant"), new RenderArea());
         // Draw the ascii art
-        _this.getRenderArea().resizeFromArray(Database.getAscii(asciiArtName));
-        _this.getRenderArea().drawArray(Database.getAscii(asciiArtName));
+        this.getRenderArea().resizeFromArray(Database.getAscii(asciiArtName));
+        this.getRenderArea().drawArray(Database.getAscii(asciiArtName));
         // Set different transparency settings depending on the ascii art
         if (asciiArtName == "places/quests/theSea/plant0" || asciiArtName == "places/quests/theSea/plant8" || asciiArtName == "places/quests/theSea/plant9" || asciiArtName == "places/quests/theSea/plant10") {
-            _this.setTransparency(new RenderTransparency(" ", "%"));
+            this.setTransparency(new RenderTransparency(" ", "%"));
         }
         else {
-            _this.setTransparency(new RenderTransparency(" "));
+            this.setTransparency(new RenderTransparency(" "));
         }
-        return _this;
     }
     return Plant;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
 // Register our hp
 Saving.registerNumber("playerHp", 100);
-var Player = /** @class */ (function (_super) {
+var Player = (function (_super) {
     __extends(Player, _super);
     // Constructor
     function Player(game) {
-        var _this = _super.call(this, null, new Pos(0, 0), new Naming("You", "you")) || this;
+        _super.call(this, null, new Pos(0, 0), new Naming("You", "you"));
         // Set the game
-        _this.game = game;
+        this.game = game;
         // Set destructible
-        _this.setDestructible(true);
-        return _this;
+        this.setDestructible(true);
     }
     // Public methods
     Player.prototype.beginBerserk = function (duration) {
@@ -13733,7 +13475,6 @@ var Player = /** @class */ (function (_super) {
         if (this.game.getSelectedEqItems()["weapon"] != null) {
             qew = this.game.getSelectedEqItems()["weapon"].getQuestEntityWeapon(quest, this);
         }
-        // Else, no weapon is equipped, we use our fists
         else {
             qew = new QuestEntityWeapon(this.getQuest(), this, new Naming("Your fists", "your fists"), this.getClassicCollisionBoxCollection(), 1);
             qew.getCloseCombatDelay().setFixedDelay(6, 0);
@@ -14084,12 +13825,12 @@ var Player = /** @class */ (function (_super) {
         }
     };
     return Player;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntityWeapon.ts"/>
-var PlayerBludgeon = /** @class */ (function (_super) {
+var PlayerBludgeon = (function (_super) {
     __extends(PlayerBludgeon, _super);
     function PlayerBludgeon() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // Public methods
     PlayerBludgeon.prototype.getRealDamage = function () {
@@ -14099,7 +13840,7 @@ var PlayerBludgeon = /** @class */ (function (_super) {
         return "12-16";
     };
     return PlayerBludgeon;
-}(QuestEntityWeapon));
+})(QuestEntityWeapon);
 var PlayerCharacterType;
 (function (PlayerCharacterType) {
     PlayerCharacterType[PlayerCharacterType["CANDYBOX"] = 0] = "CANDYBOX";
@@ -14108,67 +13849,64 @@ var PlayerCharacterType;
     PlayerCharacterType[PlayerCharacterType["MEDIUM_SQUEEZED"] = 3] = "MEDIUM_SQUEEZED";
 })(PlayerCharacterType || (PlayerCharacterType = {}));
 ///<reference path="QuestEntity.ts"/>
-var PlayerCloneCandyBox = /** @class */ (function (_super) {
+var PlayerCloneCandyBox = (function (_super) {
     __extends(PlayerCloneCandyBox, _super);
     // Constructor
     function PlayerCloneCandyBox(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A clone", "a clone"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A clone", "a clone"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement());
         // Set the team
-        _this.setTeam(QuestEntityTeam.PLAYER);
+        this.setTeam(QuestEntityTeam.PLAYER);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(quest.getGame().getPlayer().getHp());
-        _this.setHp(quest.getGame().getPlayer().getHp());
+        this.setDestructible(true);
+        this.setMaxHp(quest.getGame().getPlayer().getHp());
+        this.setHp(quest.getGame().getPlayer().getHp());
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawString("\\o/");
+        this.getRenderArea().drawString("\\o/");
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its fists", "its fists"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(5, 3))), 3));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its fists", "its fists"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(5, 3))), 3));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
     }
     return PlayerCloneCandyBox;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var PlayerCloneMedium = /** @class */ (function (_super) {
+var PlayerCloneMedium = (function (_super) {
     __extends(PlayerCloneMedium, _super);
     // Constructor
     function PlayerCloneMedium(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A clone", "a clone"), new RenderArea(11, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(11, 1)), new CollisionBox(_this, new Pos(1, 1), new Pos(9, 1)), new CollisionBox(_this, new Pos(2, 2), new Pos(7, 1)), new CollisionBox(_this, new Pos(4, 3), new Pos(3, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A clone", "a clone"), new RenderArea(11, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(11, 1)), new CollisionBox(this, new Pos(1, 1), new Pos(9, 1)), new CollisionBox(this, new Pos(2, 2), new Pos(7, 1)), new CollisionBox(this, new Pos(4, 3), new Pos(3, 1))), new QuestEntityMovement());
         // Set the team
-        _this.setTeam(QuestEntityTeam.PLAYER);
+        this.setTeam(QuestEntityTeam.PLAYER);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(quest.getGame().getPlayer().getHp());
-        _this.setHp(quest.getGame().getPlayer().getHp());
+        this.setDestructible(true);
+        this.setMaxHp(quest.getGame().getPlayer().getHp());
+        this.setHp(quest.getGame().getPlayer().getHp());
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("players/medium"));
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.getRenderArea().drawArray(Database.getAscii("players/medium"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its fists", "its fists"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(13, 6))), 3));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its fists", "its fists"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(13, 6))), 3));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
     }
     return PlayerCloneMedium;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntitySpell.ts"/>
-var PlayerSummonedDemon = /** @class */ (function (_super) {
+var PlayerSummonedDemon = (function (_super) {
     __extends(PlayerSummonedDemon, _super);
     // Constructor
     function PlayerSummonedDemon(quest, globalPosition, damage) {
-        var _this = _super.call(this, quest, globalPosition, new Naming("A demon", "a demon")) || this;
+        _super.call(this, quest, globalPosition, new Naming("A demon", "a demon"));
         // Set the damage
-        _this.damage = damage;
+        this.damage = damage;
         // Create the damage reason
-        _this.damageReason = new QuestEntityDamageReason(QuestEntityDamageReasonWhoType.ENTITY, QuestEntityDamageReasonWhatType.SPELL);
-        _this.damageReason.setQuestEntity(_this.getQuest().getGame().getPlayer(), QuestEntityTeam.NATURE);
-        _this.damageReason.setSpellNaming(_this.getRandomNaming());
+        this.damageReason = new QuestEntityDamageReason(QuestEntityDamageReasonWhoType.ENTITY, QuestEntityDamageReasonWhatType.SPELL);
+        this.damageReason.setQuestEntity(this.getQuest().getGame().getPlayer(), QuestEntityTeam.NATURE);
+        this.damageReason.setSpellNaming(this.getRandomNaming());
         // Create the collision box collection
-        _this.damageCollisionBoxCollection = new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(8, 4)));
+        this.damageCollisionBoxCollection = new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(8, 4)));
         // Add the demon colors randomly
-        _this.addRandomQuestEntitySpellColors();
+        this.addRandomQuestEntitySpellColors();
         // Add the quest entity movement
-        _this.setQuestEntityMovement(new QuestEntityMovement(new Pos(3, 0)));
-        return _this;
+        this.setQuestEntityMovement(new QuestEntityMovement(new Pos(3, 0)));
     }
     // Public methods
     PlayerSummonedDemon.prototype.update = function () {
@@ -14268,29 +14006,28 @@ var PlayerSummonedDemon = /** @class */ (function (_super) {
         }
     };
     return PlayerSummonedDemon;
-}(QuestEntitySpell));
+})(QuestEntitySpell);
 ///<reference path="QuestEntity.ts"/>
-var PlayerSummonedOctopusKing = /** @class */ (function (_super) {
+var PlayerSummonedOctopusKing = (function (_super) {
     __extends(PlayerSummonedOctopusKing, _super);
     // Constructor
     function PlayerSummonedOctopusKing(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("An Octopus King", "an Octopus King"), new RenderArea(6, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(2, 0), new Pos(2, 1)), new CollisionBox(_this, new Pos(1, 1), new Pos(4, 1)), new CollisionBox(_this, new Pos(1, 2), new Pos(4, 1)), new CollisionBox(_this, new Pos(0, 3), new Pos(6, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("An Octopus King", "an Octopus King"), new RenderArea(6, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(2, 0), new Pos(2, 1)), new CollisionBox(this, new Pos(1, 1), new Pos(4, 1)), new CollisionBox(this, new Pos(1, 2), new Pos(4, 1)), new CollisionBox(this, new Pos(0, 3), new Pos(6, 1))), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
-        _this.getQuestEntityMovement().setWormsLike(true);
+        this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setWormsLike(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(380);
-        _this.setHp(380);
+        this.setDestructible(true);
+        this.setMaxHp(380);
+        this.setHp(380);
         // Set the team
-        _this.setTeam(QuestEntityTeam.PLAYER);
+        this.setTeam(QuestEntityTeam.PLAYER);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/octopusKing/octopusKing"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/octopusKing/octopusKing"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its tentacles", "its tentacles"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(8, 6))), 16));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its tentacles", "its tentacles"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(8, 6))), 16));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
     }
     // update()
     PlayerSummonedOctopusKing.prototype.update = function () {
@@ -14300,43 +14037,42 @@ var PlayerSummonedOctopusKing = /** @class */ (function (_super) {
         _super.prototype.update.call(this);
     };
     return PlayerSummonedOctopusKing;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var PlayerSummonedTribeWarrior = /** @class */ (function (_super) {
+var PlayerSummonedTribeWarrior = (function (_super) {
     __extends(PlayerSummonedTribeWarrior, _super);
     // Constructor
     function PlayerSummonedTribeWarrior(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A tribe warrior", "a tribe warrior"), new RenderArea(4, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(1, 1)), new CollisionBox(_this, new Pos(0, 1), new Pos(4, 3))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A tribe warrior", "a tribe warrior"), new RenderArea(4, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(1, 1)), new CollisionBox(this, new Pos(0, 1), new Pos(4, 3))), new QuestEntityMovement());
         // Set gravity and worms like
-        _this.setQuestEntityMovement(new QuestEntityMovement(new Pos(1, 0)));
-        _this.getQuestEntityMovement().setGravity(true);
-        _this.getQuestEntityMovement().setWormsLike(true);
+        this.setQuestEntityMovement(new QuestEntityMovement(new Pos(1, 0)));
+        this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setWormsLike(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(25);
-        _this.setHp(25);
+        this.setDestructible(true);
+        this.setMaxHp(25);
+        this.setHp(25);
         // Set the team
-        _this.setTeam(QuestEntityTeam.PLAYER);
+        this.setTeam(QuestEntityTeam.PLAYER);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theHole/lostTribeWarrior"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theHole/lostTribeWarrior"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("A tribal spear", "a tribal spear"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(6, 6))), 8));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(2);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("A tribal spear", "a tribal spear"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(6, 6))), 8));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(2);
     }
     // update()
     PlayerSummonedTribeWarrior.prototype.update = function () {
         _super.prototype.update.call(this);
     };
     return PlayerSummonedTribeWarrior;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var PolishedSilverSword = /** @class */ (function (_super) {
+var PolishedSilverSword = (function (_super) {
     __extends(PolishedSilverSword, _super);
     // Constructor
     function PolishedSilverSword() {
-        return _super.call(this, "eqItemWeaponPolishedSilverSword", "eqItemWeaponPolishedSilverSwordName", "eqItemWeaponPolishedSilverSwordDescription", "eqItems/weapons/polishedSilverSword") || this;
+        _super.call(this, "eqItemWeaponPolishedSilverSword", "eqItemWeaponPolishedSilverSwordName", "eqItemWeaponPolishedSilverSwordDescription", "eqItems/weapons/polishedSilverSword");
     }
     // Public getters
     PolishedSilverSword.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -14345,8 +14081,8 @@ var PolishedSilverSword = /** @class */ (function (_super) {
         return qew;
     };
     return PolishedSilverSword;
-}(EqItem));
-var PondLine = /** @class */ (function () {
+})(EqItem);
+var PondLine = (function () {
     // Constructor
     function PondLine(x1, x2) {
         // Is the line currently used by a lolligator ?
@@ -14369,8 +14105,8 @@ var PondLine = /** @class */ (function () {
         this.isUsed = isUsed;
     };
     return PondLine;
-}());
-var PondLolligator = /** @class */ (function () {
+})();
+var PondLolligator = (function () {
     // Constructor
     function PondLolligator(pondLines, pondLineIndex) {
         // Out width
@@ -14381,7 +14117,7 @@ var PondLolligator = /** @class */ (function () {
         // Set the orientation (randomly)
         this.isLeft = Random.flipACoin();
         // Set the position (depending on the orientation)
-        if (this.isLeft == false) // If the lolligator is looking right
+        if (this.isLeft == false)
             this.x = this.pondLines[this.pondLineIndex].getX1();
         else
             this.x = this.pondLines[this.pondLineIndex].getX2() - this.width;
@@ -14404,7 +14140,6 @@ var PondLolligator = /** @class */ (function () {
             else if (this.visibleType == PondLolligatorVisibleType.FULLY_VISIBLE && (this.x < this.pondLines[this.pondLineIndex].getX1() + 2 || Random.oneChanceOutOf(2)))
                 this.visibleType = PondLolligatorVisibleType.NOT_FULLY_VISIBLE_ANYMORE;
         }
-        // Else it goes to the right
         else {
             this.x += 1;
             // If we're not fully visible but we should be
@@ -14443,14 +14178,14 @@ var PondLolligator = /** @class */ (function () {
             this.pondLines[this.pondLineIndex - 1].setIsUsed(isUsed);
     };
     return PondLolligator;
-}());
+})();
 var PondLolligatorVisibleType;
 (function (PondLolligatorVisibleType) {
     PondLolligatorVisibleType[PondLolligatorVisibleType["NOT_FULLY_VISIBLE_YET"] = 0] = "NOT_FULLY_VISIBLE_YET";
     PondLolligatorVisibleType[PondLolligatorVisibleType["FULLY_VISIBLE"] = 1] = "FULLY_VISIBLE";
     PondLolligatorVisibleType[PondLolligatorVisibleType["NOT_FULLY_VISIBLE_ANYMORE"] = 2] = "NOT_FULLY_VISIBLE_ANYMORE";
 })(PondLolligatorVisibleType || (PondLolligatorVisibleType = {}));
-var Pos = /** @class */ (function () {
+var Pos = (function () {
     // Constructor
     function Pos(x, y) {
         if (x === void 0) { x = 0; }
@@ -14483,8 +14218,8 @@ var Pos = /** @class */ (function () {
         return new Pos(this.x + pos.x, this.y + pos.y);
     };
     return Pos;
-}());
-var QuestEntityAnimation = /** @class */ (function () {
+})();
+var QuestEntityAnimation = (function () {
     // Constructor
     function QuestEntityAnimation(intervalTime, currentTime, currentAsciiIndex) {
         var asciiNames = [];
@@ -14517,8 +14252,8 @@ var QuestEntityAnimation = /** @class */ (function () {
         return this.currentAsciiIndex;
     };
     return QuestEntityAnimation;
-}());
-var QuestEntityDamageReason = /** @class */ (function () {
+})();
+var QuestEntityDamageReason = (function () {
     // Constructor
     function QuestEntityDamageReason(whoType, whatType) {
         // Additional parameters, depeding on the who type
@@ -14577,7 +14312,7 @@ var QuestEntityDamageReason = /** @class */ (function () {
         return this;
     };
     return QuestEntityDamageReason;
-}());
+})();
 var QuestEntityDamageReasonWhatType;
 (function (QuestEntityDamageReasonWhatType) {
     QuestEntityDamageReasonWhatType[QuestEntityDamageReasonWhatType["WEAPON"] = 0] = "WEAPON";
@@ -14588,10 +14323,10 @@ var QuestEntityDamageReasonWhoType;
     QuestEntityDamageReasonWhoType[QuestEntityDamageReasonWhoType["NATURE"] = 0] = "NATURE";
     QuestEntityDamageReasonWhoType[QuestEntityDamageReasonWhoType["ENTITY"] = 1] = "ENTITY";
 })(QuestEntityDamageReasonWhoType || (QuestEntityDamageReasonWhoType = {}));
-var QuestEntityHealthBar = /** @class */ (function () {
+var QuestEntityHealthBar = (function () {
     // Constructor
     function QuestEntityHealthBar(questEntity, barSize, position, // By default, the bar will be above the entity
-    positionType, drawEvenIfFull, showText, barType) {
+        positionType, drawEvenIfFull, showText, barType) {
         if (position === void 0) { position = new Pos(0, -1); }
         if (positionType === void 0) { positionType = QuestEntityHealthBarPositionType.RELATIVE; }
         if (drawEvenIfFull === void 0) { drawEvenIfFull = false; }
@@ -14621,9 +14356,9 @@ var QuestEntityHealthBar = /** @class */ (function () {
                     renderArea.drawArea(this.bar, this.questEntity.getQuest().getRealQuestPosition().x + this.position.x + this.questEntity.getQuest().getGlobalDrawingOffset().x, this.questEntity.getQuest().getRealQuestPosition().y + this.position.y + this.questEntity.getQuest().getGlobalDrawingOffset().y, new RenderTransparency(" "));
                     break;
                 case QuestEntityHealthBarPositionType.RELATIVE:
-                    if (this.questEntity.getQuest().getRealQuestPosition().x + this.questEntity.getGlobalPosition().x + this.position.x > 0 && // If the bar fit at the left
-                        this.questEntity.getQuest().getRealQuestPosition().x + this.questEntity.getGlobalPosition().x + this.position.x + this.bar.getWidth() <= renderArea.getWidth() && // And at the right too
-                        this.questEntity.getGlobalPosition().y + this.position.y > 0 && // And at the top
+                    if (this.questEntity.getQuest().getRealQuestPosition().x + this.questEntity.getGlobalPosition().x + this.position.x > 0 &&
+                        this.questEntity.getQuest().getRealQuestPosition().x + this.questEntity.getGlobalPosition().x + this.position.x + this.bar.getWidth() <= renderArea.getWidth() &&
+                        this.questEntity.getGlobalPosition().y + this.position.y > 0 &&
                         this.questEntity.getGlobalPosition().y + this.position.y <= this.questEntity.getQuest().getRealQuestSize().y // And at the bottom
                     ) {
                         renderArea.drawArea(this.bar, this.questEntity.getQuest().getRealQuestPosition().x + this.questEntity.getGlobalPosition().x + this.position.x + this.questEntity.getQuest().getGlobalDrawingOffset().x, this.questEntity.getQuest().getRealQuestPosition().y + this.questEntity.getGlobalPosition().y + this.position.y + this.questEntity.getQuest().getGlobalDrawingOffset().y, new RenderTransparency(" "));
@@ -14644,7 +14379,6 @@ var QuestEntityHealthBar = /** @class */ (function () {
             // If we don't have to show text
             if (this.showText == false)
                 this.bar.update(this.questEntity.getHp() / this.questEntity.getMaxHp(), this.questEntity.getHp().toString());
-            // If we have to
             else
                 this.bar.update(this.questEntity.getHp() / this.questEntity.getMaxHp(), this.questEntity.getNaming().getBeginning() + " : " + this.questEntity.getHp().toString() + "/" + this.questEntity.getMaxHp().toString());
         }
@@ -14658,14 +14392,14 @@ var QuestEntityHealthBar = /** @class */ (function () {
         this.drawEvenIfFull = value;
     };
     return QuestEntityHealthBar;
-}());
+})();
 var QuestEntityHealthBarPositionType;
 (function (QuestEntityHealthBarPositionType) {
     QuestEntityHealthBarPositionType[QuestEntityHealthBarPositionType["RELATIVE"] = 0] = "RELATIVE";
     QuestEntityHealthBarPositionType[QuestEntityHealthBarPositionType["FIXED"] = 1] = "FIXED";
     QuestEntityHealthBarPositionType[QuestEntityHealthBarPositionType["FIXED_ON_PAGE"] = 2] = "FIXED_ON_PAGE"; // The position of the bar is fixd in the quest and not affected by scrolling
 })(QuestEntityHealthBarPositionType || (QuestEntityHealthBarPositionType = {}));
-var QuestEntityMovement = /** @class */ (function () {
+var QuestEntityMovement = (function () {
     // Constructor
     function QuestEntityMovement(offset, intervalTime, currentTime) {
         if (offset === void 0) { offset = new Pos(0, 0); }
@@ -14714,8 +14448,8 @@ var QuestEntityMovement = /** @class */ (function () {
         this.wormsLike = value;
     };
     return QuestEntityMovement;
-}());
-var QuestEntitySpellCaster = /** @class */ (function () {
+})();
+var QuestEntitySpellCaster = (function () {
     // Constructor
     function QuestEntitySpellCaster(callbackCollection) {
         // The delay
@@ -14733,8 +14467,8 @@ var QuestEntitySpellCaster = /** @class */ (function () {
         return this.delay;
     };
     return QuestEntitySpellCaster;
-}());
-var QuestEntitySpellColor = /** @class */ (function () {
+})();
+var QuestEntitySpellColor = (function () {
     // Constructor
     function QuestEntitySpellColor(quest, position, size, color) {
         this.quest = quest;
@@ -14764,14 +14498,14 @@ var QuestEntitySpellColor = /** @class */ (function () {
         }
     };
     return QuestEntitySpellColor;
-}());
+})();
 var QuestEntityTeam;
 (function (QuestEntityTeam) {
     QuestEntityTeam[QuestEntityTeam["PLAYER"] = 0] = "PLAYER";
     QuestEntityTeam[QuestEntityTeam["MOBS"] = 1] = "MOBS";
     QuestEntityTeam[QuestEntityTeam["NATURE"] = 2] = "NATURE";
 })(QuestEntityTeam || (QuestEntityTeam = {}));
-var QuestEntityWeaponDelay = /** @class */ (function () {
+var QuestEntityWeaponDelay = (function () {
     // Constructor
     function QuestEntityWeaponDelay() {
         // By default, the type is FIXED and the maxDelay is 0
@@ -14884,14 +14618,14 @@ var QuestEntityWeaponDelay = /** @class */ (function () {
         this.maxDelay = Random.between(this.minBetweenDelay, this.maxBetweenDelay);
     };
     return QuestEntityWeaponDelay;
-}());
+})();
 var QuestEntityWeaponDelayType;
 (function (QuestEntityWeaponDelayType) {
     QuestEntityWeaponDelayType[QuestEntityWeaponDelayType["FIXED"] = 0] = "FIXED";
     QuestEntityWeaponDelayType[QuestEntityWeaponDelayType["BETWEEN"] = 1] = "BETWEEN";
     QuestEntityWeaponDelayType[QuestEntityWeaponDelayType["ONCE_THEN_WAIT"] = 2] = "ONCE_THEN_WAIT"; // We can attack immediately once, but then we have to wait for another attack
 })(QuestEntityWeaponDelayType || (QuestEntityWeaponDelayType = {}));
-var QuestItemFound = /** @class */ (function () {
+var QuestItemFound = (function () {
     // Constructor
     function QuestItemFound(quest, savingName, foundText, getText) {
         this.quest = quest;
@@ -14911,8 +14645,8 @@ var QuestItemFound = /** @class */ (function () {
         return this.savingName;
     };
     return QuestItemFound;
-}());
-var QuestLog = /** @class */ (function () {
+})();
+var QuestLog = (function () {
     // Constructor
     function QuestLog() {
         // Array of messages contained in the quest log
@@ -14945,8 +14679,8 @@ var QuestLog = /** @class */ (function () {
         }
     };
     return QuestLog;
-}());
-var QuestLogMessage = /** @class */ (function () {
+})();
+var QuestLogMessage = (function () {
     // Constructor
     function QuestLogMessage(left, right, bold) {
         if (right === void 0) { right = null; }
@@ -14977,7 +14711,7 @@ var QuestLogMessage = /** @class */ (function () {
         }
     };
     return QuestLogMessage;
-}());
+})();
 // Potions
 Saving.registerBool("questPlayerSpellHealthPotionHasSpell", false);
 Saving.registerBool("questPlayerSpellTurtlePotionHasSpell", false);
@@ -14993,7 +14727,7 @@ Saving.registerNumber("questPlayerSpellBerserkPotionQuantity", 0);
 Saving.registerNumber("questPlayerSpellCloningPotionQuantity", 0);
 Saving.registerNumber("questPlayerSpellPPotionQuantity", 0);
 Saving.registerNumber("questPlayerSpellXPotionQuantity", 0);
-var QuestPlayerSpell = /** @class */ (function () {
+var QuestPlayerSpell = (function () {
     // Constructor
     function QuestPlayerSpell(quest, buttonClassName, buttonPosition, buttonText, buttonColor, callbackCollection, countdownType, countdownTime, underlinedLetter, hotkeyLetter, numberIdWichLimitsQuantity) {
         if (underlinedLetter === void 0) { underlinedLetter = null; }
@@ -15088,7 +14822,7 @@ var QuestPlayerSpell = /** @class */ (function () {
         }
     };
     return QuestPlayerSpell;
-}());
+})();
 var QuestPlayerSpellCountdownType;
 (function (QuestPlayerSpellCountdownType) {
     QuestPlayerSpellCountdownType[QuestPlayerSpellCountdownType["SPELLS"] = 0] = "SPELLS";
@@ -15146,45 +14880,42 @@ var Random;
     Random.upTo = upTo;
 })(Random || (Random = {}));
 ///<reference path="QuestEntity.ts"/>
-var Rat = /** @class */ (function (_super) {
+var Rat = (function (_super) {
     __extends(Rat, _super);
     // Constructor
     function Rat(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A rat", "a rat"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A rat", "a rat"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(3);
-        _this.setHp(3);
+        this.setDestructible(true);
+        this.setMaxHp(3);
+        this.setHp(3);
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/cellar/rat"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/cellar/rat"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its teeth", "its teeth"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(5, 2))), 1));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its teeth", "its teeth"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(5, 2))), 1));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(3);
     }
     // Public methods
     Rat.prototype.willDie = function () {
         // We find a candy
         if (Random.oneChanceOutOf(3))
             this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage() + " (and found " + Algo.pluralFormat(this.getQuest().foundCandies(1), " candy", " candies") + ")", this.getQuest().getCandiesFoundMessage()));
-        // We don't find a candy
         else
             this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage()));
     };
     return Rat;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var RedEnchantedGloves = /** @class */ (function (_super) {
+var RedEnchantedGloves = (function (_super) {
     __extends(RedEnchantedGloves, _super);
     // Constructor
     function RedEnchantedGloves() {
-        var _this = _super.call(this, "eqItemGlovesRedEnchantedGloves", "eqItemGlovesRedEnchantedGlovesName", "eqItemGlovesRedEnchantedGlovesDescription", "eqItems/gloves/redEnchantedGloves") || this;
+        _super.call(this, "eqItemGlovesRedEnchantedGloves", "eqItemGlovesRedEnchantedGlovesName", "eqItemGlovesRedEnchantedGlovesDescription", "eqItems/gloves/redEnchantedGloves");
         // The timer (to avoid casting fireballs too often..)
-        _this.currentTimer = 0;
-        _this.maxTimer = 5;
-        return _this;
+        this.currentTimer = 0;
+        this.maxTimer = 5;
     }
     // Special ability
     RedEnchantedGloves.prototype.getSpecialAbility = function () {
@@ -15211,29 +14942,27 @@ var RedEnchantedGloves = /** @class */ (function (_super) {
         quest.addEntity(fireball);
     };
     return RedEnchantedGloves;
-}(EqItem));
-var RenderLinkCallbackCollection = /** @class */ (function (_super) {
+})(EqItem);
+var RenderLinkCallbackCollection = (function (_super) {
     __extends(RenderLinkCallbackCollection, _super);
     // Constructor
     function RenderLinkCallbackCollection(callbackCollection) {
-        var _this = _super.call(this) || this;
-        _this.callbackCollection = callbackCollection;
-        return _this;
+        _super.call(this);
+        this.callbackCollection = callbackCollection;
     }
     // Public methods
     RenderLinkCallbackCollection.prototype.run = function () {
         this.callbackCollection.fire();
     };
     return RenderLinkCallbackCollection;
-}(RenderLink));
-var RenderLinkChange = /** @class */ (function (_super) {
+})(RenderLink);
+var RenderLinkChange = (function (_super) {
     __extends(RenderLinkChange, _super);
     // Constructor
     function RenderLinkChange(element, callbackCollection) {
-        var _this = _super.call(this) || this;
-        _this.element = element;
-        _this.callbackCollection = callbackCollection;
-        return _this;
+        _super.call(this);
+        this.element = element;
+        this.callbackCollection = callbackCollection;
     }
     // Public methods
     RenderLinkChange.prototype.run = function () {
@@ -15245,16 +14974,15 @@ var RenderLinkChange = /** @class */ (function (_super) {
         });
     };
     return RenderLinkChange;
-}(RenderLink));
-var RenderLinkCheckbox = /** @class */ (function (_super) {
+})(RenderLink);
+var RenderLinkCheckbox = (function (_super) {
     __extends(RenderLinkCheckbox, _super);
     // Constructor
     function RenderLinkCheckbox(element, callbackCollectionWhenChecked, callbackCollectionWhenUnchecked) {
-        var _this = _super.call(this) || this;
-        _this.element = element;
-        _this.callbackCollectionWhenChecked = callbackCollectionWhenChecked;
-        _this.callbackCollectionWhenUnchecked = callbackCollectionWhenUnchecked;
-        return _this;
+        _super.call(this);
+        this.element = element;
+        this.callbackCollectionWhenChecked = callbackCollectionWhenChecked;
+        this.callbackCollectionWhenUnchecked = callbackCollectionWhenUnchecked;
     }
     // Public methods
     RenderLinkCheckbox.prototype.run = function () {
@@ -15273,15 +15001,14 @@ var RenderLinkCheckbox = /** @class */ (function (_super) {
         });
     };
     return RenderLinkCheckbox;
-}(RenderLink));
-var RenderLinkClick = /** @class */ (function (_super) {
+})(RenderLink);
+var RenderLinkClick = (function (_super) {
     __extends(RenderLinkClick, _super);
     // Constructor
     function RenderLinkClick(element, callbackCollection) {
-        var _this = _super.call(this) || this;
-        _this.element = element;
-        _this.callbackCollection = callbackCollection;
-        return _this;
+        _super.call(this);
+        this.element = element;
+        this.callbackCollection = callbackCollection;
     }
     // Public methods
     RenderLinkClick.prototype.run = function () {
@@ -15293,17 +15020,16 @@ var RenderLinkClick = /** @class */ (function (_super) {
         });
     };
     return RenderLinkClick;
-}(RenderLink));
-var RenderLinkInput = /** @class */ (function (_super) {
+})(RenderLink);
+var RenderLinkInput = (function (_super) {
     __extends(RenderLinkInput, _super);
     // Constructor
     function RenderLinkInput(element, enigmaAnswer, callbackCollection, callbackCollectionWrong) {
-        var _this = _super.call(this) || this;
-        _this.element = element;
-        _this.enigmaAnswer = enigmaAnswer;
-        _this.callbackCollection = callbackCollection;
-        _this.callbackCollectionWrong = callbackCollectionWrong;
-        return _this;
+        _super.call(this);
+        this.element = element;
+        this.enigmaAnswer = enigmaAnswer;
+        this.callbackCollection = callbackCollection;
+        this.callbackCollectionWrong = callbackCollectionWrong;
     }
     // Public methods
     RenderLinkInput.prototype.run = function () {
@@ -15314,7 +15040,6 @@ var RenderLinkInput = /** @class */ (function (_super) {
             // We check if the new value correspond to the answer (if it does we fire the callbacks)
             if (renderLink.enigmaAnswer.isRight($(this).val()))
                 renderLink.callbackCollection.fire();
-            // Here it means that the new value doesn't correspond to the answers
             else if (renderLink.callbackCollectionWrong != null) {
                 renderLink.callbackCollectionWrong.fire();
             }
@@ -15326,15 +15051,14 @@ var RenderLinkInput = /** @class */ (function (_super) {
         $(this.element).focus();
     };
     return RenderLinkInput;
-}(RenderLink));
-var RenderLinkOnHoverShowTooltip = /** @class */ (function (_super) {
+})(RenderLink);
+var RenderLinkOnHoverShowTooltip = (function (_super) {
     __extends(RenderLinkOnHoverShowTooltip, _super);
     // Constructor
     function RenderLinkOnHoverShowTooltip(classHover, classTooltip) {
-        var _this = _super.call(this) || this;
-        _this.classHover = classHover;
-        _this.classTooltip = classTooltip;
-        return _this;
+        _super.call(this);
+        this.classHover = classHover;
+        this.classTooltip = classTooltip;
     }
     // Public methods
     RenderLinkOnHoverShowTooltip.prototype.run = function () {
@@ -15367,16 +15091,15 @@ var RenderLinkOnHoverShowTooltip = /** @class */ (function (_super) {
         });
     };
     return RenderLinkOnHoverShowTooltip;
-}(RenderLink));
+})(RenderLink);
 ///<reference path="RenderLink.ts"/>
-var RenderLinkOver = /** @class */ (function (_super) {
+var RenderLinkOver = (function (_super) {
     __extends(RenderLinkOver, _super);
     // Constructor
     function RenderLinkOver(firstElement, secondElement) {
-        var _this = _super.call(this) || this;
-        _this.firstElement = firstElement;
-        _this.secondElement = secondElement;
-        return _this;
+        _super.call(this);
+        this.firstElement = firstElement;
+        this.secondElement = secondElement;
     }
     // Public methods
     RenderLinkOver.prototype.run = function () {
@@ -15402,17 +15125,16 @@ var RenderLinkOver = /** @class */ (function (_super) {
         */
     };
     return RenderLinkOver;
-}(RenderLink));
-var RenderLinkSimpleInput = /** @class */ (function (_super) {
+})(RenderLink);
+var RenderLinkSimpleInput = (function (_super) {
     __extends(RenderLinkSimpleInput, _super);
     // Constructor
     function RenderLinkSimpleInput(element, callbackCollection, defaultValue, hasFocus) {
-        var _this = _super.call(this) || this;
-        _this.element = element;
-        _this.callbackCollection = callbackCollection;
-        _this.defaultValue = defaultValue;
-        _this.hasFocus = hasFocus;
-        return _this;
+        _super.call(this);
+        this.element = element;
+        this.callbackCollection = callbackCollection;
+        this.defaultValue = defaultValue;
+        this.hasFocus = hasFocus;
     }
     // Public methods
     RenderLinkSimpleInput.prototype.run = function () {
@@ -15433,13 +15155,13 @@ var RenderLinkSimpleInput = /** @class */ (function (_super) {
             $(this.element).focus();
     };
     return RenderLinkSimpleInput;
-}(RenderLink));
+})(RenderLink);
 ///<reference path="RenderTag.ts"/>
-var RenderTagLt = /** @class */ (function (_super) {
+var RenderTagLt = (function (_super) {
     __extends(RenderTagLt, _super);
     // Constructor
     function RenderTagLt(x) {
-        return _super.call(this, x, "") || this;
+        _super.call(this, x, "");
     }
     // Public methods
     RenderTagLt.prototype.clone = function () {
@@ -15451,8 +15173,8 @@ var RenderTagLt = /** @class */ (function (_super) {
         return str.addAt(this.getX() + 1, "lt;");
     };
     return RenderTagLt;
-}(RenderTag));
-var RenderTransparency = /** @class */ (function () {
+})(RenderTag);
+var RenderTransparency = (function () {
     // Constructor
     function RenderTransparency(alphaCharacter, metaAlphaCharacter) {
         if (metaAlphaCharacter === void 0) { metaAlphaCharacter = null; }
@@ -15467,20 +15189,20 @@ var RenderTransparency = /** @class */ (function () {
         return this.metaAlphaCharacter;
     };
     return RenderTransparency;
-}());
+})();
 ///<reference path="EqItem.ts"/>
-var RocketBoots = /** @class */ (function (_super) {
+var RocketBoots = (function (_super) {
     __extends(RocketBoots, _super);
     // Constructor
     function RocketBoots() {
-        return _super.call(this, "eqItemBootsRocketBoots", "eqItemBootsRocketBootsName", "eqItemBootsRocketBootsDescription", "eqItems/boots/rocketBoots") || this;
+        _super.call(this, "eqItemBootsRocketBoots", "eqItemBootsRocketBootsName", "eqItemBootsRocketBootsDescription", "eqItems/boots/rocketBoots");
     }
     // Special ability
     RocketBoots.prototype.getSpecialAbility = function () {
         return "Jump in mid-air without limit (rocket boots).";
     };
     return RocketBoots;
-}(EqItem));
+})(EqItem);
 ///<reference path="Game.ts"/>
 ///<reference path="./../../libs/jquery.d.ts"/>
 var Main;
@@ -15552,28 +15274,27 @@ $(document).ready(function () {
 });
 ///<reference path="Place.ts"/>
 ///<reference path="main.ts"/>
-var Save = /** @class */ (function (_super) {
+var Save = (function (_super) {
     __extends(Save, _super);
     // Constructor
     function Save(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // The currently selected slot (slot1 by default)
-        _this.selectedSlot = "slot1";
+        this.selectedSlot = "slot1";
         // The last local autosave minute we drew (used to refresh the page at the right time)
-        _this.lastLocalAutosaveMinute = null;
+        this.lastLocalAutosaveMinute = null;
         // Should we show the file save warning?
-        _this.showFileSaveWarning = false;
+        this.showFileSaveWarning = false;
         // The textarea content
-        _this.fileSaveTextareaContent = null;
+        this.fileSaveTextareaContent = null;
         // Resize
-        _this.resize();
+        this.resize();
         // Create the slots array
-        _this.createSlotsArray();
+        this.createSlotsArray();
         // Update
-        _this.update();
-        return _this;
+        this.update();
     }
     // getRenderArea()
     Save.prototype.getRenderArea = function () {
@@ -15731,14 +15452,12 @@ var Save = /** @class */ (function (_super) {
                 this.renderArea.addAsciiRealButton(Database.getText("saveLocalSaveAutosaveButton") + " on slot " + this.selectedSlot.substr(4, 1), x + 51, y + yAdd + 10, "saveLocalSaveAutosaveButton", Database.getTranslatedText("saveLocalSaveAutosaveButton"), true, -1, null, false);
                 this.renderArea.addLinkCall(".saveLocalSaveAutosaveButton", new CallbackCollection(this.clickedAutosave.bind(this)));
             }
-            // Else
             else {
                 // Add disable autosave button
                 this.renderArea.addAsciiRealButton(Database.getText("saveLocalSaveDisableAutosaveButton"), x + 51, y + yAdd + 10, "saveLocalSaveDisableAutosaveButton", Database.getTranslatedText("saveLocalSaveDisableAutosaveButton"), true, -1, null, false);
                 this.renderArea.addLinkCall(".saveLocalSaveDisableAutosaveButton", new CallbackCollection(this.clickedDisableAutosave.bind(this)));
             }
         }
-        // If we don't
         else {
             // Warning messages
             this.drawWarning(Database.getText("saveLocalSaveWarning0") + " (local storage and application cache)", x, y + yAdd + 4);
@@ -15860,13 +15579,13 @@ var Save = /** @class */ (function (_super) {
         this.renderArea.addLinkCallbackCollection(new CallbackCollection(this.selectRightSlot.bind(this)));
     };
     return Save;
-}(Place));
+})(Place);
 ///<reference path="EqItem.ts"/>
-var Scythe = /** @class */ (function (_super) {
+var Scythe = (function (_super) {
     __extends(Scythe, _super);
     // Constructor
     function Scythe() {
-        return _super.call(this, "eqItemWeaponScythe", "eqItemWeaponScytheName", "eqItemWeaponScytheDescription", "eqItems/weapons/scythe") || this;
+        _super.call(this, "eqItemWeaponScythe", "eqItemWeaponScytheName", "eqItemWeaponScytheDescription", "eqItems/weapons/scythe");
     }
     // Public getters
     Scythe.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -15875,21 +15594,20 @@ var Scythe = /** @class */ (function (_super) {
         return qew;
     };
     return Scythe;
-}(EqItem));
+})(EqItem);
 ///<reference path="QuestEntity.ts"/>
-var SeaSnake = /** @class */ (function (_super) {
+var SeaSnake = (function (_super) {
     __extends(SeaSnake, _super);
     // Constructor
     function SeaSnake(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A sea snake", "a sea snake"), new RenderArea(78, 11), new Pos(0, 0)) || this;
+        _super.call(this, quest, pos, new Naming("A sea snake", "a sea snake"), new RenderArea(78, 11), new Pos(0, 0));
         // Set the movement and the animation
-        _this.setQuestEntityMovement(new QuestEntityMovement(new Pos(-Random.between(3, 5), 0)));
-        _this.setQuestEntityAnimation(new QuestEntityAnimation(0, 0, Random.upTo(11), "places/quests/theSea/seaSnake/1", "places/quests/theSea/seaSnake/2", "places/quests/theSea/seaSnake/3", "places/quests/theSea/seaSnake/4", "places/quests/theSea/seaSnake/5", "places/quests/theSea/seaSnake/6", "places/quests/theSea/seaSnake/7", "places/quests/theSea/seaSnake/8", "places/quests/theSea/seaSnake/9", "places/quests/theSea/seaSnake/10", "places/quests/theSea/seaSnake/11", "places/quests/theSea/seaSnake/12"));
+        this.setQuestEntityMovement(new QuestEntityMovement(new Pos(-Random.between(3, 5), 0)));
+        this.setQuestEntityAnimation(new QuestEntityAnimation(0, 0, Random.upTo(11), "places/quests/theSea/seaSnake/1", "places/quests/theSea/seaSnake/2", "places/quests/theSea/seaSnake/3", "places/quests/theSea/seaSnake/4", "places/quests/theSea/seaSnake/5", "places/quests/theSea/seaSnake/6", "places/quests/theSea/seaSnake/7", "places/quests/theSea/seaSnake/8", "places/quests/theSea/seaSnake/9", "places/quests/theSea/seaSnake/10", "places/quests/theSea/seaSnake/11", "places/quests/theSea/seaSnake/12"));
         // Set the transparency
-        _this.setTransparency(new RenderTransparency(" ", "%"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
         // Set destructible
-        _this.setDestructible(false);
-        return _this;
+        this.setDestructible(false);
     }
     // update()
     SeaSnake.prototype.update = function () {
@@ -15949,27 +15667,26 @@ var SeaSnake = /** @class */ (function (_super) {
         }
     };
     return SeaSnake;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var Seahorse = /** @class */ (function (_super) {
+var Seahorse = (function (_super) {
     __extends(Seahorse, _super);
     // Constructor
     function Seahorse(quest, pos, intendedXPosition) {
-        var _this = _super.call(this, quest, pos, new Naming("A magical seahorse", "a magical seahorse"), new RenderArea(4, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(3, 1)), new CollisionBox(_this, new Pos(1, 1), new Pos(3, 1)), new CollisionBox(_this, new Pos(2, 2), new Pos(1, 1)), new CollisionBox(_this, new Pos(2, 3), new Pos(1, 1))), new QuestEntityMovement(new Pos(-1, 0))) || this;
+        _super.call(this, quest, pos, new Naming("A magical seahorse", "a magical seahorse"), new RenderArea(4, 4), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(3, 1)), new CollisionBox(this, new Pos(1, 1), new Pos(3, 1)), new CollisionBox(this, new Pos(2, 2), new Pos(1, 1)), new CollisionBox(this, new Pos(2, 3), new Pos(1, 1))), new QuestEntityMovement(new Pos(-1, 0)));
         // Set the intended x position
-        _this.intendedXPosition = intendedXPosition;
+        this.intendedXPosition = intendedXPosition;
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(20);
-        _this.setHp(20);
+        this.setDestructible(true);
+        this.setMaxHp(20);
+        this.setHp(20);
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/seahorse"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/seahorse"));
         // Set the transparency
-        _this.setTransparency(new RenderTransparency(" "));
+        this.setTransparency(new RenderTransparency(" "));
         // Add a spell caster
-        _this.addQuestEntitySpellCaster(new QuestEntitySpellCaster(new CallbackCollection(_this.castWaterBall.bind(_this))));
-        _this.getLastQuestEntitySpellCaster().getDelay().setFixedDelay(30, Random.upTo(30));
-        return _this;
+        this.addQuestEntitySpellCaster(new QuestEntitySpellCaster(new CallbackCollection(this.castWaterBall.bind(this))));
+        this.getLastQuestEntitySpellCaster().getDelay().setFixedDelay(30, Random.upTo(30));
     }
     // Public methods
     Seahorse.prototype.tryToGoToIntendedXPosition = function (baseX) {
@@ -15989,7 +15706,7 @@ var Seahorse = /** @class */ (function (_super) {
         this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage() + " (and found " + Algo.pluralFormat(this.getQuest().foundCandies(150), " candy", " candies") + ")", this.getQuest().getCandiesFoundMessage()));
     };
     return Seahorse;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="House.ts"/>
 // Lollipops
 Saving.registerBool("secondHouseLollipop1Bought", false);
@@ -16003,39 +15720,37 @@ Saving.registerBool("secondHouseChocolateBarBought", false);
 Saving.registerBool("secondHouseMerchantHatBought", false);
 // The time ring
 Saving.registerBool("secondHouseTimeRingBought", false);
-var SecondHouse = /** @class */ (function (_super) {
+var SecondHouse = (function (_super) {
     __extends(SecondHouse, _super);
     // Constructor
     function SecondHouse(game) {
-        var _this = 
         // House constructor
-        _super.call(this, game) || this;
-        _this.renderArea = new RenderArea();
+        _super.call(this, game);
+        this.renderArea = new RenderArea();
         // Items sold by the candy merchant
-        _this.items = [];
+        this.items = [];
         // Selected item (an item is selected when the players clicks on it)
-        _this.selectedItemIndex = null;
+        this.selectedItemIndex = null;
         // Should we draw the intro speech ? (will be set to false as soon as we select an item)
-        _this.shouldDrawIntroSpeech = true;
+        this.shouldDrawIntroSpeech = true;
         // We add all the items
         // Lollipops
-        _this.addItem(new CandyMerchantItem_Lollipop(_this.getGame(), "secondHouseLollipop1Bought", "places/village/candyMerchantItems/lollipopRight", new Pos(14, 22), "secondHouseLollipop1Speech", 60, "secondHouseLollipopButtonText", "secondHouseLollipop1Button"));
-        _this.addItem(new CandyMerchantItem_Lollipop(_this.getGame(), "secondHouseLollipop2Bought", "places/village/candyMerchantItems/lollipopLeft", new Pos(12, 23), "secondHouseLollipop2Speech", 60, "secondHouseLollipopButtonText", "secondHouseLollipop2Button"));
-        _this.addItem(new CandyMerchantItem_Lollipop(_this.getGame(), "secondHouseLollipop3Bought", "places/village/candyMerchantItems/lollipopRight", new Pos(18, 24), "secondHouseLollipop3Speech", 60, "secondHouseLollipopButtonText", "secondHouseLollipop3Button"));
+        this.addItem(new CandyMerchantItem_Lollipop(this.getGame(), "secondHouseLollipop1Bought", "places/village/candyMerchantItems/lollipopRight", new Pos(14, 22), "secondHouseLollipop1Speech", 60, "secondHouseLollipopButtonText", "secondHouseLollipop1Button"));
+        this.addItem(new CandyMerchantItem_Lollipop(this.getGame(), "secondHouseLollipop2Bought", "places/village/candyMerchantItems/lollipopLeft", new Pos(12, 23), "secondHouseLollipop2Speech", 60, "secondHouseLollipopButtonText", "secondHouseLollipop2Button"));
+        this.addItem(new CandyMerchantItem_Lollipop(this.getGame(), "secondHouseLollipop3Bought", "places/village/candyMerchantItems/lollipopRight", new Pos(18, 24), "secondHouseLollipop3Speech", 60, "secondHouseLollipopButtonText", "secondHouseLollipop3Button"));
         // The leather boots
-        _this.addItem(new CandyMerchantItem_LeatherBoots(_this.getGame(), "eqItemBootsLeatherBoots", "places/village/candyMerchantItems/boots", new Pos(5, 25), "secondHouseLeatherBootsSpeech", 300, "secondHouseLeatherBootsButtonText", "secondHouseLeatherBootsButton"));
+        this.addItem(new CandyMerchantItem_LeatherBoots(this.getGame(), "eqItemBootsLeatherBoots", "places/village/candyMerchantItems/boots", new Pos(5, 25), "secondHouseLeatherBootsSpeech", 300, "secondHouseLeatherBootsButtonText", "secondHouseLeatherBootsButton"));
         // The chocolate bar
-        _this.addItem(new CandyMerchantItem_ChocolateBar(_this.getGame(), "secondHouseChocolateBarBought", "places/village/candyMerchantItems/chocolateBar", new Pos(62, 27), "secondHouseChocolateBarSpeech", 800, "secondHouseChocolateBarButtonText", "secondHouseChocolateBarButton"));
+        this.addItem(new CandyMerchantItem_ChocolateBar(this.getGame(), "secondHouseChocolateBarBought", "places/village/candyMerchantItems/chocolateBar", new Pos(62, 27), "secondHouseChocolateBarSpeech", 800, "secondHouseChocolateBarButtonText", "secondHouseChocolateBarButton"));
         // The merchant hat
-        _this.addItem(new CandyMerchantItem_MerchantHat(_this.getGame(), "secondHouseMerchantHatBought", "places/village/candyMerchantItems/hat", new Pos(53, 13), "secondHouseMerchantHatSpeech", 1000000, "secondHouseMerchantHatButtonText", "secondHouseMerchantHatButton"));
+        this.addItem(new CandyMerchantItem_MerchantHat(this.getGame(), "secondHouseMerchantHatBought", "places/village/candyMerchantItems/hat", new Pos(53, 13), "secondHouseMerchantHatSpeech", 1000000, "secondHouseMerchantHatButtonText", "secondHouseMerchantHatButton"));
         // The time ring
-        _this.addItem(new CandyMerchantItem_TimeRing(_this.getGame(), "secondHouseTimeRingBought", "places/village/candyMerchantItems/timeRing", new Pos(43, 28), "secondHouseTimeRingSpeech", 500, "secondHouseTimeRingButtonText", "secondHouseTimeRingButton"));
+        this.addItem(new CandyMerchantItem_TimeRing(this.getGame(), "secondHouseTimeRingBought", "places/village/candyMerchantItems/timeRing", new Pos(43, 28), "secondHouseTimeRingSpeech", 500, "secondHouseTimeRingButtonText", "secondHouseTimeRingButton"));
         // Leather gloves
-        _this.addItem(new CandyMerchantItem_LeatherGloves(_this.getGame(), "eqItemGlovesLeatherGloves", "places/village/candyMerchantItems/leatherGloves", new Pos(82, 27), "secondHouseLeatherGlovesSpeech", 300, "secondHouseLeatherGlovesButtonText", "secondHouseLeatherGlovesButton"));
+        this.addItem(new CandyMerchantItem_LeatherGloves(this.getGame(), "eqItemGlovesLeatherGloves", "places/village/candyMerchantItems/leatherGloves", new Pos(82, 27), "secondHouseLeatherGlovesSpeech", 300, "secondHouseLeatherGlovesButtonText", "secondHouseLeatherGlovesButton"));
         // We resize the render area and update it
-        _this.renderArea.resizeFromArray(Database.getAscii("places/village/secondHouse"), 0, 3);
-        _this.update();
-        return _this;
+        this.renderArea.resizeFromArray(Database.getAscii("places/village/secondHouse"), 0, 3);
+        this.update();
     }
     // Public methods
     SecondHouse.prototype.willBeDisplayed = function () {
@@ -16128,28 +15843,26 @@ var SecondHouse = /** @class */ (function (_super) {
         }
     };
     return SecondHouse;
-}(House));
+})(House);
 ///<reference path="QuestEntity.ts"/>
-var ShellPowder = /** @class */ (function (_super) {
+var ShellPowder = (function (_super) {
     __extends(ShellPowder, _super);
     // Constructor
     function ShellPowder(quest, leftDownCornerPosition) {
-        var _this = this;
         // Create the real global position
         var globalPosition = leftDownCornerPosition;
         globalPosition.add(new Pos(0, -Database.getAsciiHeight("places/quests/theSea/shellPowder") + 1));
         // Call the mother constructor
-        _this = _super.call(this, quest, globalPosition, new Naming("Shell powder", "shell powder"), new RenderArea(), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(6, 3)))) || this;
+        _super.call(this, quest, globalPosition, new Naming("Shell powder", "shell powder"), new RenderArea(), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(6, 3))));
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(10);
-        _this.setHp(10);
+        this.setDestructible(true);
+        this.setMaxHp(10);
+        this.setHp(10);
         // Set the team (nature)
-        _this.setTeam(QuestEntityTeam.NATURE);
+        this.setTeam(QuestEntityTeam.NATURE);
         // Draw the ascii art
-        _this.getRenderArea().resizeFromArray(Database.getAscii("places/quests/theSea/shellPowder"));
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/shellPowder"));
-        return _this;
+        this.getRenderArea().resizeFromArray(Database.getAscii("places/quests/theSea/shellPowder"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/shellPowder"));
     }
     // willDie()
     ShellPowder.prototype.willDie = function () {
@@ -16157,27 +15870,26 @@ var ShellPowder = /** @class */ (function (_super) {
         this.getQuest().foundGridOrEqItem(new QuestItemFound(this.getQuest(), "gridItemPossessedShellPowder", "You found shell powder.", "You gain shell powder."));
     };
     return ShellPowder;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var SmallestFish = /** @class */ (function (_super) {
+var SmallestFish = (function (_super) {
     __extends(SmallestFish, _super);
     // Constructor
     function SmallestFish(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A very small fish", "a very small fish"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement(new Pos(-1, 0))) || this;
+        _super.call(this, quest, pos, new Naming("A very small fish", "a very small fish"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement(new Pos(-1, 0)));
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(10);
-        _this.setHp(10);
+        this.setDestructible(true);
+        this.setMaxHp(10);
+        this.setHp(10);
         // Set the ascii art
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/smallestFish"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/smallestFish"));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its fins", "its fins"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(5, 2))), 1));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(6);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its fins", "its fins"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(5, 2))), 1));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(6);
     }
     return SmallestFish;
-}(QuestEntity));
-var Smoke = /** @class */ (function () {
+})(QuestEntity);
+var Smoke = (function () {
     // Constructor
     function Smoke(x, y, width, height, minWaitingTime, maxWaitingTime) {
         if (minWaitingTime === void 0) { minWaitingTime = 0; }
@@ -16216,7 +15928,6 @@ var Smoke = /** @class */ (function () {
             if (-this.yGap >= this.height) {
                 this.init();
             }
-            // Else we invert it
             else {
                 this.inverted = !this.inverted;
             }
@@ -16241,7 +15952,6 @@ var Smoke = /** @class */ (function () {
             // Waiting stuff
             this.weAreWaiting = false;
         }
-        // At first we are waiting
         else {
             // Y position
             this.yGap = 0;
@@ -16252,39 +15962,38 @@ var Smoke = /** @class */ (function () {
         }
     };
     return Smoke;
-}());
+})();
 ///<reference path="EqItem.ts"/>
-var SorceressHat = /** @class */ (function (_super) {
+var SorceressHat = (function (_super) {
     __extends(SorceressHat, _super);
     // Constructor
     function SorceressHat() {
-        return _super.call(this, "eqItemHatSorceressHat", "eqItemHatSorceressHatName", "eqItemHatSorceressHatDescription", "eqItems/hats/sorceressHat") || this;
+        _super.call(this, "eqItemHatSorceressHat", "eqItemHatSorceressHatName", "eqItemHatSorceressHatDescription", "eqItems/hats/sorceressHat");
     }
     // Special ability
     SorceressHat.prototype.getSpecialAbility = function () {
         return "Enhances your spells & potions effects (sorceress hat).";
     };
     return SorceressHat;
-}(EqItem));
+})(EqItem);
 ///<reference path="Place.ts"/>
 Saving.registerBool("sorceressHutTookLollipop", false);
 Saving.registerBool("sorceressHutBoughtGrimoire", false);
 Saving.registerBool("sorceressHutBoughtGrimoire2", false);
 Saving.registerBool("sorceressHutBoughtCauldron", false);
 Saving.registerBool("sorceressHutBoughtHat", false);
-var SorceressHut = /** @class */ (function (_super) {
+var SorceressHut = (function (_super) {
     __extends(SorceressHut, _super);
     // Constructor
     function SorceressHut(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Set the default speech
-        _this.currentSpeech = "sorceressHutHello";
+        this.currentSpeech = "sorceressHutHello";
         // Resize & update
-        _this.renderArea.resize(144, 48);
-        _this.update();
-        return _this;
+        this.renderArea.resize(144, 48);
+        this.update();
     }
     // getRenderArea()
     SorceressHut.prototype.getRenderArea = function () {
@@ -16465,55 +16174,51 @@ var SorceressHut = /** @class */ (function (_super) {
         this.drawCurrentSpeech(43, 4);
     };
     return SorceressHut;
-}(Place));
+})(Place);
 ///<reference path="QuestEntity.ts"/>
-var Spikes = /** @class */ (function (_super) {
+var Spikes = (function (_super) {
     __extends(Spikes, _super);
     // Constructor
     function Spikes(quest, globalPosition, width, damage, inverted) {
         if (damage === void 0) { damage = 200; }
         if (inverted === void 0) { inverted = false; }
-        var _this = 
         // Call the mother constructor
-        _super.call(this, quest, globalPosition, new Naming("Some spikes", "some spikes"), new RenderArea(), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(width, 1)))) || this;
+        _super.call(this, quest, globalPosition, new Naming("Some spikes", "some spikes"), new RenderArea(), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(width, 1))));
         // Set the team (nature)
-        _this.setTeam(QuestEntityTeam.NATURE);
+        this.setTeam(QuestEntityTeam.NATURE);
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its spikes", "its spikes"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, (inverted ? 1 : -1)), new Pos(width, 1))), damage));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its spikes", "its spikes"), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, (inverted ? 1 : -1)), new Pos(width, 1))), damage));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(0);
         // Draw the ascii art
-        _this.getRenderArea().resize(width, 1);
+        this.getRenderArea().resize(width, 1);
         for (var i = 0; i < Math.floor(width / 2); i++) {
             if (inverted == false)
-                _this.getRenderArea().drawString("/\\", i * 2, 0);
+                this.getRenderArea().drawString("/\\", i * 2, 0);
             else
-                _this.getRenderArea().drawString("\\/", i * 2, 0);
+                this.getRenderArea().drawString("\\/", i * 2, 0);
         }
-        return _this;
     }
     return Spikes;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var Sponge = /** @class */ (function (_super) {
+var Sponge = (function (_super) {
     __extends(Sponge, _super);
     // Constructor
     function Sponge(quest, leftDownCornerPosition) {
-        var _this = this;
         // Create the real global position
         var globalPosition = leftDownCornerPosition;
         globalPosition.add(new Pos(0, -Database.getAsciiHeight("places/quests/theSea/sponge") + 1));
         // Call the mother constructor
-        _this = _super.call(this, quest, globalPosition, new Naming("A sponge", "a sponge"), new RenderArea(), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(6, 3)))) || this;
+        _super.call(this, quest, globalPosition, new Naming("A sponge", "a sponge"), new RenderArea(), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(6, 3))));
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(40);
-        _this.setHp(40);
+        this.setDestructible(true);
+        this.setMaxHp(40);
+        this.setHp(40);
         // Set the team (nature)
-        _this.setTeam(QuestEntityTeam.NATURE);
+        this.setTeam(QuestEntityTeam.NATURE);
         // Draw the ascii art
-        _this.getRenderArea().resizeFromArray(Database.getAscii("places/quests/theSea/sponge"));
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/sponge"));
-        return _this;
+        this.getRenderArea().resizeFromArray(Database.getAscii("places/quests/theSea/sponge"));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/theSea/sponge"));
     }
     // willDie()
     Sponge.prototype.willDie = function () {
@@ -16521,7 +16226,7 @@ var Sponge = /** @class */ (function (_super) {
         this.getQuest().foundGridOrEqItem(new QuestItemFound(this.getQuest(), "gridItemPossessedSponge", "You found a sponge.", "You gain a sponge."));
     };
     return Sponge;
-}(QuestEntity));
+})(QuestEntity);
 // Saving stuff related to the status bar itself
 Saving.registerBool("statusBarUnlocked", false);
 // Saving stuff related to unlocked tabs
@@ -16538,7 +16243,7 @@ Saving.registerBool("statusBarUnlockedTheArena", false);
 Saving.registerBool("statusBarUnlockedHealthBar", false);
 // The corner step
 Saving.registerNumber("statusBarCornerStep", 0);
-var StatusBar = /** @class */ (function () {
+var StatusBar = (function () {
     // Constructor
     function StatusBar(game, selectedTabIndex) {
         // Render areas
@@ -16744,8 +16449,8 @@ var StatusBar = /** @class */ (function () {
         Saving.saveNumber("statusBarCornerStep", nextCornerStep);
     };
     return StatusBar;
-}());
-var StatusBarTab = /** @class */ (function () {
+})();
+var StatusBarTab = (function () {
     // Constructor
     function StatusBarTab(statusBar, type, xPos, text1, text2, text3, tabIndexWhenSelected, callbackCollectionWhenSelected) {
         if (tabIndexWhenSelected === void 0) { tabIndexWhenSelected = -1; }
@@ -16813,7 +16518,7 @@ var StatusBarTab = /** @class */ (function () {
         this.calculateWidth();
     };
     return StatusBarTab;
-}());
+})();
 var StatusBarTabType;
 (function (StatusBarTabType) {
     StatusBarTabType[StatusBarTabType["CANDY_BOX"] = 0] = "CANDY_BOX";
@@ -16828,14 +16533,13 @@ var StatusBarTabType;
     StatusBarTabType[StatusBarTabType["CFG"] = 9] = "CFG";
 })(StatusBarTabType || (StatusBarTabType = {}));
 ///<reference path="EqItem.ts"/>
-var SummoningTribalSpear = /** @class */ (function (_super) {
+var SummoningTribalSpear = (function (_super) {
     __extends(SummoningTribalSpear, _super);
     // Constructor
     function SummoningTribalSpear() {
-        var _this = _super.call(this, "eqItemWeaponSummoningTribalSpear", "eqItemWeaponSummoningTribalSpearName", "eqItemWeaponSummoningTribalSpearDescription", "eqItems/weapons/summoningTribalSpear") || this;
+        _super.call(this, "eqItemWeaponSummoningTribalSpear", "eqItemWeaponSummoningTribalSpearName", "eqItemWeaponSummoningTribalSpearDescription", "eqItems/weapons/summoningTribalSpear");
         // Time since we last summoned a warrior
-        _this.timeSinceSummon = 0;
-        return _this;
+        this.timeSinceSummon = 0;
     }
     // Public getters
     SummoningTribalSpear.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -16866,26 +16570,25 @@ var SummoningTribalSpear = /** @class */ (function (_super) {
         this.timeSinceSummon = 0;
     };
     return SummoningTribalSpear;
-}(EqItem));
+})(EqItem);
 ///<reference path="ThirdHouseGame.ts"/>
 Saving.registerBool("SuperRPGReward1", false);
 Saving.registerBool("SuperRPGReward2", false);
 Saving.registerBool("SuperRPGReward3", false);
 Saving.registerBool("SuperRPGReward4", false);
 Saving.registerBool("SuperRPGUnlockedHardmode", false);
-var SuperRPG = /** @class */ (function (_super) {
+var SuperRPG = (function (_super) {
     __extends(SuperRPG, _super);
     function SuperRPG() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
         // The global step of the game (splash screen, the menu, or the game itself
-        _this.step = SuperRPGStep.SPLASH_SCREEN;
+        this.step = SuperRPGStep.SPLASH_SCREEN;
         // The timer used for the splash screen
-        _this.splashScreenTimer = 39;
+        this.splashScreenTimer = 39;
         // The current menu
-        _this.menu = null;
+        this.menu = null;
         // Should we exit the game?
-        _this.shouldExitGame = false;
-        return _this;
+        this.shouldExitGame = false;
     }
     // Public methods
     SuperRPG.prototype.exitGame = function () {
@@ -17136,7 +16839,6 @@ var SuperRPG = /** @class */ (function (_super) {
                 // Big spider
                 if (this.floorStep == SuperRPGFloorStep.MONSTER3)
                     menu.setSpider();
-                // Small spiders
                 else
                     menu.setSpiders();
                 break;
@@ -17341,7 +17043,6 @@ var SuperRPG = /** @class */ (function (_super) {
             // Reduce the timer
             this.splashScreenTimer -= 1;
         }
-        // Else
         else {
             // Switch to the next step
             this.goToMainMenu();
@@ -17350,7 +17051,7 @@ var SuperRPG = /** @class */ (function (_super) {
         return false;
     };
     return SuperRPG;
-}(ThirdHouseGame));
+})(ThirdHouseGame);
 var SuperRPGFloorStep;
 (function (SuperRPGFloorStep) {
     SuperRPGFloorStep[SuperRPGFloorStep["SHOP"] = 0] = "SHOP";
@@ -17358,7 +17059,7 @@ var SuperRPGFloorStep;
     SuperRPGFloorStep[SuperRPGFloorStep["MONSTER2"] = 2] = "MONSTER2";
     SuperRPGFloorStep[SuperRPGFloorStep["MONSTER3"] = 3] = "MONSTER3";
 })(SuperRPGFloorStep || (SuperRPGFloorStep = {}));
-var SuperRPGMenu = /** @class */ (function () {
+var SuperRPGMenu = (function () {
     // Constructor
     function SuperRPGMenu(superRPG, asciiName, currentlySelectedEntryIndex) {
         // Menu entries
@@ -17406,13 +17107,13 @@ var SuperRPGMenu = /** @class */ (function () {
     SuperRPGMenu.prototype.setEntries = function () {
         var entries = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            entries[_i] = arguments[_i];
+            entries[_i - 0] = arguments[_i];
         }
         this.entries = entries;
     };
     return SuperRPGMenu;
-}());
-var SuperRPGMenuEntry = /** @class */ (function () {
+})();
+var SuperRPGMenuEntry = (function () {
     // Constructor
     function SuperRPGMenuEntry(text, callbackCollection) {
         this.text = text;
@@ -17435,12 +17136,12 @@ var SuperRPGMenuEntry = /** @class */ (function () {
         return this.callbackCollection;
     };
     return SuperRPGMenuEntry;
-}());
+})();
 ///<reference path="SuperRPGMenu.ts"/>
-var SuperRPGMenu_Ingame = /** @class */ (function (_super) {
+var SuperRPGMenu_Ingame = (function (_super) {
     __extends(SuperRPGMenu_Ingame, _super);
     function SuperRPGMenu_Ingame() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // Public methods
     SuperRPGMenu_Ingame.prototype.draw = function (renderArea) {
@@ -17483,18 +17184,17 @@ var SuperRPGMenu_Ingame = /** @class */ (function (_super) {
         _super.prototype.draw.call(this, renderArea);
     };
     return SuperRPGMenu_Ingame;
-}(SuperRPGMenu));
+})(SuperRPGMenu);
 ///<reference path="SuperRPGMenu.ts"/>
-var SuperRPGMenu_Main = /** @class */ (function (_super) {
+var SuperRPGMenu_Main = (function (_super) {
     __extends(SuperRPGMenu_Main, _super);
     // Constructor
     function SuperRPGMenu_Main(superRPG) {
-        var _this = _super.call(this, superRPG, "places/village/thirdHouseGames/SuperRPG/mainMenu", 0) || this;
-        _this.addEntry(new SuperRPGMenuEntry("Start", new CallbackCollection(_this.getSuperRPG().startGame.bind(_this.getSuperRPG(), false))));
+        _super.call(this, superRPG, "places/village/thirdHouseGames/SuperRPG/mainMenu", 0);
+        this.addEntry(new SuperRPGMenuEntry("Start", new CallbackCollection(this.getSuperRPG().startGame.bind(this.getSuperRPG(), false))));
         if (Saving.loadBool("SuperRPGUnlockedHardmode"))
-            _this.addEntry(new SuperRPGMenuEntry("Start (hardmode)", new CallbackCollection(_this.getSuperRPG().startGame.bind(_this.getSuperRPG(), true))));
-        _this.addEntry(new SuperRPGMenuEntry("Exit", new CallbackCollection(_this.getSuperRPG().exitGame.bind(_this.getSuperRPG()))));
-        return _this;
+            this.addEntry(new SuperRPGMenuEntry("Start (hardmode)", new CallbackCollection(this.getSuperRPG().startGame.bind(this.getSuperRPG(), true))));
+        this.addEntry(new SuperRPGMenuEntry("Exit", new CallbackCollection(this.getSuperRPG().exitGame.bind(this.getSuperRPG()))));
     }
     // Public methods
     SuperRPGMenu_Main.prototype.draw = function (renderArea) {
@@ -17504,13 +17204,13 @@ var SuperRPGMenu_Main = /** @class */ (function (_super) {
         _super.prototype.draw.call(this, renderArea);
     };
     return SuperRPGMenu_Main;
-}(SuperRPGMenu));
+})(SuperRPGMenu);
 ///<reference path="SuperRPGMenu_Ingame.ts"/>
-var SuperRPGMenu_Monster = /** @class */ (function (_super) {
+var SuperRPGMenu_Monster = (function (_super) {
     __extends(SuperRPGMenu_Monster, _super);
     // Constructor
     function SuperRPGMenu_Monster(superRPG) {
-        return _super.call(this, superRPG, "", 0) || this;
+        _super.call(this, superRPG, "", 0);
     }
     // Public methods
     SuperRPGMenu_Monster.prototype.addUsualEntries = function () {
@@ -17566,7 +17266,6 @@ var SuperRPGMenu_Monster = /** @class */ (function (_super) {
         // Bill gates skeleton
         if (Random.oneChanceOutOf(10))
             this.setMonster("places/village/thirdHouseGames/SuperRPG/billGatesSkeleton", 6, 1, 50, 7);
-        // Normal skeleton
         else
             this.setMonster("places/village/thirdHouseGames/SuperRPG/skeleton", 6, 1, 25, 7);
     };
@@ -17624,13 +17323,13 @@ var SuperRPGMenu_Monster = /** @class */ (function (_super) {
             this.maxHp = (this.getSuperRPG().getHardmode() ? Math.floor(maxHp * 1.2) : maxHp);
     };
     return SuperRPGMenu_Monster;
-}(SuperRPGMenu_Ingame));
+})(SuperRPGMenu_Ingame);
 ///<reference path="SuperRPGMenu_Ingame.ts"/>
-var SuperRPGMenu_Shop = /** @class */ (function (_super) {
+var SuperRPGMenu_Shop = (function (_super) {
     __extends(SuperRPGMenu_Shop, _super);
     // Constructor
     function SuperRPGMenu_Shop(superRPG) {
-        return _super.call(this, superRPG, "places/village/thirdHouseGames/SuperRPG/shop", 0) || this;
+        _super.call(this, superRPG, "places/village/thirdHouseGames/SuperRPG/shop", 0);
     }
     // Public methods
     SuperRPGMenu_Shop.prototype.addBuyingDefenseItem = function (defenseItem, defense, price) {
@@ -17696,7 +17395,7 @@ var SuperRPGMenu_Shop = /** @class */ (function (_super) {
         }
     };
     return SuperRPGMenu_Shop;
-}(SuperRPGMenu_Ingame));
+})(SuperRPGMenu_Ingame);
 var SuperRPGStep;
 (function (SuperRPGStep) {
     SuperRPGStep[SuperRPGStep["SPLASH_SCREEN"] = 0] = "SPLASH_SCREEN";
@@ -17704,22 +17403,21 @@ var SuperRPGStep;
     SuperRPGStep[SuperRPGStep["LOSE"] = 2] = "LOSE";
 })(SuperRPGStep || (SuperRPGStep = {}));
 ///<reference path="QuestEntity.ts"/>
-var Teapot = /** @class */ (function (_super) {
+var Teapot = (function (_super) {
     __extends(Teapot, _super);
     // Constructor
     function Teapot(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A teapot", "a teapot"), new RenderArea(19, 6), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 1), new Pos(3, 1)), new CollisionBox(_this, new Pos(6, 1), new Pos(8, 1)), new CollisionBox(_this, new Pos(1, 2), new Pos(18, 1)), new CollisionBox(_this, new Pos(2, 3), new Pos(17, 1)), new CollisionBox(_this, new Pos(3, 4), new Pos(16, 1)), new CollisionBox(_this, new Pos(5, 5), new Pos(12, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A teapot", "a teapot"), new RenderArea(19, 6), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 1), new Pos(3, 1)), new CollisionBox(this, new Pos(6, 1), new Pos(8, 1)), new CollisionBox(this, new Pos(1, 2), new Pos(18, 1)), new CollisionBox(this, new Pos(2, 3), new Pos(17, 1)), new CollisionBox(this, new Pos(3, 4), new Pos(16, 1)), new CollisionBox(this, new Pos(5, 5), new Pos(12, 1))), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
-        _this.getQuestEntityMovement().setWormsLike(true);
+        this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setWormsLike(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(1000000);
-        _this.setHp(1000000);
+        this.setDestructible(true);
+        this.setMaxHp(1000000);
+        this.setHp(1000000);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/fortress/teapot"));
-        _this.setTransparency(new RenderTransparency(" ", "%"));
-        return _this;
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/fortress/teapot"));
+        this.setTransparency(new RenderTransparency(" ", "%"));
     }
     // update()
     Teapot.prototype.update = function () {
@@ -17737,18 +17435,17 @@ var Teapot = /** @class */ (function (_super) {
         this.getQuest().foundGridOrEqItem(new QuestItemFound(this.getQuest(), "eqItemWeaponGiantSpoon", "You found a giant spoon inside the teapot.", "You gain a giant spoon."));
     };
     return Teapot;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="Place.ts"/>
-var TheArena = /** @class */ (function (_super) {
+var TheArena = (function (_super) {
     __extends(TheArena, _super);
     // Constructor
     function TheArena(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resize(100, 20);
-        _this.update();
-        return _this;
+        this.renderArea = new RenderArea();
+        this.renderArea.resize(100, 20);
+        this.update();
     }
     // getRenderArea()
     TheArena.prototype.getRenderArea = function () {
@@ -17761,7 +17458,6 @@ var TheArena = /** @class */ (function (_super) {
             // If this quest doesn't exist
             if (TheArenaModule.getQuest(questFolderName) == null)
                 console.log("Trying to draw the arena quest " + questFolderName + " which wasn't added to the arena module.");
-            // Else, this quest exists
             else {
                 // Draw the logo
                 TheArenaModule.getQuest(questFolderName).drawLogo(this.renderArea, x, y, this.getGame());
@@ -17798,7 +17494,7 @@ var TheArena = /** @class */ (function (_super) {
         this.renderArea.addHtmlLink(80, 15, "create_quest.html", "follow the guide");
     };
     return TheArena;
-}(Place));
+})(Place);
 var TheArenaModule;
 (function (TheArenaModule) {
     var quests = {};
@@ -17813,7 +17509,7 @@ var TheArenaModule;
     }
     TheArenaModule.getQuest = getQuest;
 })(TheArenaModule || (TheArenaModule = {}));
-var TheArenaModuleQuest = /** @class */ (function () {
+var TheArenaModuleQuest = (function () {
     // Constructor
     function TheArenaModuleQuest(questFolderName, specialCallback) {
         // Set from parameters
@@ -17841,31 +17537,30 @@ var TheArenaModuleQuest = /** @class */ (function () {
         }
     };
     return TheArenaModuleQuest;
-}());
+})();
 ///<reference path="Place.ts"/>
-var TheCave = /** @class */ (function (_super) {
+var TheCave = (function (_super) {
     __extends(TheCave, _super);
     // Constructor
     function TheCave(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Last moves chosen
-        _this.lastMoves = [];
+        this.lastMoves = [];
         // Database text names for the first sentence below
-        _this.firstSentence = null;
+        this.firstSentence = null;
         // Pattern currently in use
-        _this.pattern = null;
+        this.pattern = null;
         // Add the additional characters to the array
-        _this.createAdditionalCharactersPossible();
+        this.createAdditionalCharactersPossible();
         // Add the additional characters positions to the array
-        _this.createAdditionalCharactersPositionsPossible();
+        this.createAdditionalCharactersPositionsPossible();
         // Create the current way
-        _this.createWay();
+        this.createWay();
         // Resize & update
-        _this.renderArea.resizeFromArray(Database.getAscii("places/theCave/ways"), 42, 7); // 3 for the return to map button + 4 for the two sentences = 7
-        _this.update();
-        return _this;
+        this.renderArea.resizeFromArray(Database.getAscii("places/theCave/ways"), 42, 7); // 3 for the return to map button + 4 for the two sentences = 7
+        this.update();
     }
     // getRenderArea()
     TheCave.prototype.getRenderArea = function () {
@@ -18050,8 +17745,8 @@ var TheCave = /** @class */ (function (_super) {
         this.drawWays();
     };
     return TheCave;
-}(Place));
-var TheCaveAdditionalCharacter = /** @class */ (function () {
+})(Place);
+var TheCaveAdditionalCharacter = (function () {
     // Constructor
     function TheCaveAdditionalCharacter(theCave, characterString, characterPosition) {
         if (characterString === void 0) { characterString = null; }
@@ -18063,7 +17758,6 @@ var TheCaveAdditionalCharacter = /** @class */ (function () {
             // We set our string from this one
             this.characterString = characterString;
         }
-        // Else, if it's null
         else {
             // We choose a string randomly from the possible strings
             this.characterString = this.theCave.getAdditionalCharactersPossible()[Random.upTo(this.theCave.getAdditionalCharactersPossible().length - 1)];
@@ -18073,7 +17767,6 @@ var TheCaveAdditionalCharacter = /** @class */ (function () {
             // We set our position from this one
             this.characterPosition = characterPosition;
         }
-        // Else, if it's null
         else {
             // We choose a position randomly from the possible positions
             this.characterPosition = this.theCave.getAdditionalCharactersPositionsPossible()[Random.upTo(this.theCave.getAdditionalCharactersPositionsPossible().length - 1)];
@@ -18087,18 +17780,17 @@ var TheCaveAdditionalCharacter = /** @class */ (function () {
         return this.characterString;
     };
     return TheCaveAdditionalCharacter;
-}());
+})();
 ///<reference path="Place.ts"/>
-var TheCaveExit = /** @class */ (function (_super) {
+var TheCaveExit = (function (_super) {
     __extends(TheCaveExit, _super);
     // Constructor
     function TheCaveExit(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/theCave/exit"), 42, 3);
-        _this.update();
-        return _this;
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/theCave/exit"), 42, 3);
+        this.update();
     }
     // getRenderArea()
     TheCaveExit.prototype.getRenderArea = function () {
@@ -18121,14 +17813,14 @@ var TheCaveExit = /** @class */ (function (_super) {
         this.renderArea.addLinkCall(".theCaveExitReturnToMapButton", new CallbackCollection(this.getGame().goToMainMap.bind(this.getGame())));
     };
     return TheCaveExit;
-}(Place));
+})(Place);
 var TheCaveMoveType;
 (function (TheCaveMoveType) {
     TheCaveMoveType[TheCaveMoveType["LEFT"] = 0] = "LEFT";
     TheCaveMoveType[TheCaveMoveType["RIGHT"] = 1] = "RIGHT";
     TheCaveMoveType[TheCaveMoveType["STRAIGHT"] = 2] = "STRAIGHT";
 })(TheCaveMoveType || (TheCaveMoveType = {}));
-var TheCavePattern = /** @class */ (function () {
+var TheCavePattern = (function () {
     // Constructor
     function TheCavePattern(theCave) {
         this.theCave = theCave;
@@ -18149,26 +17841,25 @@ var TheCavePattern = /** @class */ (function () {
         return this.theCave;
     };
     return TheCavePattern;
-}());
+})();
 ///<reference path="TheCavePattern.ts"/>
-var TheCavePattern_ArrowsToHeartPlug = /** @class */ (function (_super) {
+var TheCavePattern_ArrowsToHeartPlug = (function (_super) {
     __extends(TheCavePattern_ArrowsToHeartPlug, _super);
     // Constructor
     function TheCavePattern_ArrowsToHeartPlug(theCave) {
-        var _this = _super.call(this, theCave) || this;
+        _super.call(this, theCave);
         // Is the pattern stopped?
-        _this.stopped = false;
+        this.stopped = false;
         // Should we draw an arrow?
-        _this.arrow = true;
+        this.arrow = true;
         // Number of times the player correctly followed the arrows
-        _this.followedNumber = 0;
+        this.followedNumber = 0;
         // Did we find the heart plug?
-        _this.foundPlug = false;
+        this.foundPlug = false;
         // Did we get the heart plug? (true if the player clicked on it)
-        _this.gotPlug = false;
+        this.gotPlug = false;
         // Choose a random direction
-        _this.arrowAtRight = Random.flipACoin();
-        return _this;
+        this.arrowAtRight = Random.flipACoin();
     }
     // Public methods
     TheCavePattern_ArrowsToHeartPlug.prototype.draw = function (renderArea, x, y) {
@@ -18221,11 +17912,9 @@ var TheCavePattern_ArrowsToHeartPlug = /** @class */ (function (_super) {
                     this.followedNumber += 1;
                 }
             }
-            // Else, we found the plug, so we stop this pattern
             else
                 this.stopped = true;
         }
-        // Else, we stop
         else {
             this.stopped = true;
         }
@@ -18239,17 +17928,16 @@ var TheCavePattern_ArrowsToHeartPlug = /** @class */ (function (_super) {
         this.getTheCave().aPatternNeedsUpdating();
     };
     return TheCavePattern_ArrowsToHeartPlug;
-}(TheCavePattern));
+})(TheCavePattern);
 ///<reference path="TheCavePattern.ts"/>
 Saving.registerBool("TheCavePattern_ChocolateBarNowGotTheBar", false);
-var TheCavePattern_ChocolateBarNow = /** @class */ (function (_super) {
+var TheCavePattern_ChocolateBarNow = (function (_super) {
     __extends(TheCavePattern_ChocolateBarNow, _super);
     // Constructor
     function TheCavePattern_ChocolateBarNow(theCave) {
-        var _this = _super.call(this, theCave) || this;
+        _super.call(this, theCave);
         // Did we clicked to get the bar?
-        _this.gotTheBar = false;
-        return _this;
+        this.gotTheBar = false;
     }
     // Public methods
     TheCavePattern_ChocolateBarNow.prototype.draw = function (renderArea, x, y) {
@@ -18285,13 +17973,13 @@ var TheCavePattern_ChocolateBarNow = /** @class */ (function (_super) {
         this.getTheCave().aPatternNeedsUpdating();
     };
     return TheCavePattern_ChocolateBarNow;
-}(TheCavePattern));
+})(TheCavePattern);
 ///<reference path="TheCavePattern.ts"/>
-var TheCavePattern_MonkeyWizard = /** @class */ (function (_super) {
+var TheCavePattern_MonkeyWizard = (function (_super) {
     __extends(TheCavePattern_MonkeyWizard, _super);
     // Constructor
     function TheCavePattern_MonkeyWizard(theCave) {
-        return _super.call(this, theCave) || this;
+        _super.call(this, theCave);
     }
     // Public methods
     TheCavePattern_MonkeyWizard.prototype.draw = function (renderArea, x, y) {
@@ -18313,13 +18001,13 @@ var TheCavePattern_MonkeyWizard = /** @class */ (function (_super) {
             this.getTheCave().getGame().setPlace(new MonkeyWizardQuest(this.getTheCave().getGame()));
     };
     return TheCavePattern_MonkeyWizard;
-}(TheCavePattern));
+})(TheCavePattern);
 ///<reference path="TheCavePattern.ts"/>
-var TheCavePattern_OctopusKing = /** @class */ (function (_super) {
+var TheCavePattern_OctopusKing = (function (_super) {
     __extends(TheCavePattern_OctopusKing, _super);
     // Constructor
     function TheCavePattern_OctopusKing(theCave) {
-        return _super.call(this, theCave) || this;
+        _super.call(this, theCave);
     }
     // Public methods
     TheCavePattern_OctopusKing.prototype.draw = function (renderArea, x, y) {
@@ -18341,18 +18029,17 @@ var TheCavePattern_OctopusKing = /** @class */ (function (_super) {
             this.getTheCave().getGame().setPlace(new OctopusKingQuest(this.getTheCave().getGame()));
     };
     return TheCavePattern_OctopusKing;
-}(TheCavePattern));
+})(TheCavePattern);
 ///<reference path="TheCavePattern.ts"/>
 Saving.registerBool("TheCavePattern_TreasureMapSawMap", false);
 Saving.registerBool("TheCavePattern_TreasureMapFoundTreasure", false);
-var TheCavePattern_TreasureMap = /** @class */ (function (_super) {
+var TheCavePattern_TreasureMap = (function (_super) {
     __extends(TheCavePattern_TreasureMap, _super);
     // Constructor
     function TheCavePattern_TreasureMap(theCave) {
-        var _this = _super.call(this, theCave) || this;
+        _super.call(this, theCave);
         // We saw the map!
         Saving.saveBool("TheCavePattern_TreasureMapSawMap", true);
-        return _this;
     }
     // Public methods
     TheCavePattern_TreasureMap.prototype.draw = function (renderArea, x, y) {
@@ -18365,25 +18052,24 @@ var TheCavePattern_TreasureMap = /** @class */ (function (_super) {
         return "theCavePattern_TreasureMapSentence";
     };
     return TheCavePattern_TreasureMap;
-}(TheCavePattern));
+})(TheCavePattern);
 ///<reference path="Place.ts"/>
-var TheComputer = /** @class */ (function (_super) {
+var TheComputer = (function (_super) {
     __extends(TheComputer, _super);
     // Constructor
     function TheComputer(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // The lines
-        _this.lines = [];
+        this.lines = [];
         // The current command text
-        _this.currentCommandText = "";
+        this.currentCommandText = "";
         // Did we already add hotkeys?
-        _this.hotkeysAdded = false;
+        this.hotkeysAdded = false;
         // Resize and update
-        _this.renderArea.resize(100, 40);
-        _this.update();
-        return _this;
+        this.renderArea.resize(100, 40);
+        this.update();
     }
     // getRenderArea()
     TheComputer.prototype.getRenderArea = function () {
@@ -18541,7 +18227,6 @@ var TheComputer = /** @class */ (function (_super) {
                         if (words.length > 2) {
                             this.addMisunderstood();
                         }
-                        // Else, no third word, we do something different depending on the second word
                         else {
                             switch (words[1]) {
                                 case "help":
@@ -18584,7 +18269,6 @@ var TheComputer = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    // Else, no second word
                     else {
                         this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "List of available commands : add, bug, help. Use \"help command\" to get more informations about a specific command. There are probably no hidden commands. I guess."));
                     }
@@ -18600,15 +18284,12 @@ var TheComputer = /** @class */ (function (_super) {
                                 // Misunderstood
                                 this.addMisunderstood();
                             }
-                            // Else, no fourth word
                             else {
                                 // If the second word cannot be converted to a number
                                 if (isNaN(parseFloat(words[1])))
                                     this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "The quantity must be a number. See \"help quantity\" for more informations."));
-                                // Else, if the third word isn't a valid resource
                                 else if (words[2] != "candies" && words[2] != "lollipops" && words[2] != "chocolatebars" && words[2] != "painsauchocolat")
                                     this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "The resource is invalid. See \"help resource\" for more informations."));
-                                // Else, everything's okay
                                 else {
                                     // Execute the command, depending on the resource given
                                     switch (words[2]) {
@@ -18630,12 +18311,10 @@ var TheComputer = /** @class */ (function (_super) {
                                 }
                             }
                         }
-                        // Else, no third word
                         else {
                             this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "You must give a resource. See \"help add\" for more informations."));
                         }
                     }
-                    // Else, no second word
                     else {
                         this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "You must give a quantity. See \"help add\" for more informations."));
                     }
@@ -18651,15 +18330,12 @@ var TheComputer = /** @class */ (function (_super) {
                                 // Misunderstood
                                 this.addMisunderstood();
                             }
-                            // Else, no fourth word
                             else {
                                 // If the second word isn't a valid type
                                 if (words[1] != "graphical" && words[1] != "quest" && words[1] != "ultimate")
                                     this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "The bug type is incorrect. See \"help type\" for more informations."));
-                                // Else, if the third word isn't a valid level
                                 else if (words[2] != "0" && words[2] != "1" && words[2] != "2" && words[2] != "3" && words[2] != "4")
                                     this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "The bug level is invalid. See \"help level\" for more informations."));
-                                // Else, everything's okay
                                 else {
                                     // Execute the command, depending on the type given
                                     switch (words[1]) {
@@ -18678,12 +18354,10 @@ var TheComputer = /** @class */ (function (_super) {
                                 }
                             }
                         }
-                        // Else, no third word
                         else {
                             this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "You must give a bug level. See \"help level\" for more informations."));
                         }
                     }
-                    // Else, no second word
                     else {
                         this.addLine(new TheComputerLine(TheComputerLineType.TEXT, "You must give a bug type. See \"help type\" for more informations."));
                     }
@@ -18761,7 +18435,6 @@ var TheComputer = /** @class */ (function (_super) {
             this.lines = []; // Clear the lines
             this.getGame().setIsStatusBarAllowedToUseTheNKey(true); // The status bar can use the n key now
         }
-        // Else, if the computer was off
         else {
             this.on = true; // Now it's on
             // Add the first lines
@@ -18795,8 +18468,8 @@ var TheComputer = /** @class */ (function (_super) {
         this.draw();
     };
     return TheComputer;
-}(Place));
-var TheComputerLine = /** @class */ (function () {
+})(Place);
+var TheComputerLine = (function () {
     // Constructor
     function TheComputerLine(type, text) {
         // Set the type
@@ -18815,7 +18488,6 @@ var TheComputerLine = /** @class */ (function () {
                     // We draw it
                     renderArea.drawString(this.linesOfText[i], pos.x, pos.y - (this.linesOfText.length - 1 - i));
                 }
-                // Else, it is
                 else {
                     // We draw it centered
                     renderArea.drawString(this.linesOfText[i], pos.x + 16 - Math.floor(this.linesOfText[i].length / 2), pos.y - (this.linesOfText.length - 1 - i));
@@ -18843,7 +18515,6 @@ var TheComputerLine = /** @class */ (function () {
                 // We add the word
                 this.linesOfText[this.linesOfText.length - 1] = this.linesOfText[this.linesOfText.length - 1] + words[i] + " ";
             }
-            // Else, we don't have enough space in the line to add the word
             else {
                 // We add a new line
                 this.linesOfText.push(words[i] + " ");
@@ -18855,7 +18526,7 @@ var TheComputerLine = /** @class */ (function () {
         return this.type;
     };
     return TheComputerLine;
-}());
+})();
 var TheComputerLineType;
 (function (TheComputerLineType) {
     TheComputerLineType[TheComputerLineType["TEXT"] = 0] = "TEXT";
@@ -18873,62 +18544,61 @@ Saving.registerBool("theHoleFirstChestFound", false);
 Saving.registerBool("theHoleSecondChestFound", false);
 Saving.registerBool("theHoleThirdChestFound", false);
 Saving.registerBool("theHoleFourthChestFound", false);
-var TheHole = /** @class */ (function (_super) {
+var TheHole = (function (_super) {
     __extends(TheHole, _super);
     // Constructor
     function TheHole(game) {
-        var _this = _super.call(this, game, "You can move with the left and right arrow keys!") || this;
+        _super.call(this, game, "You can move with the left and right arrow keys!");
         // Variables which store the open states of the chests for the current quest
-        _this.firstChestOpened = false;
-        _this.secondChestOpened = false;
-        _this.thirdChestOpened = false;
-        _this.fourthChestOpened = false;
+        this.firstChestOpened = false;
+        this.secondChestOpened = false;
+        this.thirdChestOpened = false;
+        this.fourthChestOpened = false;
         // A bool to know if the player is going left or right (useful to choose the fireball spell direction)
         // By default we're going right because in most quests the fireball is launched to the right, so it just seems more logical
         // But anyway as soon as the player will press the left key this can change
-        _this.isGoingRight = true;
+        this.isGoingRight = true;
         // Resize the quest
-        _this.resizeQuest(100, 35, new Pos(100, 136));
+        this.resizeQuest(100, 35, new Pos(100, 136));
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(48, 0));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(48, 0));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the walls
-        _this.createWalls();
+        this.createWalls();
         // Add the spikes
-        _this.addSpikes(new Spikes(_this, new Pos(44, 42), 20));
-        _this.addSpikes(new Spikes(_this, new Pos(23, 59), 22));
-        _this.addSpikes(new Spikes(_this, new Pos(90, 62), 8));
-        _this.addSpikes(new Spikes(_this, new Pos(87, 69), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(94, 69), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(93, 74), 2));
-        _this.addSpikes(new Spikes(_this, new Pos(66, 74), 14));
-        _this.addSpikes(new Spikes(_this, new Pos(66, 82), 4));
-        _this.addSpikes(new Spikes(_this, new Pos(76, 83), 6));
-        _this.addSpikes(new Spikes(_this, new Pos(3, 95), 8));
-        _this.addSpikes(new Spikes(_this, new Pos(13, 97), 10));
-        _this.addSpikes(new Spikes(_this, new Pos(24, 96), 2));
-        _this.addSpikes(new Spikes(_this, new Pos(29, 96), 2));
-        _this.addSpikes(new Spikes(_this, new Pos(33, 95), 12));
-        _this.addSpikes(new Spikes(_this, new Pos(64, 64), 4));
+        this.addSpikes(new Spikes(this, new Pos(44, 42), 20));
+        this.addSpikes(new Spikes(this, new Pos(23, 59), 22));
+        this.addSpikes(new Spikes(this, new Pos(90, 62), 8));
+        this.addSpikes(new Spikes(this, new Pos(87, 69), 4));
+        this.addSpikes(new Spikes(this, new Pos(94, 69), 4));
+        this.addSpikes(new Spikes(this, new Pos(93, 74), 2));
+        this.addSpikes(new Spikes(this, new Pos(66, 74), 14));
+        this.addSpikes(new Spikes(this, new Pos(66, 82), 4));
+        this.addSpikes(new Spikes(this, new Pos(76, 83), 6));
+        this.addSpikes(new Spikes(this, new Pos(3, 95), 8));
+        this.addSpikes(new Spikes(this, new Pos(13, 97), 10));
+        this.addSpikes(new Spikes(this, new Pos(24, 96), 2));
+        this.addSpikes(new Spikes(this, new Pos(29, 96), 2));
+        this.addSpikes(new Spikes(this, new Pos(33, 95), 12));
+        this.addSpikes(new Spikes(this, new Pos(64, 64), 4));
         // Add the chests
-        _this.addChest(new Chest(_this, new Pos(27, 67), true, new CallbackCollection(_this.openFirstChest.bind(_this)), Saving.loadBool("theHoleFirstChestFound")));
-        _this.addChest(new Chest(_this, new Pos(59, 74), true, new CallbackCollection(_this.openSecondChest.bind(_this)), Saving.loadBool("theHoleSecondChestFound")));
-        _this.addChest(new Chest(_this, new Pos(37, 107), false, new CallbackCollection(_this.openThirdChest.bind(_this)), Saving.loadBool("theHoleThirdChestFound")));
-        _this.addChest(new Chest(_this, new Pos(4, 129), true, new CallbackCollection(_this.openFourthChest.bind(_this)), Saving.loadBool("theHoleFourthChestFound")));
+        this.addChest(new Chest(this, new Pos(27, 67), true, new CallbackCollection(this.openFirstChest.bind(this)), Saving.loadBool("theHoleFirstChestFound")));
+        this.addChest(new Chest(this, new Pos(59, 74), true, new CallbackCollection(this.openSecondChest.bind(this)), Saving.loadBool("theHoleSecondChestFound")));
+        this.addChest(new Chest(this, new Pos(37, 107), false, new CallbackCollection(this.openThirdChest.bind(this)), Saving.loadBool("theHoleThirdChestFound")));
+        this.addChest(new Chest(this, new Pos(4, 129), true, new CallbackCollection(this.openFourthChest.bind(this)), Saving.loadBool("theHoleFourthChestFound")));
         // Add the lost tribe warrior alone in its room
-        _this.addLostTribeWarrior(new LostTribeWarrior(_this, new Pos(68, 89), new Pos(63, 85), new Pos(93, 95)));
+        this.addLostTribeWarrior(new LostTribeWarrior(this, new Pos(68, 89), new Pos(63, 85), new Pos(93, 95)));
         // Add the lost tribe warriors in the big room
-        _this.addLostTribeWarrior(new LostTribeWarrior(_this, new Pos(14, 126), new Pos(2, 112), new Pos(79, 129)));
-        _this.addLostTribeWarrior(new LostTribeWarrior(_this, new Pos(21, 126), new Pos(2, 112), new Pos(79, 129)));
-        _this.addLostTribeWarrior(new LostTribeWarrior(_this, new Pos(31, 125), new Pos(2, 112), new Pos(79, 129)));
-        _this.addLostTribeWarrior(new LostTribeWarrior(_this, new Pos(51, 123), new Pos(2, 112), new Pos(79, 129)));
+        this.addLostTribeWarrior(new LostTribeWarrior(this, new Pos(14, 126), new Pos(2, 112), new Pos(79, 129)));
+        this.addLostTribeWarrior(new LostTribeWarrior(this, new Pos(21, 126), new Pos(2, 112), new Pos(79, 129)));
+        this.addLostTribeWarrior(new LostTribeWarrior(this, new Pos(31, 125), new Pos(2, 112), new Pos(79, 129)));
+        this.addLostTribeWarrior(new LostTribeWarrior(this, new Pos(51, 123), new Pos(2, 112), new Pos(79, 129)));
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You jumped into the big hole! You're falling quickly, try to stay alive!"));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You jumped into the big hole! You're falling quickly, try to stay alive!"));
     }
     // willBeDisplayed()
     TheHole.prototype.willBeDisplayed = function () {
@@ -19023,7 +18693,7 @@ var TheHole = /** @class */ (function (_super) {
     TheHole.prototype.addWalls = function () {
         var positions = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            positions[_i] = arguments[_i];
+            positions[_i - 0] = arguments[_i];
         }
         // Create the wall entity
         this.addEntity(new Wall(this, new Pos(0, 0)));
@@ -19087,51 +18757,50 @@ var TheHole = /** @class */ (function (_super) {
         return false;
     };
     return TheHole;
-}(Quest));
+})(Quest);
 ///<reference path="Quest.ts"/>
-var TheSea = /** @class */ (function (_super) {
+var TheSea = (function (_super) {
     __extends(TheSea, _super);
     // Constructor
     function TheSea(game) {
-        var _this = _super.call(this, game, "You can move with the down and up arrow keys!") || this;
+        _super.call(this, game, "You can move with the down and up arrow keys!");
         // Floors
-        _this.floors = [];
+        this.floors = [];
         // Generation projection (how many characters the player doesn't already see should we generate)
-        _this.generationProjection = 10;
+        this.generationProjection = 10;
         // The distance we've swimed so far
-        _this.distance = 0;
+        this.distance = 0;
         // Min and max floor height
-        _this.floorMinHeight = 3;
-        _this.floorMaxHeight = 8;
+        this.floorMinHeight = 3;
+        this.floorMaxHeight = 8;
         // Patterns stuff
-        _this.currentPattern = null;
-        _this.currentPatternLevel = null;
+        this.currentPattern = null;
+        this.currentPatternLevel = null;
         // Last player movement
-        _this.lastPlayerMovement = new Pos(0, 0);
+        this.lastPlayerMovement = new Pos(0, 0);
         // Did we already generate a sponge? Shell powder?
-        _this.spongeGenerated = false;
-        _this.shellPowderGenerated = false;
+        this.spongeGenerated = false;
+        this.shellPowderGenerated = false;
         // Resize the quest
-        _this.resizeQuest(100, 30);
+        this.resizeQuest(100, 30);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, false, true, true);
+        this.addPlayerCollisionBoxes(true, false, true, true);
         // Gravity is disabled
-        _this.setGravityDisabled(true);
-        _this.setWormsLikeDisabled(true);
+        this.setGravityDisabled(true);
+        this.setWormsLikeDisabled(true);
         // Add the player
-        _this.getGame().getPlayer().loadMediumCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 5));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadMediumCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 5));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Fill the floors array with null values
-        for (var i = 0; i <= 99 + _this.generationProjection; i++) {
-            _this.floors.push(null);
+        for (var i = 0; i <= 99 + this.generationProjection; i++) {
+            this.floors.push(null);
         }
         // Generate for the first time
-        _this.generate(0, 99 + _this.generationProjection);
+        this.generate(0, 99 + this.generationProjection);
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You jump into the sea! You know you could find precious hidden treasures in the depths..."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You jump into the sea! You know you could find precious hidden treasures in the depths..."));
     }
     // willBeDisplayed()
     TheSea.prototype.willBeDisplayed = function () {
@@ -19145,48 +18814,48 @@ var TheSea = /** @class */ (function (_super) {
     TheSea.prototype.addBigShark = function (pos) {
         var bigShark = new BigShark(this, pos);
         bigShark.setHealthBar(new QuestEntityHealthBar(bigShark, new Pos(47, 1)));
-        if (this.addEntity(bigShark)) // If we manage to add the entity
+        if (this.addEntity(bigShark))
             return bigShark; // We return it
         return null; // Else, we return null
     };
     TheSea.prototype.addJellyFish = function (pos) {
         var jellyFish = new JellyFish(this, pos);
         jellyFish.setHealthBar(new QuestEntityHealthBar(jellyFish, new Pos(6, 1), new Pos(0, 0)));
-        if (this.addEntity(jellyFish)) // If we manage to add the entity
+        if (this.addEntity(jellyFish))
             return jellyFish; // We return it
         return null; // Else, we return null
     };
     TheSea.prototype.addMediumFish = function (pos) {
         var mediumFish = new MediumFish(this, pos);
         mediumFish.setHealthBar(new QuestEntityHealthBar(mediumFish, new Pos(8, 1), new Pos(0, 0)));
-        if (this.addEntity(mediumFish)) // If we manage to add the entity
+        if (this.addEntity(mediumFish))
             return mediumFish; // We return it
         return null; // Else, we return null
     };
     TheSea.prototype.addMiniShark = function (pos) {
         var miniShark = new MiniShark(this, pos);
         miniShark.setHealthBar(new QuestEntityHealthBar(miniShark, new Pos(19, 1)));
-        if (this.addEntity(miniShark)) // If we manage to add the entity
+        if (this.addEntity(miniShark))
             return miniShark; // We return it
         return null; // Else, we return null
     };
     TheSea.prototype.addSeahorse = function (pos, intendedXPosition) {
         var seahorse = new Seahorse(this, pos, intendedXPosition);
         seahorse.setHealthBar(new QuestEntityHealthBar(seahorse, new Pos(4, 1)));
-        if (this.addEntity(seahorse)) // If we manage to add the entity
+        if (this.addEntity(seahorse))
             return seahorse; // We return it
         return null; // Else, we return null
     };
     TheSea.prototype.addSeaSnake = function (pos) {
         var seaSnake = new SeaSnake(this, pos);
-        if (this.addEntity(seaSnake)) // If we did manage to add the entity
+        if (this.addEntity(seaSnake))
             return seaSnake; // We return it
         return null; // Else we return null
     };
     TheSea.prototype.addSmallestFish = function (pos) {
         var smallestFish = new SmallestFish(this, pos);
         smallestFish.setHealthBar(new QuestEntityHealthBar(smallestFish, new Pos(3, 1)));
-        if (this.addEntity(smallestFish)) // If we manage to add the entity
+        if (this.addEntity(smallestFish))
             return smallestFish; // We return it
         return null; // Else, we return null
     };
@@ -19331,19 +19000,17 @@ var TheSea = /** @class */ (function (_super) {
                 // We place it at a random height and with the normal type
                 this.addFloor(i, TheSeaFloorType.NORMAL, Random.between(this.floorMinHeight, this.floorMaxHeight));
             }
-            // Else, we're not placing the first floor
             else {
                 // Init the variables
                 type = null;
                 // If we want to keep the same type and it's possible to do so
-                if (Random.oneChanceOutOf(15 - this.floors[i - 1].getHowManyFloorsOfTheSameTypeBefore()) == false && ((this.floors[i - 1].getType() == TheSeaFloorType.NORMAL) || // We want to keep a normal type : no problem
-                    (this.floors[i - 1].getType() == TheSeaFloorType.GOING_DOWN && this.floors[i - 1].getHeight() > this.floorMinHeight) || // We want to keep going down and we're not too low : no problem
+                if (Random.oneChanceOutOf(15 - this.floors[i - 1].getHowManyFloorsOfTheSameTypeBefore()) == false && ((this.floors[i - 1].getType() == TheSeaFloorType.NORMAL) ||
+                    (this.floors[i - 1].getType() == TheSeaFloorType.GOING_DOWN && this.floors[i - 1].getHeight() > this.floorMinHeight) ||
                     (this.floors[i - 1].getType() == TheSeaFloorType.GOING_UP && this.floors[i - 1].getHeight() < this.floorMaxHeight) // We want to keep going up and we're not too high : no problem
                 )) {
                     // We will keep the same type as the previous floor
                     type = this.floors[i - 1].getType();
                 }
-                // Else, we want to change the type
                 else {
                     // If the previous floor has a normal type
                     if (this.floors[i - 1].getType() == TheSeaFloorType.NORMAL) {
@@ -19359,23 +19026,22 @@ var TheSea = /** @class */ (function (_super) {
                                 type = TheSeaFloorType.GOING_DOWN;
                         }
                     }
-                    // Else, we must choose the normal type
                     else {
                         type = TheSeaFloorType.NORMAL;
                     }
                 }
                 // Create the floor from the type decided before
                 switch (type) {
-                    case TheSeaFloorType.NORMAL: // Normal type : height + 1 if up before, else height
+                    case TheSeaFloorType.NORMAL:
                         if (this.floors[i - 1].getType() == TheSeaFloorType.GOING_UP)
                             this.addFloor(i, TheSeaFloorType.NORMAL, this.floors[i - 1].getHeight() + 1, this.floors[i - 1]);
                         else
                             this.addFloor(i, TheSeaFloorType.NORMAL, this.floors[i - 1].getHeight(), this.floors[i - 1]);
                         break;
-                    case TheSeaFloorType.GOING_DOWN: // Going down : height - 1
+                    case TheSeaFloorType.GOING_DOWN:
                         this.addFloor(i, TheSeaFloorType.GOING_DOWN, this.floors[i - 1].getHeight() - 1, this.floors[i - 1]);
                         break;
-                    case TheSeaFloorType.GOING_UP: // Going up : height if normal before, else height + 1
+                    case TheSeaFloorType.GOING_UP:
                         if (this.floors[i - 1].getType() == TheSeaFloorType.NORMAL)
                             this.addFloor(i, TheSeaFloorType.GOING_UP, this.floors[i - 1].getHeight(), this.floors[i - 1]);
                         else
@@ -19393,9 +19059,9 @@ var TheSea = /** @class */ (function (_super) {
         var thereIsAlreadyAPlant;
         // Iterate over newly generated floors, searching for one which could receive a plant
         for (var i = x1; i <= x2; i++) {
-            if (Random.oneChanceOutOf(3) && // One chance out of 3
-                i >= 4 && // We're not too much on the left
-                this.floors[i].getType() == TheSeaFloorType.NORMAL && // This floor has the normal type
+            if (Random.oneChanceOutOf(3) &&
+                i >= 4 &&
+                this.floors[i].getType() == TheSeaFloorType.NORMAL &&
                 this.floors[i].getHowManyFloorsOfTheSameTypeBefore() >= 4 // And there's at least 4 floors of the same type before
             ) {
                 // Init the variable
@@ -19425,8 +19091,8 @@ var TheSea = /** @class */ (function (_super) {
         if (Saving.loadBool("gridItemPossessedShellPowder") == false && this.shellPowderGenerated == false && this.distance >= 500) {
             // Iterate over newly generated floors, searching for one which could receive the powder
             for (var i = x1; i <= x2; i++) {
-                if (i >= 6 && // We're not too much on the left
-                    this.floors[i].getType() == TheSeaFloorType.NORMAL && // This floor has the normal type
+                if (i >= 6 &&
+                    this.floors[i].getType() == TheSeaFloorType.NORMAL &&
                     this.floors[i].getHowManyFloorsOfTheSameTypeBefore() >= 6 // And there's at least 6 floors of the same type before
                 ) {
                     // Check if there is already a plant, if so return
@@ -19449,11 +19115,11 @@ var TheSea = /** @class */ (function (_super) {
     };
     TheSea.prototype.generateSponge = function (x1, x2) {
         // If we don't already have a sponge and no sponge have been generated in this quest so far and the distance is at least 793
-        if (Saving.loadBool("gridItemPossessedSponge") == false && this.spongeGenerated == false && this.distance >= 793) { // 793 because Robert Edmond Grant, a sponge expert, was born in 1793 (source : wikipedia)
+        if (Saving.loadBool("gridItemPossessedSponge") == false && this.spongeGenerated == false && this.distance >= 793) {
             // Iterate over newly generated floors, searching for one which could receive a sponge
             for (var i = x1; i <= x2; i++) {
-                if (i >= 6 && // We're not too much on the left
-                    this.floors[i].getType() == TheSeaFloorType.NORMAL && // This floor has the normal type
+                if (i >= 6 &&
+                    this.floors[i].getType() == TheSeaFloorType.NORMAL &&
                     this.floors[i].getHowManyFloorsOfTheSameTypeBefore() >= 6 // And there's at least 6 floors of the same type before
                 ) {
                     // Check if there is already a plant, if so return
@@ -19501,7 +19167,6 @@ var TheSea = /** @class */ (function (_super) {
             // If the level is null, we begin with level 0
             if (this.currentPatternLevel == null)
                 this.currentPatternLevel = new TheSeaPatternLevel_Level0(this);
-            // Else, if the level is done, we get the next level from it
             else if (this.currentPatternLevel.isLevelDone())
                 this.currentPatternLevel = this.currentPatternLevel.getNextLevel();
             // We get the new pattern from the current level
@@ -19528,8 +19193,8 @@ var TheSea = /** @class */ (function (_super) {
         }
     };
     return TheSea;
-}(Quest));
-var TheSeaFloor = /** @class */ (function () {
+})(Quest);
+var TheSeaFloor = (function () {
     // Constructor
     function TheSeaFloor(type, height, previousFloor) {
         if (previousFloor === void 0) { previousFloor = null; }
@@ -19606,14 +19271,14 @@ var TheSeaFloor = /** @class */ (function () {
         this.hasAPlant = hasAPlant;
     };
     return TheSeaFloor;
-}());
+})();
 var TheSeaFloorType;
 (function (TheSeaFloorType) {
     TheSeaFloorType[TheSeaFloorType["NORMAL"] = 0] = "NORMAL";
     TheSeaFloorType[TheSeaFloorType["GOING_DOWN"] = 1] = "GOING_DOWN";
     TheSeaFloorType[TheSeaFloorType["GOING_UP"] = 2] = "GOING_UP";
 })(TheSeaFloorType || (TheSeaFloorType = {}));
-var TheSeaPattern = /** @class */ (function () {
+var TheSeaPattern = (function () {
     // Constructor
     function TheSeaPattern(theSea, initialDistance) {
         this.theSea = theSea;
@@ -19633,8 +19298,8 @@ var TheSeaPattern = /** @class */ (function () {
         return this.theSea;
     };
     return TheSeaPattern;
-}());
-var TheSeaPatternLevel = /** @class */ (function () {
+})();
+var TheSeaPatternLevel = (function () {
     // Constructor
     function TheSeaPatternLevel(theSea) {
         // How many patterns launched already ?
@@ -19662,13 +19327,13 @@ var TheSeaPatternLevel = /** @class */ (function () {
         return this.theSea;
     };
     return TheSeaPatternLevel;
-}());
+})();
 ///<reference path="TheSeaPatternLevel.ts"/>
-var TheSeaPatternLevel_Boss0 = /** @class */ (function (_super) {
+var TheSeaPatternLevel_Boss0 = (function (_super) {
     __extends(TheSeaPatternLevel_Boss0, _super);
     // Constructor
     function TheSeaPatternLevel_Boss0(theSea) {
-        return _super.call(this, theSea) || this;
+        _super.call(this, theSea);
     }
     // Public methods
     TheSeaPatternLevel_Boss0.prototype.getNextLevel = function () {
@@ -19684,13 +19349,13 @@ var TheSeaPatternLevel_Boss0 = /** @class */ (function (_super) {
         return false;
     };
     return TheSeaPatternLevel_Boss0;
-}(TheSeaPatternLevel));
+})(TheSeaPatternLevel);
 ///<reference path="TheSeaPatternLevel.ts"/>
-var TheSeaPatternLevel_Boss1 = /** @class */ (function (_super) {
+var TheSeaPatternLevel_Boss1 = (function (_super) {
     __extends(TheSeaPatternLevel_Boss1, _super);
     // Constructor
     function TheSeaPatternLevel_Boss1(theSea) {
-        return _super.call(this, theSea) || this;
+        _super.call(this, theSea);
     }
     // Public methods
     TheSeaPatternLevel_Boss1.prototype.getNextLevel = function () {
@@ -19706,13 +19371,13 @@ var TheSeaPatternLevel_Boss1 = /** @class */ (function (_super) {
         return false;
     };
     return TheSeaPatternLevel_Boss1;
-}(TheSeaPatternLevel));
+})(TheSeaPatternLevel);
 ///<reference path="TheSeaPatternLevel.ts"/>
-var TheSeaPatternLevel_Level0 = /** @class */ (function (_super) {
+var TheSeaPatternLevel_Level0 = (function (_super) {
     __extends(TheSeaPatternLevel_Level0, _super);
     // Constructor
     function TheSeaPatternLevel_Level0(theSea) {
-        return _super.call(this, theSea) || this;
+        _super.call(this, theSea);
     }
     // Public methods
     TheSeaPatternLevel_Level0.prototype.getNextLevel = function () {
@@ -19738,13 +19403,13 @@ var TheSeaPatternLevel_Level0 = /** @class */ (function (_super) {
         return false;
     };
     return TheSeaPatternLevel_Level0;
-}(TheSeaPatternLevel));
+})(TheSeaPatternLevel);
 ///<reference path="TheSeaPatternLevel.ts"/>
-var TheSeaPatternLevel_Level1 = /** @class */ (function (_super) {
+var TheSeaPatternLevel_Level1 = (function (_super) {
     __extends(TheSeaPatternLevel_Level1, _super);
     // Constructor
     function TheSeaPatternLevel_Level1(theSea) {
-        return _super.call(this, theSea) || this;
+        _super.call(this, theSea);
     }
     // Public methods
     TheSeaPatternLevel_Level1.prototype.getNextLevel = function () {
@@ -19767,13 +19432,13 @@ var TheSeaPatternLevel_Level1 = /** @class */ (function (_super) {
         return false;
     };
     return TheSeaPatternLevel_Level1;
-}(TheSeaPatternLevel));
+})(TheSeaPatternLevel);
 ///<reference path="TheSeaPatternLevel.ts"/>
-var TheSeaPatternLevel_Level2 = /** @class */ (function (_super) {
+var TheSeaPatternLevel_Level2 = (function (_super) {
     __extends(TheSeaPatternLevel_Level2, _super);
     // Constructor
     function TheSeaPatternLevel_Level2(theSea) {
-        return _super.call(this, theSea) || this;
+        _super.call(this, theSea);
     }
     // Public methods
     TheSeaPatternLevel_Level2.prototype.getNextLevel = function () {
@@ -19784,7 +19449,6 @@ var TheSeaPatternLevel_Level2 = /** @class */ (function (_super) {
         // If this is the first pattern, then we return the big sharks pattern
         if (this.getHowManyPatterns() == 1)
             return new TheSeaPattern_BigSharks(this.getTheSea(), initialDistance);
-        // Else, we return the sea snakes pattern
         else
             return new TheSeaPattern_SeaSnakesForever(this.getTheSea(), initialDistance);
     };
@@ -19792,13 +19456,13 @@ var TheSeaPatternLevel_Level2 = /** @class */ (function (_super) {
         return false;
     };
     return TheSeaPatternLevel_Level2;
-}(TheSeaPatternLevel));
+})(TheSeaPatternLevel);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_BigSharks = /** @class */ (function (_super) {
+var TheSeaPattern_BigSharks = (function (_super) {
     __extends(TheSeaPattern_BigSharks, _super);
     // Constructor
     function TheSeaPattern_BigSharks(theSea, initialDistance) {
-        return _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
     }
     // Public methods
     TheSeaPattern_BigSharks.prototype.isPatternDone = function () {
@@ -19811,22 +19475,21 @@ var TheSeaPattern_BigSharks = /** @class */ (function (_super) {
             this.getTheSea().addBigShark(new Pos(x2, Random.fromArray([2, 6])));
     };
     return TheSeaPattern_BigSharks;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_Boss0_Shapes = /** @class */ (function (_super) {
+var TheSeaPattern_Boss0_Shapes = (function (_super) {
     __extends(TheSeaPattern_Boss0_Shapes, _super);
     // Constructor
     function TheSeaPattern_Boss0_Shapes(theSea, initialDistance) {
-        var _this = _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
         // Fishes of the squares
-        _this.fishes = [];
+        this.fishes = [];
         // Did we add the fishes already ?
-        _this.fishesAdded = false;
+        this.fishesAdded = false;
         // Are fishes moving right now ?
-        _this.fishesAreMoving = true;
+        this.fishesAreMoving = true;
         // Set the shape type
-        _this.shapeType = Random.upTo(2);
-        return _this;
+        this.shapeType = Random.upTo(2);
     }
     // Public methods    
     TheSeaPattern_Boss0_Shapes.prototype.isPatternDone = function () {
@@ -19912,7 +19575,6 @@ var TheSeaPattern_Boss0_Shapes = /** @class */ (function (_super) {
                 this.fishes[i].setQuestEntityMovement(new QuestEntityMovement(new Pos(0, 0)));
             }
         }
-        // Else, if fishes aren't moving but should be
         else if (this.fishesAreMoving == false && (this.getTheSea().getLastPlayerMovement().x > 0 || this.getTheSea().getGame().getPlayer().getGlobalPosition().y < 20)) {
             // Fishes are now moving
             this.fishesAreMoving = true;
@@ -19922,23 +19584,22 @@ var TheSeaPattern_Boss0_Shapes = /** @class */ (function (_super) {
         }
     };
     return TheSeaPattern_Boss0_Shapes;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_Boss1_Seahorses = /** @class */ (function (_super) {
+var TheSeaPattern_Boss1_Seahorses = (function (_super) {
     __extends(TheSeaPattern_Boss1_Seahorses, _super);
     // Constructor
     function TheSeaPattern_Boss1_Seahorses(theSea, initialDistance) {
-        var _this = _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
         // Variables
-        _this.seahorses = [];
-        _this.seahorsesAdded = false;
-        _this.seaHorsesStopped = false;
+        this.seahorses = [];
+        this.seahorsesAdded = false;
+        this.seaHorsesStopped = false;
         // The special seahorse wandering
-        _this.seahorseWandering = null;
-        _this.seahorseWanderingIsGoingUp = false;
+        this.seahorseWandering = null;
+        this.seahorseWanderingIsGoingUp = false;
         // The special seahorse following player
-        _this.seahorseFollowingPlayer = null;
-        return _this;
+        this.seahorseFollowingPlayer = null;
     }
     // Public methods
     TheSeaPattern_Boss1_Seahorses.prototype.addSeahorse = function (seahorse) {
@@ -20021,7 +19682,6 @@ var TheSeaPattern_Boss1_Seahorses = /** @class */ (function (_super) {
                     // We go up
                     this.seahorseFollowingPlayer.getQuestEntityMovement().getOffset().y = -1;
             }
-            // Else, if the player is below
             else if (this.getTheSea().getGame().getPlayer().getGlobalPosition().y > this.seahorseFollowingPlayer.getGlobalPosition().y - 1) {
                 // If we're not too low
                 if (this.seahorseFollowingPlayer.getGlobalPosition().y < 17)
@@ -20031,13 +19691,13 @@ var TheSeaPattern_Boss1_Seahorses = /** @class */ (function (_super) {
         }
     };
     return TheSeaPattern_Boss1_Seahorses;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_JellyFishStorm = /** @class */ (function (_super) {
+var TheSeaPattern_JellyFishStorm = (function (_super) {
     __extends(TheSeaPattern_JellyFishStorm, _super);
     // Constructor
     function TheSeaPattern_JellyFishStorm(theSea, initialDistance) {
-        return _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
     }
     // Public methods
     TheSeaPattern_JellyFishStorm.prototype.isPatternDone = function () {
@@ -20050,16 +19710,15 @@ var TheSeaPattern_JellyFishStorm = /** @class */ (function (_super) {
             this.getTheSea().addJellyFish(new Pos(Random.between(x1, x2), Random.between(0, this.getTheSea().getRealQuestSize().y - this.getTheSea().getFloorMaxHeight() - 6)));
     };
     return TheSeaPattern_JellyFishStorm;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_LotOfMiniSharks = /** @class */ (function (_super) {
+var TheSeaPattern_LotOfMiniSharks = (function (_super) {
     __extends(TheSeaPattern_LotOfMiniSharks, _super);
     // Constructor
     function TheSeaPattern_LotOfMiniSharks(theSea, initialDistance) {
-        var _this = _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
         // Variables
-        _this.sharksAdded = false;
-        return _this;
+        this.sharksAdded = false;
     }
     // Public methods
     TheSeaPattern_LotOfMiniSharks.prototype.isPatternDone = function () {
@@ -20076,13 +19735,13 @@ var TheSeaPattern_LotOfMiniSharks = /** @class */ (function (_super) {
         }
     };
     return TheSeaPattern_LotOfMiniSharks;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_MaybeOneMediumFish = /** @class */ (function (_super) {
+var TheSeaPattern_MaybeOneMediumFish = (function (_super) {
     __extends(TheSeaPattern_MaybeOneMediumFish, _super);
     // Constructor
     function TheSeaPattern_MaybeOneMediumFish(theSea, initialDistance) {
-        return _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
     }
     // Public methods
     TheSeaPattern_MaybeOneMediumFish.prototype.isPatternDone = function () {
@@ -20096,13 +19755,13 @@ var TheSeaPattern_MaybeOneMediumFish = /** @class */ (function (_super) {
         }
     };
     return TheSeaPattern_MaybeOneMediumFish;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_MaybeOneSmallestFish = /** @class */ (function (_super) {
+var TheSeaPattern_MaybeOneSmallestFish = (function (_super) {
     __extends(TheSeaPattern_MaybeOneSmallestFish, _super);
     // Constructor
     function TheSeaPattern_MaybeOneSmallestFish(theSea, initialDistance) {
-        return _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
     }
     // Public methods
     TheSeaPattern_MaybeOneSmallestFish.prototype.isPatternDone = function () {
@@ -20116,13 +19775,13 @@ var TheSeaPattern_MaybeOneSmallestFish = /** @class */ (function (_super) {
         }
     };
     return TheSeaPattern_MaybeOneSmallestFish;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_OneSmallestFish = /** @class */ (function (_super) {
+var TheSeaPattern_OneSmallestFish = (function (_super) {
     __extends(TheSeaPattern_OneSmallestFish, _super);
     // Constructor
     function TheSeaPattern_OneSmallestFish(theSea, initialDistance) {
-        return _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
     }
     // Public methods
     TheSeaPattern_OneSmallestFish.prototype.isPatternDone = function () {
@@ -20134,20 +19793,19 @@ var TheSeaPattern_OneSmallestFish = /** @class */ (function (_super) {
         this.getTheSea().addSmallestFish(new Pos(Random.between(x1, x2), Random.between(0, this.getTheSea().getRealQuestSize().y - this.getTheSea().getFloorMaxHeight() - 2)));
     };
     return TheSeaPattern_OneSmallestFish;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="TheSeaPattern.ts"/>
-var TheSeaPattern_SeaSnakesForever = /** @class */ (function (_super) {
+var TheSeaPattern_SeaSnakesForever = (function (_super) {
     __extends(TheSeaPattern_SeaSnakesForever, _super);
     // Constructor
     function TheSeaPattern_SeaSnakesForever(theSea, initialDistance) {
-        var _this = _super.call(this, theSea, initialDistance) || this;
+        _super.call(this, theSea, initialDistance);
         // Variables
-        _this.addedRedSharkFin = false;
-        _this.addedGreenSharkFin = false;
-        _this.addedPurpleSharkFin = false;
-        _this.nextSnakeIn = 0;
-        _this.nextSharkIn = Random.between(0, 50);
-        return _this;
+        this.addedRedSharkFin = false;
+        this.addedGreenSharkFin = false;
+        this.addedPurpleSharkFin = false;
+        this.nextSnakeIn = 0;
+        this.nextSharkIn = Random.between(0, 50);
     }
     // Public methods
     TheSeaPattern_SeaSnakesForever.prototype.isPatternDone = function () {
@@ -20185,20 +19843,19 @@ var TheSeaPattern_SeaSnakesForever = /** @class */ (function (_super) {
         }
     };
     return TheSeaPattern_SeaSnakesForever;
-}(TheSeaPattern));
+})(TheSeaPattern);
 ///<reference path="House.ts"/>
-var ThirdHouse = /** @class */ (function (_super) {
+var ThirdHouse = (function (_super) {
     __extends(ThirdHouse, _super);
     // Constructor
     function ThirdHouse(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // The game running
-        _this.gameRunning = null;
-        _this.renderArea.resizeFromArray(Database.getAscii("places/village/thirdHouse"), 0, 3);
-        _this.update();
-        return _this;
+        this.gameRunning = null;
+        this.renderArea.resizeFromArray(Database.getAscii("places/village/thirdHouse"), 0, 3);
+        this.update();
     }
     // getRenderArea()
     ThirdHouse.prototype.getRenderArea = function () {
@@ -20275,7 +19932,6 @@ var ThirdHouse = /** @class */ (function (_super) {
                 this.update();
                 this.getGame().updatePlace();
             }
-            // Else
             else {
                 // We update
                 this.update();
@@ -20299,18 +19955,17 @@ var ThirdHouse = /** @class */ (function (_super) {
         this.addControls(29, 24);
     };
     return ThirdHouse;
-}(House));
+})(House);
 ///<reference path="Place.ts"/>
-var Treasure = /** @class */ (function (_super) {
+var Treasure = (function (_super) {
     __extends(Treasure, _super);
     // Constructor
     function Treasure(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/treasure"), 57, 3);
-        _this.update();
-        return _this;
+        this.renderArea = new RenderArea();
+        this.renderArea.resizeFromArray(Database.getAscii("places/treasure"), 57, 3);
+        this.update();
     }
     // getRenderArea()
     Treasure.prototype.getRenderArea = function () {
@@ -20339,7 +19994,6 @@ var Treasure = /** @class */ (function (_super) {
             this.renderArea.addAsciiRealButton(Database.getText("treasureButtonDig"), 49, 14, "treasureButton", Database.getTranslatedText("treasureButtonDig"), true, -1, null, false);
             this.renderArea.addLinkCall(".treasureButton", new CallbackCollection(this.dig.bind(this)));
         }
-        // Else, we found the treasure
         else {
             // Add the text
             this.renderArea.drawString(Database.getText("treasureButtonYouFound"), 49, 14);
@@ -20347,34 +20001,33 @@ var Treasure = /** @class */ (function (_super) {
         }
     };
     return Treasure;
-}(Place));
+})(Place);
 ///<reference path="QuestEntity.ts"/>
-var TreeSpirit = /** @class */ (function (_super) {
+var TreeSpirit = (function (_super) {
     __extends(TreeSpirit, _super);
     // Constructor
     function TreeSpirit(quest, pos, groundYPosition) {
-        var _this = _super.call(this, quest, pos, new Naming("A tree spirit", "a tree spirit"), new RenderArea(5, 5), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 1), new Pos(5, 2)), new CollisionBox(_this, new Pos(1, 3), new Pos(3, 2))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A tree spirit", "a tree spirit"), new RenderArea(5, 5), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 1), new Pos(5, 2)), new CollisionBox(this, new Pos(1, 3), new Pos(3, 2))), new QuestEntityMovement());
         // Set the ground y position from the value given in parameter
-        _this.groundYPosition = groundYPosition;
+        this.groundYPosition = groundYPosition;
         // Set the default values for ammunition related variables
-        _this.maxAmmunition = 5;
-        _this.ammunition = 5;
-        _this.ammunitionTimer = 0;
+        this.maxAmmunition = 5;
+        this.ammunition = 5;
+        this.ammunitionTimer = 0;
         // Set the default values for magic spines related variables
-        _this.magicSpineTimer = 0;
+        this.magicSpineTimer = 0;
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/forest/treeSpirit"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/forest/treeSpirit"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(100);
-        _this.setHp(100);
+        this.setDestructible(true);
+        this.setMaxHp(100);
+        this.setHp(100);
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Spines", "spines"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, 0), new Pos(7, 6))), 2));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(1);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Spines", "spines"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, 0), new Pos(7, 6))), 2));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(1);
     }
     // update()
     TreeSpirit.prototype.update = function () {
@@ -20398,7 +20051,7 @@ var TreeSpirit = /** @class */ (function (_super) {
             // If the timer is okay
             if (this.magicSpineTimer <= 0) {
                 // We shoot a magic spine on the left or on the right
-                if (this.shootMagicSpine((distanceFromPlayer.x > 0 ? true : false))) { // If it worked
+                if (this.shootMagicSpine((distanceFromPlayer.x > 0 ? true : false))) {
                     this.ammunition -= 1; // We lower the ammunition
                     this.magicSpineTimer = 12; // We set the countdown
                 }
@@ -20421,13 +20074,13 @@ var TreeSpirit = /** @class */ (function (_super) {
         return this.getQuest().addEntity(magicSpine);
     };
     return TreeSpirit;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var TribalSpear = /** @class */ (function (_super) {
+var TribalSpear = (function (_super) {
     __extends(TribalSpear, _super);
     // Constructor
     function TribalSpear() {
-        return _super.call(this, "eqItemWeaponTribalSpear", "eqItemWeaponTribalSpearName", "eqItemWeaponTribalSpearDescription", "eqItems/weapons/tribalSpear") || this;
+        _super.call(this, "eqItemWeaponTribalSpear", "eqItemWeaponTribalSpearName", "eqItemWeaponTribalSpearDescription", "eqItems/weapons/tribalSpear");
     }
     // Public getters
     TribalSpear.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -20436,62 +20089,54 @@ var TribalSpear = /** @class */ (function (_super) {
         return qew;
     };
     return TribalSpear;
-}(EqItem));
+})(EqItem);
 ///<reference path="QuestEntity.ts"/>
-var TripodCamel = /** @class */ (function (_super) {
+var TripodCamel = (function (_super) {
     __extends(TripodCamel, _super);
     // Constructor
     function TripodCamel(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A tripod camel", "a tripod camel"), new RenderArea(7, 2), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(6, 1)), new CollisionBox(_this, new Pos(2, 1), new Pos(5, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A tripod camel", "a tripod camel"), new RenderArea(7, 2), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(6, 1)), new CollisionBox(this, new Pos(2, 1), new Pos(5, 1))), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(7);
-        _this.setHp(7);
+        this.setDestructible(true);
+        this.setMaxHp(7);
+        this.setHp(7);
         // Set the ascii art and the transparent character
         if (Random.flipACoin())
-            _this.getRenderArea().drawArray(Database.getAscii("places/quests/desert/tripodCamel1"));
+            this.getRenderArea().drawArray(Database.getAscii("places/quests/desert/tripodCamel1"));
         else
-            _this.getRenderArea().drawArray(Database.getAscii("places/quests/desert/tripodCamel2"));
-        _this.setTransparency(new RenderTransparency(" "));
+            this.getRenderArea().drawArray(Database.getAscii("places/quests/desert/tripodCamel2"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its long neck", "its long neck"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, 0), new Pos(3, 3))), 5));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(6, 8);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its long neck", "its long neck"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, 0), new Pos(3, 3))), 5));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setBetweenDelay(6, 8);
     }
     // Public methods
     TripodCamel.prototype.willDie = function () {
         this.getQuest().getGame().getQuestLog().addMessage(new QuestLogMessage(this.getDeathMessage() + " (and found " + Algo.pluralFormat(this.getQuest().foundCandies(20 + Random.upTo(12)), " candy", " candies") + ")", this.getQuest().getCandiesFoundMessage()));
     };
     return TripodCamel;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="QuestEntity.ts"/>
-var Troll = /** @class */ (function (_super) {
+var Troll = (function (_super) {
     __extends(Troll, _super);
     // Constructor
     function Troll(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A troll", "a troll"), new RenderArea(15, 10), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(11, 0), new Pos(2, 1)), // Upper part of the bludgeon
-        new CollisionBox(_this, new Pos(4, 1), new Pos(3, 3)), // The head
-        new CollisionBox(_this, new Pos(9, 1), new Pos(6, 2)), // Main part of the bludgeon
-        new CollisionBox(_this, new Pos(0, 4), new Pos(8, 4)), // Main body and right arm
-        new CollisionBox(_this, new Pos(2, 8), new Pos(5, 2)), // The legs & feet
-        new CollisionBox(_this, new Pos(8, 4), new Pos(4, 2)), // The left arm
-        new CollisionBox(_this, new Pos(11, 3), new Pos(2, 4)) // The lowest part of the bludgeon
-        ), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A troll", "a troll"), new RenderArea(15, 10), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(11, 0), new Pos(2, 1)), new CollisionBox(this, new Pos(4, 1), new Pos(3, 3)), new CollisionBox(this, new Pos(9, 1), new Pos(6, 2)), new CollisionBox(this, new Pos(0, 4), new Pos(8, 4)), new CollisionBox(this, new Pos(2, 8), new Pos(5, 2)), new CollisionBox(this, new Pos(8, 4), new Pos(4, 2)), new CollisionBox(this, new Pos(11, 3), new Pos(2, 4)) // The lowest part of the bludgeon
+        ), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(80);
-        _this.setHp(80);
+        this.setDestructible(true);
+        this.setMaxHp(80);
+        this.setHp(80);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/bridge/troll"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/bridge/troll"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new Bludgeon(_this.getQuest(), _this, new Naming("Its bludgeon", "its bludgeon"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(17, 11))), 15));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(6);
-        return _this;
+        this.addQuestEntityWeapon(new Bludgeon(this.getQuest(), this, new Naming("Its bludgeon", "its bludgeon"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(17, 11))), 15));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(6);
     }
     // Public methods
     Troll.prototype.draw = function (renderArea) {
@@ -20504,13 +20149,13 @@ var Troll = /** @class */ (function (_super) {
         this.getQuest().foundGridOrEqItem(new QuestItemFound(this.getQuest(), "eqItemWeaponTrollBludgeon", "You picked up the troll's bludgeon from the floor", "You gain the troll's bludgeon"));
     };
     return Troll;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var TrollBludgeon = /** @class */ (function (_super) {
+var TrollBludgeon = (function (_super) {
     __extends(TrollBludgeon, _super);
     // Constructor
     function TrollBludgeon() {
-        return _super.call(this, "eqItemWeaponTrollBludgeon", "eqItemWeaponTrollBludgeonName", "eqItemWeaponTrollBludgeonDescription", "eqItems/weapons/trollBludgeon") || this;
+        _super.call(this, "eqItemWeaponTrollBludgeon", "eqItemWeaponTrollBludgeonName", "eqItemWeaponTrollBludgeonDescription", "eqItems/weapons/trollBludgeon");
     }
     // Public getters
     TrollBludgeon.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -20519,37 +20164,36 @@ var TrollBludgeon = /** @class */ (function (_super) {
         return qew;
     };
     return TrollBludgeon;
-}(EqItem));
+})(EqItem);
 ///<reference path="GridItem.ts"/>
-var UnicornHorn = /** @class */ (function (_super) {
+var UnicornHorn = (function (_super) {
     __extends(UnicornHorn, _super);
     function UnicornHorn() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     UnicornHorn.prototype.update = function (player, quest) {
         player.heal(3);
     };
     return UnicornHorn;
-}(GridItem));
+})(GridItem);
 ///<reference path="Place.ts"/>
-var Village = /** @class */ (function (_super) {
+var Village = (function (_super) {
     __extends(Village, _super);
     // Constructor
     function Village(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Render areas
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Smoke
-        _this.smokes = [new Smoke(8, 26, 1, 3, 1, 3),
+        this.smokes = [new Smoke(8, 26, 1, 3, 1, 3),
             new Smoke(64, 26, 2, 4, 0, 0),
             new Smoke(80, 26, 1, 3, 1, 3),
             new Smoke(59, 42, 1, 3, 1, 3)
         ];
         // Resize the area
-        _this.renderArea.resizeFromArray(Database.getAscii("places/village/village"), 0, 3);
+        this.renderArea.resizeFromArray(Database.getAscii("places/village/village"), 0, 3);
         // Update
-        _this.update();
-        return _this;
+        this.update();
     }
     // Public methods    
     Village.prototype.willBeDisplayed = function () {
@@ -20638,7 +20282,6 @@ var Village = /** @class */ (function (_super) {
             this.renderArea.addLinkOver(".mapVillageThirdHouseButton, .mapVillageThirdHouseComment", ".mapVillageThirdHouseComment");
             this.renderArea.addLinkCall(".mapVillageThirdHouseButton, .mapVillageThirdHouseComment", new CallbackCollection(this.goToThirdHouse.bind(this)));
         }
-        // Else, we don't have the key
         else {
             // Buttons
             this.renderArea.addMultipleAsciiNinjaButtons("mapVillageThirdHouseButton", x + 1, x + 7, y, x, x + 8, y + 1, x - 1, x + 9, y + 2, x, x + 8, y + 3, x, x + 8, y + 4);
@@ -20676,13 +20319,13 @@ var Village = /** @class */ (function (_super) {
         this.renderArea.addLinkCall(".mapVillageFifthHouseButton, .mapVillageFifthHouseComment", new CallbackCollection(this.goToFifthHouse.bind(this)));
     };
     return Village;
-}(Place));
+})(Place);
 ///<reference path="QuestEntity.ts"/>
-var Wall = /** @class */ (function (_super) {
+var Wall = (function (_super) {
     __extends(Wall, _super);
     // Constructor
     function Wall(quest, pos) {
-        return _super.call(this, quest, pos, new Naming("A wall", "a wall"), null, new Pos(0, 0), new CollisionBoxCollection()) || this;
+        _super.call(this, quest, pos, new Naming("A wall", "a wall"), null, new Pos(0, 0), new CollisionBoxCollection());
     }
     // Public method
     Wall.prototype.addBox = function (pos, size) {
@@ -20692,7 +20335,7 @@ var Wall = /** @class */ (function (_super) {
         this.getCbc().removeBoxes();
     };
     return Wall;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="Place.ts"/>
 // Candies stuff
 Saving.registerBool("wishingWellFirstCandyThrown", false);
@@ -20709,22 +20352,21 @@ Saving.registerBool("wishingWellWeArePainAuChocolating", false); // If true, it 
 Saving.registerNumber("wishingWellHowManyPainsAuChocolatThrown", 0);
 // Chocolate bars stuff
 Saving.registerBool;
-var WishingWell = /** @class */ (function (_super) {
+var WishingWell = (function (_super) {
     __extends(WishingWell, _super);
     // Constructor
     function WishingWell(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // The render area
-        _this.renderArea = new RenderArea();
+        this.renderArea = new RenderArea();
         // Current speech
-        _this.currentSpeech = null;
-        _this.selectedEnchantmentId = "wishingWellPossibleEnchantment0";
+        this.currentSpeech = null;
+        this.selectedEnchantmentId = "wishingWellPossibleEnchantment0";
         // Gifts
-        _this.selectedGiftId = "wishingWellGiftPower";
-        _this.createPossibleEnchantments();
-        _this.renderArea.resizeFromArray(Database.getAscii("places/wishingWell"), 62, 3);
-        _this.update();
-        return _this;
+        this.selectedGiftId = "wishingWellGiftPower";
+        this.createPossibleEnchantments();
+        this.renderArea.resizeFromArray(Database.getAscii("places/wishingWell"), 62, 3);
+        this.update();
     }
     // getRenderArea()
     WishingWell.prototype.getRenderArea = function () {
@@ -20785,7 +20427,6 @@ var WishingWell = /** @class */ (function (_super) {
             this.renderArea.addAsciiRealButton(Database.getText("wishingWellThrowFirstCandyButton"), x, y, "wishingWellThrowFirstCandyButton", Database.getTranslatedText("wishingWellThrowFirstCandyButton"), true);
             this.renderArea.addLinkCall(".wishingWellThrowFirstCandyButton", new CallbackCollection(this.throwFirstCandy.bind(this)));
         }
-        // Else, we already threw our first candy
         else {
             // The button
             this.renderArea.addAsciiRealButton("Throw " + Algo.pluralFormatNicely(Saving.loadNumber("wishingWellCurrentCandyWishPrice"), " candy", " candies") + " in the well", x, y, "wishingWellThrowCandiesButton");
@@ -20800,7 +20441,6 @@ var WishingWell = /** @class */ (function (_super) {
             // The link
             this.renderArea.addLinkCall(".wishingWellThrowChocolateBarButton", new CallbackCollection(this.throwChocolateBar.bind(this)));
         }
-        // Else, we are enchanting
         else {
             // If there's at least one possible enchantment
             if (this.possibleEnchantments.length >= 1) {
@@ -20829,7 +20469,6 @@ var WishingWell = /** @class */ (function (_super) {
             this.renderArea.addAsciiRealButton(Database.getText("wishingWellThrowFirstLollipopButton"), x, y, "wishingWellThrowFirstLollipopButton", Database.getTranslatedText("wishingWellThrowFirstLollipopButton"), true);
             this.renderArea.addLinkCall(".wishingWellThrowFirstLollipopButton", new CallbackCollection(this.throwFirstLollipop.bind(this)));
         }
-        // Else, we already threw our first lollipop
         else {
             // The button
             this.renderArea.addAsciiRealButton("Throw " + Algo.pluralFormatNicely(Saving.loadNumber("wishingWellCurrentLollipopWishPrice"), " lollipop", " lollipops") + " in the well", x, y, "wishingWellThrowLollipopsButton");
@@ -20844,7 +20483,6 @@ var WishingWell = /** @class */ (function (_super) {
             // The link
             this.renderArea.addLinkCall(".wishingWellThrowPainAuChocolatButton", new CallbackCollection(this.throwPainAuChocolat.bind(this)));
         }
-        // Else, we are pain au chocolating
         else {
             // "Choose your gift"
             this.renderArea.drawString(Database.getText("wishingWellChooseGift"), x, y);
@@ -20923,7 +20561,6 @@ var WishingWell = /** @class */ (function (_super) {
                 Saving.saveNumber("wishingWellCurrentCandyWishPrice", Saving.loadNumber("wishingWellPreviousCandyWishPrice") * 2 + Saving.loadNumber("wishingWellCurrentCandyWishPrice") * 2);
                 Saving.saveNumber("wishingWellPreviousCandyWishPrice", oldPrice);
             }
-            // Else, no need to be healed
             else {
                 // Set the speech
                 this.currentSpeech = "wishingWellNoWoundSpeech";
@@ -21024,30 +20661,29 @@ var WishingWell = /** @class */ (function (_super) {
             this.drawPainsAuChocolatStuff(0, 24);
     };
     return WishingWell;
-}(Place));
+})(Place);
 ///<reference path="QuestEntity.ts"/>
-var Wolf = /** @class */ (function (_super) {
+var Wolf = (function (_super) {
     __extends(Wolf, _super);
     // Constructor
     function Wolf(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A wolf", "a wolf"), new RenderArea(7, 3), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 1), new Pos(7, 2))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A wolf", "a wolf"), new RenderArea(7, 3), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 1), new Pos(7, 2))), new QuestEntityMovement());
         // At first, we're not taking the decision to begin running
-        _this.takeTheDecisionToRunTimer = null;
+        this.takeTheDecisionToRunTimer = null;
         // Set the area transparency
-        _this.setTransparency(new RenderTransparency(" "));
+        this.setTransparency(new RenderTransparency(" "));
         // At first we're looking left and standing
-        _this.setIsLookingLeft(true);
-        _this.setIsStanding(true);
+        this.setIsLookingLeft(true);
+        this.setIsStanding(true);
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(45);
-        _this.setHp(45);
+        this.setDestructible(true);
+        this.setMaxHp(45);
+        this.setHp(45);
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its fangs", "its fangs"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, 0), new Pos(9, 3))), 10));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(2);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its fangs", "its fangs"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, 0), new Pos(9, 3))), 10));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(2);
     }
     // update()
     Wolf.prototype.update = function () {
@@ -21058,7 +20694,6 @@ var Wolf = /** @class */ (function (_super) {
             // We're looking left
             this.setIsLookingLeft(true);
         }
-        // Else, the player is on our right
         else {
             // We're looking right
             this.setIsLookingLeft(false);
@@ -21070,7 +20705,6 @@ var Wolf = /** @class */ (function (_super) {
                 // We take the decision to run by setting the timer
                 this.takeTheDecisionToRunTimer = Random.between(2, 6);
             }
-            // Else, if we already took the decision ro run
             else if (this.takeTheDecisionToRunTimer != null) {
                 // We decrease the timer
                 this.takeTheDecisionToRunTimer -= 1;
@@ -21081,7 +20715,6 @@ var Wolf = /** @class */ (function (_super) {
                 }
             }
         }
-        // Else, if we're running
         else {
             // If the running movement won't be possible next turn
             if (this.testNewGlobalPosition(this.getGlobalPosition().plus(new Pos(this.getRunningSpeed(), 0))) == false) {
@@ -21125,20 +20758,19 @@ var Wolf = /** @class */ (function (_super) {
             // No movement
             this.getQuestEntityMovement().setOffset(new Pos(0, 0));
         }
-        // Else, we're running
         else {
             // Set the movement depending on our orientation
             this.getQuestEntityMovement().setOffset(new Pos(this.getRunningSpeed(), 0));
         }
     };
     return Wolf;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="EqItem.ts"/>
-var WoodenSword = /** @class */ (function (_super) {
+var WoodenSword = (function (_super) {
     __extends(WoodenSword, _super);
     // Constructor
     function WoodenSword() {
-        return _super.call(this, "eqItemWeaponWoodenSword", "eqItemWeaponWoodenSwordName", "eqItemWeaponWoodenSwordDescription", "eqItems/weapons/woodenSword") || this;
+        _super.call(this, "eqItemWeaponWoodenSword", "eqItemWeaponWoodenSwordName", "eqItemWeaponWoodenSwordDescription", "eqItems/weapons/woodenSword");
     }
     // Public getters
     WoodenSword.prototype.getQuestEntityWeapon = function (quest, player) {
@@ -21147,27 +20779,26 @@ var WoodenSword = /** @class */ (function (_super) {
         return qew;
     };
     return WoodenSword;
-}(EqItem));
+})(EqItem);
 ///<reference path="QuestEntity.ts"/>
-var Xinopherydon = /** @class */ (function (_super) {
+var Xinopherydon = (function (_super) {
     __extends(Xinopherydon, _super);
     // Constructor
     function Xinopherydon(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("A xinopherydon", "a xinopherydon"), new RenderArea(17, 6), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 1), new Pos(5, 1)), new CollisionBox(_this, new Pos(0, 2), new Pos(9, 1)), new CollisionBox(_this, new Pos(12, 2), new Pos(5, 1)), new CollisionBox(_this, new Pos(3, 3), new Pos(14, 1)), new CollisionBox(_this, new Pos(4, 4), new Pos(5, 1)), new CollisionBox(_this, new Pos(10, 4), new Pos(5, 1)), new CollisionBox(_this, new Pos(5, 5), new Pos(3, 1)), new CollisionBox(_this, new Pos(11, 5), new Pos(3, 1))), new QuestEntityMovement()) || this;
+        _super.call(this, quest, pos, new Naming("A xinopherydon", "a xinopherydon"), new RenderArea(17, 6), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 1), new Pos(5, 1)), new CollisionBox(this, new Pos(0, 2), new Pos(9, 1)), new CollisionBox(this, new Pos(12, 2), new Pos(5, 1)), new CollisionBox(this, new Pos(3, 3), new Pos(14, 1)), new CollisionBox(this, new Pos(4, 4), new Pos(5, 1)), new CollisionBox(this, new Pos(10, 4), new Pos(5, 1)), new CollisionBox(this, new Pos(5, 5), new Pos(3, 1)), new CollisionBox(this, new Pos(11, 5), new Pos(3, 1))), new QuestEntityMovement());
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
-        _this.getQuestEntityMovement().setWormsLike(true);
+        this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setWormsLike(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(5000);
-        _this.setHp(5000);
+        this.setDestructible(true);
+        this.setMaxHp(5000);
+        this.setHp(5000);
         // Set the ascii art and the transparent character
-        _this.getRenderArea().drawArray(Database.getAscii("places/quests/fortress/xinopherydon"));
-        _this.setTransparency(new RenderTransparency(" "));
+        this.getRenderArea().drawArray(Database.getAscii("places/quests/fortress/xinopherydon"));
+        this.setTransparency(new RenderTransparency(" "));
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("Its huge body", "its huge body"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(19, 8))), 800));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(20);
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its huge body", "its huge body"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(19, 8))), 800));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(20);
     }
     // update()
     Xinopherydon.prototype.update = function () {
@@ -21185,44 +20816,43 @@ var Xinopherydon = /** @class */ (function (_super) {
         this.getQuest().foundGridOrEqItem(new QuestItemFound(this.getQuest(), "gridItemPossessedXinopherydonClaw", "You found a strange claw on the xinopherydon's corpse.", "You gain a strange claw."));
     };
     return Xinopherydon;
-}(QuestEntity));
+})(QuestEntity);
 ///<reference path="GridItem.ts"/>
-var XinopherydonClaw = /** @class */ (function (_super) {
+var XinopherydonClaw = (function (_super) {
     __extends(XinopherydonClaw, _super);
     function XinopherydonClaw() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     XinopherydonClaw.prototype.hit = function (player, quest, questEntity, damage, reason) {
         return damage * 2;
     };
     return XinopherydonClaw;
-}(GridItem));
+})(GridItem);
 ///<reference path="Quest.ts"/>
-var Yourself = /** @class */ (function (_super) {
+var Yourself = (function (_super) {
     __extends(Yourself, _super);
     // Constructor
     function Yourself(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Sentences flying across the screen
-        _this.sentences = [];
+        this.sentences = [];
         // Sentences timer (to avoid having sentences at the very beginning of the quest)
-        _this.sentencesTimer = 30;
+        this.sentencesTimer = 30;
         // Resize the quest
-        _this.resizeQuest(100, 20);
+        this.resizeQuest(100, 20);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, true, true, true);
+        this.addPlayerCollisionBoxes(true, true, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 19));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 19));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add yourself
-        _this.addYourself();
+        this.addYourself();
         // Add the walls
-        _this.addWalls();
+        this.addWalls();
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You are now fighting yourself."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You are now fighting yourself."));
     }
     // Public methods
     Yourself.prototype.configPlayerOrClone = function (entity) {
@@ -21326,14 +20956,12 @@ var Yourself = /** @class */ (function (_super) {
                         "The crown of life is neither happiness nor annihilation; it is understanding",
                         "Tentacles tentacles tentacles"]), Random.flipACoin(), Random.between(1, 12)));
             }
-            // Else, we have the crown
             else {
                 // We possibly add the sentence
                 if (this.sentences.length == 0 || Random.oneChanceOutOf(20))
                     this.sentences.push(new YourselfSentence(this, Random.fromArray(["You are very self-confident."]), Random.flipACoin(), Random.between(1, 12)));
             }
         }
-        // Else, we decrease the timer
         else {
             this.sentencesTimer -= 1;
         }
@@ -21354,25 +20982,24 @@ var Yourself = /** @class */ (function (_super) {
         return false;
     };
     return Yourself;
-}(Quest));
+})(Quest);
 ///<reference path="QuestEntity.ts"/>
-var YourselfEntity = /** @class */ (function (_super) {
+var YourselfEntity = (function (_super) {
     __extends(YourselfEntity, _super);
     // Constructor
     function YourselfEntity(quest, pos) {
-        var _this = _super.call(this, quest, pos, new Naming("Yourself", "yourself"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement(new Pos(-1, 0))) || this;
+        _super.call(this, quest, pos, new Naming("Yourself", "yourself"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement(new Pos(-1, 0)));
         // Set gravity
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true);
-        _this.setMaxHp(_this.getQuest().getGame().getPlayer().getMaxHp());
-        _this.setHp(_this.getQuest().getGame().getPlayer().getHp());
+        this.setDestructible(true);
+        this.setMaxHp(this.getQuest().getGame().getPlayer().getMaxHp());
+        this.setHp(this.getQuest().getGame().getPlayer().getHp());
         // Set the ascii art
-        _this.getRenderArea().drawString("\\o/");
+        this.getRenderArea().drawString("\\o/");
         // Set the weapon and its delay
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, new Naming("The same weapon as yours", "the same weapon as yours"), new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(5, 3))), 0));
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay();
-        return _this;
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("The same weapon as yours", "the same weapon as yours"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(5, 3))), 0));
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay();
     }
     // setHp()
     YourselfEntity.prototype.setHp = function (hp) {
@@ -21381,7 +21008,6 @@ var YourselfEntity = /** @class */ (function (_super) {
             // When anyone want to change our hp, we change the player's hp first :)
             this.getQuest().getGame().getPlayer().setHp(hp);
         }
-        // Else, we have the crown
         else {
             // When anyone want to change our hp, we change the player's hp first :) (but here we keep it over 0!)
             if (hp > 0)
@@ -21397,8 +21023,8 @@ var YourselfEntity = /** @class */ (function (_super) {
         this.getQuest().foundGridOrEqItem(new QuestItemFound(this.getQuest(), "eqItemBootsBootsOfIntrospection", "You found the boots of introspection", "You gain the boots of introspection"));
     };
     return YourselfEntity;
-}(QuestEntity));
-var YourselfSentence = /** @class */ (function () {
+})(QuestEntity);
+var YourselfSentence = (function () {
     // Constructor
     function YourselfSentence(quest, text, isGoingRight, y) {
         // Set from parameters
@@ -21418,19 +21044,19 @@ var YourselfSentence = /** @class */ (function () {
     YourselfSentence.prototype.update = function () {
         if (this.isGoingRight) {
             this.position.x += 1;
-            if (this.position.x > 100) // Out of the screen?
+            if (this.position.x > 100)
                 return true; // Delete the sentence
         }
         else {
             this.position.x -= 1;
-            if (this.position.x < -this.text.length) // Out of the screen?
+            if (this.position.x < -this.text.length)
                 return true; // Delete the sentence
         }
         // We don't delete the sentence : we return false
         return false;
     };
     return YourselfSentence;
-}());
+})();
 Database.addAscii("eqItems/boots/leatherBoots", 16, 5, [
     "  ____",
     "  \\   |   ____",
@@ -31620,27 +31246,26 @@ TheArenaModule.addQuest(new TheArenaModuleQuest("hardcorePlatformer", HardcorePl
 // -------------------------------------------------------------------------------
 // We create our HardcorePlatformer_Quest class, which herits from the Quest class 
 // -------------------------------------------------------------------------------
-var HardcorePlatformer_Quest = /** @class */ (function (_super) {
+var HardcorePlatformer_Quest = (function (_super) {
     __extends(HardcorePlatformer_Quest, _super);
     // Constructor
     function HardcorePlatformer_Quest(game) {
-        var _this = _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(240, 13);
+        this.resizeQuest(240, 13);
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, false, true, true);
+        this.addPlayerCollisionBoxes(true, false, true, true);
         // Add the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this);
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 8));
-        _this.configPlayerOrClone(_this.getGame().getPlayer());
-        _this.addEntity(_this.getGame().getPlayer());
+        this.getGame().getPlayer().loadCandyBoxCharacter(this);
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 8));
+        this.configPlayerOrClone(this.getGame().getPlayer());
+        this.addEntity(this.getGame().getPlayer());
         // Add the ground
-        _this.addGround();
+        this.addGround();
         // Add the spikes
-        _this.addAllSpikes(_this.getGame().getPlayer().getMaxHp() * 100);
+        this.addAllSpikes(this.getGame().getPlayer().getMaxHp() * 100);
         // Add the message
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("This is going to be HARDCORE."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("This is going to be HARDCORE."));
     }
     // Public methods
     HardcorePlatformer_Quest.prototype.castPlayerAntiGravityPotion = function () {
@@ -31736,12 +31361,12 @@ var HardcorePlatformer_Quest = /** @class */ (function (_super) {
         return false;
     };
     return HardcorePlatformer_Quest;
-}(Quest));
+})(Quest);
 ///<reference path="./../../main/Spikes.ts"/>
-var HardcorePlatformer_Spikes = /** @class */ (function (_super) {
+var HardcorePlatformer_Spikes = (function (_super) {
     __extends(HardcorePlatformer_Spikes, _super);
     function HardcorePlatformer_Spikes() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     // Public methods
     HardcorePlatformer_Spikes.prototype.update = function () {
@@ -31752,7 +31377,7 @@ var HardcorePlatformer_Spikes = /** @class */ (function (_super) {
         _super.prototype.update.call(this);
     };
     return HardcorePlatformer_Spikes;
-}(Spikes));
+})(Spikes);
 ///<reference path="./../../main/Quest.ts"/>
 // -------------------------------
 // We register on the Arena module
@@ -31764,43 +31389,41 @@ TheArenaModule.addQuest(new TheArenaModuleQuest("peacefulForest", PeacefulForest
 // ---------------------------------------------------------------------------
 // We create our PeacefulForest_Quest class, which herits from the Quest class 
 // ---------------------------------------------------------------------------
-var PeacefulForest_Quest = /** @class */ (function (_super) {
+var PeacefulForest_Quest = (function (_super) {
     __extends(PeacefulForest_Quest, _super);
     // -----------
     // Constructor
     // -----------
     function PeacefulForest_Quest(game) {
-        var _this = 
         // Call the constructor of our mother class, the Quest class (don't change that)
-        _super.call(this, game) || this;
+        _super.call(this, game);
         // Resize the quest
-        _this.resizeQuest(100, 10); // 100 characters width, 10 characters height
+        this.resizeQuest(100, 10); // 100 characters width, 10 characters height
         // Add collision boxes around
-        _this.addPlayerCollisionBoxes(true, false, true, true); // this means that the player will only be able to get out of the quest on the right side
+        this.addPlayerCollisionBoxes(true, false, true, true); // this means that the player will only be able to get out of the quest on the right side
         // Handle the player
-        _this.getGame().getPlayer().loadCandyBoxCharacter(_this); // this means that we load the small ("\o/") character, not the big one used in the sea
-        _this.getGame().getPlayer().setGlobalPosition(new Pos(0, 9)); // the player will begin the quest at the x position of 0 and the y position of 9
-        _this.configPlayerOrClone(_this.getGame().getPlayer()); // configure the player (see below in the public methods part)
-        _this.addEntity(_this.getGame().getPlayer()); // finally add the player to the quest
+        this.getGame().getPlayer().loadCandyBoxCharacter(this); // this means that we load the small ("\o/") character, not the big one used in the sea
+        this.getGame().getPlayer().setGlobalPosition(new Pos(0, 9)); // the player will begin the quest at the x position of 0 and the y position of 9
+        this.configPlayerOrClone(this.getGame().getPlayer()); // configure the player (see below in the public methods part)
+        this.addEntity(this.getGame().getPlayer()); // finally add the player to the quest
         // Add some treeeeees (it uses a private method below)
-        _this.addATree(12);
-        _this.addATree(25);
-        _this.addATree(28);
-        _this.addATree(35);
-        _this.addATree(39);
-        _this.addATree(42);
-        _this.addATree(48);
-        _this.addATree(56);
-        _this.addATree(59);
-        _this.addATree(65);
-        _this.addATree(79);
-        _this.addATree(87);
-        _this.addATree(91);
+        this.addATree(12);
+        this.addATree(25);
+        this.addATree(28);
+        this.addATree(35);
+        this.addATree(39);
+        this.addATree(42);
+        this.addATree(48);
+        this.addATree(56);
+        this.addATree(59);
+        this.addATree(65);
+        this.addATree(79);
+        this.addATree(87);
+        this.addATree(91);
         // Add a ground because we don't want our trees to fall down (it uses a private method below)
-        _this.addGround();
+        this.addGround();
         // Add the first message in the quest log
-        _this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the peaceful forest. Trees all around you. It's a great place to calm down."));
-        return _this;
+        this.getGame().getQuestLog().addMessage(new QuestLogMessage("You enter the peaceful forest. Trees all around you. It's a great place to calm down."));
     }
     // --------------
     // Public methods
@@ -31817,7 +31440,6 @@ var PeacefulForest_Quest = /** @class */ (function (_super) {
         if (win) {
             this.getGame().getQuestLog().addMessage(new QuestLogMessage("You reached the end of the peaceful forest. It really wasn't too hard."));
         }
-        // Else, we didn't win the quest
         else {
             this.getGame().getQuestLog().addMessage(new QuestLogMessage("You died in the peaceful forest. How did you even manage to do that?"));
         }
@@ -31878,35 +31500,26 @@ var PeacefulForest_Quest = /** @class */ (function (_super) {
         return false;
     };
     return PeacefulForest_Quest;
-}(Quest));
+})(Quest);
 ///<reference path="../../main/QuestEntity.ts"/>
-var PeacefulForest_Tree = /** @class */ (function (_super) {
+var PeacefulForest_Tree = (function (_super) {
     __extends(PeacefulForest_Tree, _super);
     // Constructor
     function PeacefulForest_Tree(quest, pos) {
-        var _this = _super.call(this, quest, pos, // The global position of the tree in the quest. We use the value given in parameter.
-        new Naming("A tree", "a tree"), // The name of the entity as it will appear in the quest log. Two parameters : the first one ("A tree") is used at the beginning of a sentence, and the second one ("a tree") is used inside a sentence
-        new RenderArea(3, 1), // The tree render area : 3 characters width and 1 character height
-        new Pos(0, 0), // The position of where the render area is drawn relatively to the global position (see three lines above)
-        new CollisionBoxCollection(new CollisionBox(_this, new Pos(0, 0), new Pos(3, 1))), // The collision box collection of the tree, made of one collision box (position 0, 0, size 3, 1)
-        new QuestEntityMovement() // The tree's movement. We don't give any parameter because the tree isn't actually moving.
-        ) || this;
+        _super.call(this, quest, pos, new Naming("A tree", "a tree"), new RenderArea(3, 1), new Pos(0, 0), new CollisionBoxCollection(new CollisionBox(this, new Pos(0, 0), new Pos(3, 1))), new QuestEntityMovement() // The tree's movement. We don't give any parameter because the tree isn't actually moving.
+        );
         // Set gravity : the tree can fall (even if it probably won't because it lays on the ground)
-        _this.getQuestEntityMovement().setGravity(true);
+        this.getQuestEntityMovement().setGravity(true);
         // Set destructible
-        _this.setDestructible(true); // The tree will be destructible
-        _this.setMaxHp(50); // Set the maximum health points
-        _this.setHp(50); // Set the health points
+        this.setDestructible(true); // The tree will be destructible
+        this.setMaxHp(50); // Set the maximum health points
+        this.setHp(50); // Set the health points
         // Set the ascii art
-        _this.getRenderArea().drawString("|||", 0, 0); // Draw the tree ("|||") on the render area
+        this.getRenderArea().drawString("|||", 0, 0); // Draw the tree ("|||") on the render area
         // Add the tree's weapon. It will be attacking with its leaves.
-        _this.addQuestEntityWeapon(new QuestEntityWeapon(_this.getQuest(), _this, // Nothing important here
-        new Naming("Its leaves", "its leaves"), // The weapon's name
-        new CollisionBoxCollection(new CollisionBox(_this, new Pos(-1, -1), new Pos(5, 2))), // The tree collision box collection, made of one collision box (position -1, -1, size 5, 2)
-        1)); // The weapon's damage (1)
+        this.addQuestEntityWeapon(new QuestEntityWeapon(this.getQuest(), this, new Naming("Its leaves", "its leaves"), new CollisionBoxCollection(new CollisionBox(this, new Pos(-1, -1), new Pos(5, 2))), 1)); // The weapon's damage (1)
         // Set the weapon's delay
-        _this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(5); // This means the tree will inflict damage every 5 seconds
-        return _this;
+        this.getLastQuestEntityWeapon().getCloseCombatDelay().setFixedDelay(5); // This means the tree will inflict damage every 5 seconds
     }
     return PeacefulForest_Tree;
-}(QuestEntity));
+})(QuestEntity);

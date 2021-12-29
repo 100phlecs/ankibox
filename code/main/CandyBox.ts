@@ -211,13 +211,16 @@ class CandyBox extends Place{
         });
     }
 
-    private async reqPermission(): Promise<void>{
-        let res = await this.invoke('requestPermission', 6)
-        console.log("perm res", await res);
+    private reqPermission(): Promise<void>{
+        return this.invoke('requestPermission', 6)
+            .then(res => console.log("perm res", res));
     }
 
-    private async fetchDailyAnkiCards(): Promise<void>{
-        return await this.invoke('getNumCardsReviewedToday', 6);
+    private fetchDailyAnkiCards(): Promise<void>{
+        return this.invoke('getNumCardsReviewedToday', 6).then(res =>  {
+            console.log("card count", res);
+            return res;
+        });
     }
 
     private addAnkiCardCount(count): void{
@@ -236,10 +239,12 @@ class CandyBox extends Place{
         Saving.saveNumber("previousDailyCardTotal", count);
     }
 
-    private async syncWithAnkiDailyCardCount(): Promise<void>{
-        await this.reqPermission();
-        let count = await this.fetchDailyAnkiCards();
-        this.addAnkiCardCount(count);
+    private syncWithAnkiDailyCardCount(): void{
+        this.reqPermission().then(() => {
+             this.fetchDailyAnkiCards().then(count => {
+                this.addAnkiCardCount(count);    
+             })
+        });
     }
     
     private clickedThrowCandiesButton(): void{
