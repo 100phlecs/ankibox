@@ -4552,42 +4552,49 @@ var CandyBox = /** @class */ (function (_super) {
             this.getGame().updatePlace();
         }
     };
-    CandyBox.prototype.grabAnkiURLandFetch = function (body) {
-        return __awaiter(this, void 0, void 0, function () {
-            var url;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        url = 'http://127.0.0.1:8765';
-                        return [4 /*yield*/, fetch(url, {
-                                method: 'POST',
-                                headers: {
-                                    'Access-Control-Allow-Origin': '*',
-                                    'Content-Type': 'application/json;charset=utf-8'
-                                },
-                                body: JSON.stringify(body)
-                            })];
-                    case 1: return [2 /*return*/, _a.sent()];
+    // required to invoke a no-cors request
+    // to get permission to AnkiConnect
+    CandyBox.prototype.invoke = function (action, version, params) {
+        if (params === void 0) { params = {}; }
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.addEventListener('error', function () { return reject('failed to issue request'); });
+            xhr.addEventListener('load', function () {
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (Object.getOwnPropertyNames(response).length != 2) {
+                        throw 'response has an unexpected number of fields';
+                    }
+                    if (!response.hasOwnProperty('error')) {
+                        throw 'response is missing required error field';
+                    }
+                    if (!response.hasOwnProperty('result')) {
+                        throw 'response is missing required result field';
+                    }
+                    if (response.error) {
+                        throw response.error;
+                    }
+                    resolve(response.result);
+                }
+                catch (e) {
+                    reject(e);
                 }
             });
+            xhr.open('POST', 'http://127.0.0.1:8765');
+            xhr.send(JSON.stringify({ action: action, version: version, params: params }));
         });
     };
     CandyBox.prototype.reqPermission = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var permissionBody, res, _a, _b, _c;
+            var res, _a, _b, _c;
             return __generator(this, function (_d) {
                 switch (_d.label) {
-                    case 0:
-                        permissionBody = {
-                            "action": "requestPermission",
-                            "version": 6
-                        };
-                        return [4 /*yield*/, this.grabAnkiURLandFetch(permissionBody)];
+                    case 0: return [4 /*yield*/, this.invoke('requestPermission', 6)];
                     case 1:
                         res = _d.sent();
                         _b = (_a = console).log;
                         _c = ["perm res"];
-                        return [4 /*yield*/, res.json()];
+                        return [4 /*yield*/, res];
                     case 2:
                         _b.apply(_a, _c.concat([_d.sent()]));
                         return [2 /*return*/];
@@ -4597,22 +4604,10 @@ var CandyBox = /** @class */ (function (_super) {
     };
     CandyBox.prototype.fetchDailyAnkiCards = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var dailyCardsBody, res, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        dailyCardsBody = {
-                            action: "getNumCardsReviewedToday",
-                            version: 6
-                        };
-                        return [4 /*yield*/, this.grabAnkiURLandFetch(dailyCardsBody)];
-                    case 1:
-                        res = _a.sent();
-                        return [4 /*yield*/, res.json()];
-                    case 2:
-                        result = (_a.sent()).result;
-                        console.log('res', result);
-                        return [2 /*return*/, result];
+                    case 0: return [4 /*yield*/, this.invoke('getNumCardsReviewedToday', 6)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });

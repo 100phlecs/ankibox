@@ -179,38 +179,45 @@ class CandyBox extends Place{
         }
     }
 
-    private async grabAnkiURLandFetch(body) {
-        let url = 'http://127.0.0.1:8765';
-        return await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Access-Control-Allow-Origin':'*',
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(body)
+    // required to invoke a no-cors request
+    // to get permission to AnkiConnect
+    private invoke(action, version, params={}): Promise<any>{
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('error', () => reject('failed to issue request'));
+            xhr.addEventListener('load', () => {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (Object.getOwnPropertyNames(response).length != 2) {
+                        throw 'response has an unexpected number of fields';
+                    }
+                    if (!response.hasOwnProperty('error')) {
+                        throw 'response is missing required error field';
+                    }
+                    if (!response.hasOwnProperty('result')) {
+                        throw 'response is missing required result field';
+                    }
+                    if (response.error) {
+                        throw response.error;
+                    }
+                    resolve(response.result);
+                } catch (e) {
+                    reject(e);
+                }
+            });
+    
+            xhr.open('POST', 'http://127.0.0.1:8765');
+            xhr.send(JSON.stringify({action, version, params}));
         });
     }
 
     private async reqPermission(): Promise<void>{
-        let permissionBody = {
-            "action": "requestPermission",
-            "version": 6
-        }
-
-        let res = await this.grabAnkiURLandFetch(permissionBody);
-        console.log("perm res", await res.json());
+        let res = await this.invoke('requestPermission', 6)
+        console.log("perm res", await res);
     }
 
     private async fetchDailyAnkiCards(): Promise<void>{
-        let dailyCardsBody = {
-            action: "getNumCardsReviewedToday",
-            version: 6
-        };
-
-        let res = await this.grabAnkiURLandFetch(dailyCardsBody);
-        let { result } = await res.json();
-        console.log('res', result);
-        return result;
+        return await this.invoke('getNumCardsReviewedToday', 6);
     }
 
     private addAnkiCardCount(count): void{
@@ -233,7 +240,6 @@ class CandyBox extends Place{
         await this.reqPermission();
         let count = await this.fetchDailyAnkiCards();
         this.addAnkiCardCount(count);
-
     }
     
     private clickedThrowCandiesButton(): void{

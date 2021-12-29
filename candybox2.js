@@ -805,16 +805,16 @@ this.renderArea.drawString(Database.getTranslatedText("candyBoxRequestStatusBarU
 this.update();this.getGame().updatePlace()}}if(this.throwButtonShown==false){if(this.getGame().getCandies().getMax()>=10){this.throwButtonShown=true;
 this.update();this.getGame().updatePlace()}}if(this.requestFeatureButtonShown==false){if(this.getGame().getCandies().getMax()>=30&&Saving.loadBool("statusBarUnlockedMap")==false){this.requestFeatureButtonShown=true;
 this.update();this.getGame().updatePlace()}}};a.prototype.clickedEatCandiesButton=function(){if(this.getGame().getCandies().getCurrent()>=1){this.getGame().getCandies().transferTo(this.getGame().getCandiesEaten());
-this.update();this.getGame().updatePlace()}};a.prototype.grabAnkiURLandFetch=function(c){return __awaiter(this,void 0,void 0,function(){var d;
-return __generator(this,function(e){switch(e.label){case 0:d="http://127.0.0.1:8765";
-return[4,fetch(d,{method:"POST",headers:{"Access-Control-Allow-Origin":"*","Content-Type":"application/json;charset=utf-8"},body:JSON.stringify(c)})];
-case 1:return[2,e.sent()]}})})};a.prototype.reqPermission=function(){return __awaiter(this,void 0,void 0,function(){var d,g,f,e,c;
-return __generator(this,function(h){switch(h.label){case 0:d={action:"requestPermission",version:6};
-return[4,this.grabAnkiURLandFetch(d)];case 1:g=h.sent();e=(f=console).log;c=["perm res"];
-return[4,g.json()];case 2:e.apply(f,c.concat([h.sent()]));return[2]}})})};a.prototype.fetchDailyAnkiCards=function(){return __awaiter(this,void 0,void 0,function(){var d,e,c;
-return __generator(this,function(f){switch(f.label){case 0:d={action:"getNumCardsReviewedToday",version:6};
-return[4,this.grabAnkiURLandFetch(d)];case 1:e=f.sent();return[4,e.json()];case 2:c=(f.sent()).result;
-console.log("res",c);return[2,c]}})})};a.prototype.addAnkiCardCount=function(d){var c=new Date().toDateString();
+this.update();this.getGame().updatePlace()}};a.prototype.invoke=function(d,c,e){if(e===void 0){e={}
+}return new Promise(function(g,f){var h=new XMLHttpRequest();h.addEventListener("error",function(){return f("failed to issue request")
+});h.addEventListener("load",function(){try{var i=JSON.parse(h.responseText);if(Object.getOwnPropertyNames(i).length!=2){throw"response has an unexpected number of fields"
+}if(!i.hasOwnProperty("error")){throw"response is missing required error field"}if(!i.hasOwnProperty("result")){throw"response is missing required result field"
+}if(i.error){throw i.error}g(i.result)}catch(j){f(j)}});h.open("POST","http://127.0.0.1:8765");
+h.send(JSON.stringify({action:d,version:c,params:e}))})};a.prototype.reqPermission=function(){return __awaiter(this,void 0,void 0,function(){var f,e,d,c;
+return __generator(this,function(g){switch(g.label){case 0:return[4,this.invoke("requestPermission",6)];
+case 1:f=g.sent();d=(e=console).log;c=["perm res"];return[4,f];case 2:d.apply(e,c.concat([g.sent()]));
+return[2]}})})};a.prototype.fetchDailyAnkiCards=function(){return __awaiter(this,void 0,void 0,function(){return __generator(this,function(c){switch(c.label){case 0:return[4,this.invoke("getNumCardsReviewedToday",6)];
+case 1:return[2,c.sent()]}})})};a.prototype.addAnkiCardCount=function(d){var c=new Date().toDateString();
 var f=Saving.loadString("DateToday")==c;var e=0;if(f){e=Saving.loadNumber("previousDailyCardTotal")
 }else{Saving.saveString("DateToday",c)}this.getGame().getCandies().add(d-e);Saving.saveNumber("previousDailyCardTotal",d)
 };a.prototype.syncWithAnkiDailyCardCount=function(){return __awaiter(this,void 0,void 0,function(){var c;
