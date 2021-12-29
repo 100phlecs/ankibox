@@ -1,6 +1,8 @@
 ///<reference path="Place.ts"/>
 
 Saving.registerBool("candyBoxBoxOpened", false);
+Saving.registerNumber("previousDailyCardTotal", 0);
+Saving.registerString("DateToday", "");
 
 class CandyBox extends Place{
     private renderArea: RenderArea = new RenderArea();
@@ -79,10 +81,15 @@ class CandyBox extends Place{
         
         // Eat all the candies
         if(this.eatButtonShown){
-            this.renderArea.addAsciiRealButton(Database.getText("candyBoxEatCandiesButton"), 0, 1, "candyBoxEatCandiesButton", Database.getTranslatedText("candyBoxEatCandiesButton"), false, 0);
+            this.renderArea.addAsciiRealButton(Database.getText("candyBoxEatCandiesButton"), 0, 2, "candyBoxEatCandiesButton", Database.getTranslatedText("candyBoxEatCandiesButton"), false, 0);
             this.renderArea.addLinkCall(".candyBoxEatCandiesButton", new CallbackCollection(this.clickedEatCandiesButton.bind(this)));
-            if(this.getGame().getCandiesEaten().getCurrent() != 0) this.renderArea.drawString(this.getGame().getCandiesEaten().getCurrentAsString(), 0, 3);
+            if(this.getGame().getCandiesEaten().getCurrent() != 0) this.renderArea.drawString(this.getGame().getCandiesEaten().getCurrentAsString(), 0, 4);
         }
+
+        // Sync with Anki
+        this.renderArea.addAsciiRealButton("Sync with anki", 0, 0, "ankiSync", "", false, 0);
+        this.renderArea.addLinkCall(".ankiSync", new CallbackCollection(this.syncWithAnkiDailyCardCount.bind(this)));
+    
         
         // Throw 10 candies
         if(this.throwButtonShown){
@@ -170,6 +177,63 @@ class CandyBox extends Place{
             this.update();
             this.getGame().updatePlace();
         }
+    }
+
+    private async grabAnkiURLandFetch(body) {
+        let url = 'http://localhost:8765';
+        return await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Access-Control-Allow-Origin':'*',
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(body)
+        });
+    }
+
+    private async reqPermission(): Promise<void>{
+        let permissionBody = {
+            "action": "requestPermission",
+            "version": 6
+        }
+
+        let res = await this.grabAnkiURLandFetch(permissionBody);
+        console.log("perm res", await res.json());
+    }
+
+    private async fetchDailyAnkiCards(): Promise<void>{
+        let dailyCardsBody = {
+            action: "getNumCardsReviewedToday",
+            version: 6
+        };
+
+        let res = await this.grabAnkiURLandFetch(dailyCardsBody);
+        let { result } = await res.json();
+        console.log('res', result);
+        return result;
+    }
+
+    private addAnkiCardCount(count): void{
+        let todaysDate = new Date().toDateString();
+        let alreadySyncedToday: boolean = 
+            Saving.loadString("DateToday") == todaysDate;
+        let prevCount = 0;
+
+        if (alreadySyncedToday) {
+            prevCount = Saving.loadNumber("previousDailyCardTotal");
+        } else {
+            Saving.saveString("DateToday", todaysDate)
+        }
+
+        this.getGame().getCandies().add(count - prevCount);
+        Saving.saveNumber("previousDailyCardTotal", count);
+    }
+
+    private async syncWithAnkiDailyCardCount(): Promise<void>{
+        await this.reqPermission();
+        let count = await this.fetchDailyAnkiCards();
+        this.addAnkiCardCount(count);
+
     }
     
     private clickedThrowCandiesButton(): void{

@@ -26,8 +26,8 @@ Saving.registerBool("lollipopFarmPondFeedingLolligators", false);
 Saving.registerNumber("lollipopFarmPondConversionRate", 0);
 
 // The candies production
-Saving.registerNumber("lollipopFarmPreviousCandiesProduction", 1);
-Saving.registerNumber("lollipopFarmCurrentCandiesProduction", 1);
+Saving.registerNumber("lollipopFarmPreviousCandiesProduction", 0);
+Saving.registerNumber("lollipopFarmCurrentCandiesProduction", 0);
 
 class LollipopFarm extends Place{
     // Render area
