@@ -217,22 +217,23 @@ class CandyBox extends Place{
     }
 
     private fetchDailyAnkiCards(): Promise<void>{
-        return this.invoke('getNumCardsReviewedToday', 6).then(res =>  {
-            console.log("card count", res);
-            return res;
+        return this.invoke('getNumCardsReviewedByDay', 6).then(res =>  {
+            console.log("card+date arr", res);
+            return res.shift();
         });
     }
 
-    private addAnkiCardCount(count): void{
-        let todaysDate = new Date().toDateString();
+    private addAnkiCardCount(dateAndCountArr): void{
+        let [date, count] = dateAndCountArr;
+        console.log("add card date&count", date, count);
         let alreadySyncedToday: boolean = 
-            Saving.loadString("DateToday") == todaysDate;
+            Saving.loadString("DateToday") == date;
         let prevCount = 0;
 
         if (alreadySyncedToday) {
             prevCount = Saving.loadNumber("previousDailyCardTotal");
         } else {
-            Saving.saveString("DateToday", todaysDate)
+            Saving.saveString("DateToday", date)
         }
 
         this.getGame().getCandies().add(count - prevCount);
@@ -241,8 +242,8 @@ class CandyBox extends Place{
 
     private syncWithAnkiDailyCardCount(): void{
         this.reqPermission().then(() => {
-             this.fetchDailyAnkiCards().then(count => {
-                this.addAnkiCardCount(count);    
+             this.fetchDailyAnkiCards().then(dateAndCountArr => {
+                this.addAnkiCardCount(dateAndCountArr);    
              })
         });
     }

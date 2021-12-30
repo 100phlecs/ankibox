@@ -4497,20 +4497,21 @@ var CandyBox = (function (_super) {
             .then(function (res) { return console.log("perm res", res); });
     };
     CandyBox.prototype.fetchDailyAnkiCards = function () {
-        return this.invoke('getNumCardsReviewedToday', 6).then(function (res) {
-            console.log("card count", res);
-            return res;
+        return this.invoke('getNumCardsReviewedByDay', 6).then(function (res) {
+            console.log("card+date arr", res);
+            return res.shift();
         });
     };
-    CandyBox.prototype.addAnkiCardCount = function (count) {
-        var todaysDate = new Date().toDateString();
-        var alreadySyncedToday = Saving.loadString("DateToday") == todaysDate;
+    CandyBox.prototype.addAnkiCardCount = function (dateAndCountArr) {
+        var date = dateAndCountArr[0], count = dateAndCountArr[1];
+        console.log("add card date&count", date, count);
+        var alreadySyncedToday = Saving.loadString("DateToday") == date;
         var prevCount = 0;
         if (alreadySyncedToday) {
             prevCount = Saving.loadNumber("previousDailyCardTotal");
         }
         else {
-            Saving.saveString("DateToday", todaysDate);
+            Saving.saveString("DateToday", date);
         }
         this.getGame().getCandies().add(count - prevCount);
         Saving.saveNumber("previousDailyCardTotal", count);
@@ -4518,8 +4519,8 @@ var CandyBox = (function (_super) {
     CandyBox.prototype.syncWithAnkiDailyCardCount = function () {
         var _this = this;
         this.reqPermission().then(function () {
-            _this.fetchDailyAnkiCards().then(function (count) {
-                _this.addAnkiCardCount(count);
+            _this.fetchDailyAnkiCards().then(function (dateAndCountArr) {
+                _this.addAnkiCardCount(dateAndCountArr);
             });
         });
     };

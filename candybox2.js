@@ -791,10 +791,10 @@ this.update();this.getGame().updatePlace()}};a.prototype.invoke=function(d,c,e){
 }if(!i.hasOwnProperty("error")){throw"response is missing required error field"}if(!i.hasOwnProperty("result")){throw"response is missing required result field"
 }if(i.error){throw i.error}g(i.result)}catch(j){f(j)}});h.open("POST","http://127.0.0.1:8765");
 h.send(JSON.stringify({action:d,version:c,params:e}))})};a.prototype.reqPermission=function(){return this.invoke("requestPermission",6).then(function(c){return console.log("perm res",c)
-})};a.prototype.fetchDailyAnkiCards=function(){return this.invoke("getNumCardsReviewedToday",6).then(function(c){console.log("card count",c);
-return c})};a.prototype.addAnkiCardCount=function(d){var c=new Date().toDateString();
-var f=Saving.loadString("DateToday")==c;var e=0;if(f){e=Saving.loadNumber("previousDailyCardTotal")
-}else{Saving.saveString("DateToday",c)}this.getGame().getCandies().add(d-e);Saving.saveNumber("previousDailyCardTotal",d)
+})};a.prototype.fetchDailyAnkiCards=function(){return this.invoke("getNumCardsReviewedByDay",6).then(function(c){console.log("card+date arr",c);
+return c.shift()})};a.prototype.addAnkiCardCount=function(d){var c=d[0],e=d[1];console.log("add card date&count",c,e);
+var g=Saving.loadString("DateToday")==c;var f=0;if(g){f=Saving.loadNumber("previousDailyCardTotal")
+}else{Saving.saveString("DateToday",c)}this.getGame().getCandies().add(e-f);Saving.saveNumber("previousDailyCardTotal",e)
 };a.prototype.syncWithAnkiDailyCardCount=function(){var c=this;this.reqPermission().then(function(){c.fetchDailyAnkiCards().then(function(d){c.addAnkiCardCount(d)
 })})};a.prototype.clickedThrowCandiesButton=function(){if(this.getGame().getCandies().getCurrent()>=10){this.getGame().getCandies().transferTo(this.getGame().getCandiesThrown(),10);
 this.update();this.getGame().updatePlace()}};a.prototype.openBox=function(){Saving.saveBool("candyBoxBoxOpened",true);
